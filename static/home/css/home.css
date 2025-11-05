@@ -1,0 +1,62 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+:root {
+    font-family: 'Rubik', Arial, Helvetica, sans-serif;
+    /*Backgrounds*/
+    --primary-white-bg-text: #F6F6F6; /*Cor primária clara do background*/
+    --primary-dark-bg: #101318;
+    --secundary-dark-bg: #1C2126; /*Cor primária escura do background*/
+    --tertiary-dark-bg: #121010; /*Cor secundária escura do background*/
+    --quaternary-dark-bg: #272C35;
+
+    --primary-green: #33FF55; /*Verde Principal*/
+    --focus-button: #23FE48;
+    --border-color: #363D49; /*Cor das bordas*/
+    --primary-dark-text: #121010; /*Tom escuro primário dos textos*/
+    --secundary-dark-text: #B3B3B3; /*Tom escuro secundário dos textos*/
+    --primary-red: #EF4343; /*Vermelho Primário*/
+}
+#main-section {
+    background-image: url('../../../static/home/images/bgImagegym-hero-1.jpg');
+}
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 4.563rem;
+}
+a {
+    color: var(--primary-white-bg-text);
+}
+.secundary-button { /*Vai pro global*/
+    padding: 0.719rem 1.656rem;
+    border: 1px solid var(--primary-green);
+    border-radius: 9px;
+    text-decoration: none;
+    font-weight: 500;
+}
+.primary-button {
+    background-color: var(--primary-green);
+    padding: 0.938rem 2.125rem;
+    color: var(--primary-dark-bg);
+    border-radius: 9px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease-out;
+}
+.primary-button:hover {
+    box-shadow: 0 0 23.1px -2px var(--focus-button);
+}
+li {
+    list-style: none;
+}
+#main-logo-img {
+    width: 364px;
+}
+#nav-links {
+    display: flex;
+    gap: 2.688rem;
+}
