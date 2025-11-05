@@ -41,6 +41,30 @@ li {
     display: flex;
     gap: 2.688rem;
 }
-h1 {
+#main-infos {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 5.313rem auto 0;
+    width: fit-content;
+    gap: 4.563rem;
+}
+#main-infos h1 {
     color: var(--primary-white-bg-text);
+    font-size: 60px;
+    font-weight: 900;
+}
+#main-infos p {
+    color: var(--primary-white-bg-text);
+    font-size: 40px;
+    font-weight: 800;
+}
+#main-infos span {
+    color: var(--primary-green);
+}
+#main-infos img {
+    width: 765px;
+}
+#main-infos .text-box {
+    max-width: 800px;
 }
