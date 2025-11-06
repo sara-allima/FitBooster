@@ -19,6 +19,23 @@
     --secundary-dark-text: #B3B3B3; /*Tom escuro secundário dos textos*/
     --primary-red: #EF4343; /*Vermelho Primário*/
 }
+body {
+    background-color: var(--primary-white-bg-text);
+}
+    /*Main Section*/
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 4.563rem;
+}
+a {
+    color: var(--primary-white-bg-text);
+}
+li {
+    list-style: none;
+    color: var(--primary-white-bg-text);
+}
 #main-section {
     position: relative;
     width: 100%;
@@ -37,19 +54,6 @@
   transform: scale(1.1); /* Evita bordas visíveis após o blur */
   z-index: -1;
 }
-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 4.563rem;
-}
-a {
-    color: var(--primary-white-bg-text);
-}
-li {
-    list-style: none;
-    color: var(--primary-white-bg-text);
-}
 #main-logo-img {
     width: 364px;
 }
@@ -65,11 +69,13 @@ li {
     width: fit-content;
     gap: 4.563rem;
 }
-#main-infos h1 {
-    color: var(--primary-white-bg-text);
+h1 {
     font-size: 60px;
     font-weight: 900;
     margin-bottom: 4.25rem;
+}
+#main-section h1 {
+    color: var(--primary-white-bg-text);
 }
 #main-infos p {
     color: var(--primary-white-bg-text);
@@ -101,3 +107,53 @@ li {
     justify-content: center;
     gap: 8.75rem;
 }
+    /*Main Section*/
+    /*Show App Section*/
+#showapp-section {
+    margin-top: 1.938rem;
+}
+#showapp-section h1 {
+    max-width: 68.813rem;
+    text-align: center;
+    margin: 0 auto;
+}
+.container {
+    max-width: 107.313rem;
+    border: 1px solid red;
+    margin: 3.313rem auto 0;
+}
+h2 {
+    font-size: 35px;
+}
+.container h2 {
+    color: var(--primary-green);
+    text-align: center;
+}
+#install-app {
+    margin-top: 0.875rem;
+    border: 1px solid green;
+    display: flex;
+    justify-content: center;
+    gap: 210px;
+}
+#install-app > img {
+    margin-top: 2.063rem;
+}
+#install-app a {
+    width: fit-content;
+}
+#app-available img {
+    width: 226px;
+}
+#app-available {
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.375rem;
+}
+#downloads-app-container {
+    display: flex;
+    gap: 2.063rem;
+}
+    /*Show App Section*/
