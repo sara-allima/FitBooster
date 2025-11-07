@@ -1,0 +1,61 @@
+
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Login - FitBooster{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+  
+
+{% block content %}
+
+<body>
+  <div class="login-container">
+    <div class="background-overlay"></div>
+
+    <header>
+      <button class="back-btn"><img src="{% static 'imagens/seta-esquerda 1.png' %}" alt="seta esquerda"></button>
+      <h1>Login</h1>
+    </header>
+
+    <main>
+      <form class="login-form">
+        <label for="email">Email ou nome de usuário</label>
+        <input type="email" id="email" placeholder="exemplo@gmail.com">
+        <hr>
+
+        <label for="password">Senha</label>
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="mínimo 6 caracteres" autocomplete="current-password" />
+          <!-- use botão para melhor acessibilidade; ícone pode ser imagem ou inline svg -->
+          <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar senha">
+            <img src="{% static 'imagens/fechar-o-olho.png' %}" alt="mostrar" />
+          </button>
+        </div>
+
+        <hr>
+
+        <a href="#" class="forgot-password">Esqueceu a Senha?</a>
+
+        <button type="submit" class="btn-continue">continuar</button>
+
+        <div class="divider">ou</div>
+
+        <button type="button" class="btn-social google">
+          <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google">
+          <p>Iniciar sessão com o Google</p>
+        </button>
+
+        <button type="button" class="btn-social facebook">
+          <img src="https://www.svgrepo.com/show/452196/facebook-1.svg" alt="Facebook">
+          <p id="face" >Login com Facebook</p>
+        </button>
+      </form>
+    </main>
+  </div>
+</body>
+
+<script src="{% static 'script/login.js' %}"></script>
+  {% endblock %}
+
