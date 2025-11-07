@@ -1,0 +1,49 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}index - FitBooster{% endblock %}
+
+
+
+{% block content %}
+
+<body>
+    <div class="background-slider">
+        <img src="{% static '/img/image 6.png'%}" class="bg active">
+        <img src="{% static '/img/pexels-alesiakozik-7289369.jpg'%}" class="bg">
+        <img src="{% static '/img/pexels-pixabay-416809.jpg'%}" class="bg">
+    </div>
+
+    <div class="overlay"></div>
+
+    <main class="content">
+        <div class="logotitle">
+            <img src="{% static '/img/logo.png'%}" alt="FitBooster Logo" class="logo">
+            <p class="FitBooster">FitBooster</p>
+        </div>
+
+        <div class="addimg"></div>
+
+        <div class="dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+
+        <p class="text">Registre facilmente os seus treinos, tudo num só lugar.</p>
+
+        <button class="btn email">
+            <img src="{% static '/img/correspondencia (1) 1.png'%}" alt="Email">
+            Inscreva-se com E-mail
+        </button>
+
+        <button class="btn google">
+            <img src="{% static '/img/Google - Original.png'%}" alt="Google">
+            Registro com o Google
+        </button>
+
+        <p class="login">Já tem uma conta? <a href="#">Iniciar sessão</a></p>
+    </main>
+
+    <script src="{% static 'script/script.js'%}"></script>
+</body>
+{% endblock %}
