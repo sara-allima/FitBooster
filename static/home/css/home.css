@@ -119,8 +119,12 @@ h1 {
 }
 .container {
     max-width: 107.313rem;
-    border: 1px solid red;
     margin: 3.313rem auto 0;
+}
+.container h1 {
+    max-width: 68.813rem;
+    text-align: center;
+    margin: 0 auto;
 }
 h2 {
     font-size: 35px;
@@ -131,7 +135,6 @@ h2 {
 }
 #install-app {
     margin-top: 0.875rem;
-    border: 1px solid green;
     display: flex;
     justify-content: center;
     gap: 210px;
@@ -146,7 +149,6 @@ h2 {
     width: 226px;
 }
 #app-available {
-    border: 1px solid blue;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -157,3 +159,48 @@ h2 {
     gap: 2.063rem;
 }
     /*Show App Section*/
+    /*Extended Infos Section*/
+#infos-extended-div > img {
+    display: block;
+    margin: 3.125rem auto 0;
+}
+#detailed-infos-container .info-box h2 {
+    color: var(--primary-dark-text);
+}
+.info-box {
+    display: flex;
+    align-items: center;
+    gap: 2.25rem;
+    border: 1px solid red;
+}
+.info-box p {
+    font-size: 30px;
+    font-weight: 400;
+}
+.info-box .text-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.688rem;
+    max-width: 33rem;
+}
+.phone-img {
+    max-width: 16.188rem;
+}
+#plus-img {
+    max-width: 15.938rem;
+    margin-right: 14.25rem;
+}
+.info-box-rigth {
+    display: flex;
+    justify-content: end;
+}
+#graphic-img {
+    max-width: 14.25rem;
+    margin-left: 10.5rem;
+}
+#heart-img {
+    max-width: 22.75rem;
+    margin-right: 10.5rem;
+}
+    /*Extended Infos Section*/
