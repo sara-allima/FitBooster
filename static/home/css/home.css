@@ -35,6 +35,7 @@ a {
 li {
     list-style: none;
     color: var(--primary-white-bg-text);
+    font-size: 20px;
 }
 #main-section {
     position: relative;
@@ -73,6 +74,9 @@ h1 {
     font-size: 60px;
     font-weight: 900;
     margin-bottom: 4.25rem;
+}
+h1, h2, p {
+    cursor: default;
 }
 #main-section h1 {
     color: var(--primary-white-bg-text);
@@ -171,7 +175,6 @@ h2 {
     display: flex;
     align-items: center;
     gap: 2.25rem;
-    border: 1px solid red;
 }
 .info-box p {
     font-size: 30px;
@@ -204,3 +207,39 @@ h2 {
     margin-right: 10.5rem;
 }
     /*Extended Infos Section*/
+    /*Footer*/
+footer {
+    background-color: var(--primary-dark-bg);
+    padding: 4.938rem 0;
+}
+footer .container {
+    display: flex;
+    margin: 0 auto;
+    justify-content: space-around;
+}
+footer img {
+    max-width: 28.625rem;
+}
+footer p {
+    color: var(--primary-white-bg-text);
+    font-size: 30px;
+    font-weight: 700;
+}
+#copyright-infos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+.contact-item {
+    font-size: 25px;
+}
+.contact-item i {
+    margin-right: 12px;
+}
+    /*Footer*/
