@@ -39,3 +39,54 @@ body {
 .logo {
   width: 537px;
 }
+/* ======== CONTEÚDO PRINCIPAL ======== */
+.container {
+  text-align: center;
+  margin-top: 80px;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 3.375rem;
+}
+
+/* ======== CARDS ======== */
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: rgba(28, 33, 38, 0.86);
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(0, 255, 128, 0.4);
+  border: var(--primary-green);
+}
+
+.avatar {
+  margin: 0 7.688rem;
+  height: auto;
+}
+
+.card-footer {
+  background-color: var(--primary-green);
+  color: #000;
+  font-weight: 700;
+  padding: 10px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 1.2rem;
+}

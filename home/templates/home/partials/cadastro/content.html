@@ -1,19 +1,16 @@
+{% load static %}
 <main class="container">
-    <h2 class="subtitulo">Junte-se à nossa comunidade fitness</h2>
+    <h1>Junte-se à nossa comunidade fitness</h1>
 
     <section class="cards">
     <div class="card">
-        <!-- 🔽 Coloque aqui a imagem do avatar do aluno -->
-        <img src="imagens/aluno.png" alt="Aluno(a)" class="avatar" />
+        <img src="{% static "cadastro/images/girlIlustration.png" %}" alt="Aluno(a)" class="avatar"/>
         <div class="card-footer">Aluno(a)</div>
     </div>
 
     <div class="card">
-        <!-- 🔽 Coloque aqui a imagem do avatar do treinador -->
-        <img src="imagens/treinador.png" alt="Treinador(a)" class="avatar" />
+        <img src="{% static "cadastro/images/boyIlustration.png" %}" alt="Treinador(a)" class="avatar"/>
         <div class="card-footer">Treinador(a)</div>
     </div>
     </section>
 </main>
-
-<!-- 🔽 Coloque aqui a imagem de fundo da academia (usada via CSS) -->
