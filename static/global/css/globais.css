@@ -1,4 +1,10 @@
 /*Aqui vai ficar todos os arquivos de CSS em comum em todas as páginas*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', Arial, Helvetica, sans-serif;
+}
 .secundary-button { /*Vai pro global*/
     padding: 0.719rem 1.656rem;
     border: 1px solid var(--primary-green);
