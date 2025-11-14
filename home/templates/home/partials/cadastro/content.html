@@ -3,14 +3,14 @@
     <h1>Junte-se à nossa comunidade fitness</h1>
 
     <section class="cards">
-    <div class="card">
-        <img src="{% static "cadastro/images/girlIlustration.png" %}" alt="Aluno(a)" class="avatar"/>
+    <div class="card"> <!--Daria pra fazer partial do card e adicionar um conteúdo estático só aqui no nome do arquivo png-->
+        <img src="{% static "cadastro/images/girlIlustration.png" %}" alt="Aluno(a)" class="avatar"/> 
         <div class="card-footer">Aluno(a)</div>
     </div>
 
     <div class="card">
         <img src="{% static "cadastro/images/boyIlustration.png" %}" alt="Treinador(a)" class="avatar"/>
-        <div class="card-footer">Treinador(a)</div>
+        <div class="card-footer"><a href="{% url "formTreinador" %}">Treinador(a)</a></div>
     </div>
     </section>
 </main>
