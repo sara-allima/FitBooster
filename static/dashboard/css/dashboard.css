@@ -111,3 +111,153 @@ header {
   font-weight: 400;
 }
     /*Menu Navegação*/
+
+    /*Main card e side bar*/
+.main-grid{
+  display:grid;
+  grid-template-columns: 1fr 320px;
+  gap:20px;
+  align-items:start;
+}
+  /*Main card e side bar*/
+
+  /*Seção Principal*/ 
+.main-section{
+  background: var(--secundary-dark-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  padding: 1.563rem;
+}
+.card-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75remrem;
+  margin-bottom: 0.75rem;
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+.controls {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center
+}
+.input {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  padding: 0.938rem 0.625rem;
+  border-radius: 9px;
+  height: 100%;
+}
+.btn{
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.875rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all var(--transition);
+}
+.fa-plus {
+  margin-right: 0.75rem;
+}
+
+  /*Lista e Cards dos Estudantes */
+.student-list { 
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem
+}
+.student-item{
+  background: var(--quaternary-dark-bg);
+  padding:14px;
+  border-radius:10px;
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  border:1px solid rgba(255,255,255,0.03);
+  transition: border var(--transition), transform var(--transition);
+}
+.student-name {
+  font-size: 20px;
+  font-weight: 500;
+}
+.student-left {
+  display: flex;
+  gap: 0.75rem; 
+  align-items: center
+}
+.student-left .objective-last-training { /*Aqui!*/
+  color: var(--secundary-dark-text);
+  font-size: 14px;
+}
+.objective-last-training p {
+  margin: 0.2rem 0;
+}
+.avatar{
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 100%;
+  background: rgba(51, 255, 85, 0.4);
+  border: 1px solid var(--primary-green);
+  display:flex;align-items:center;justify-content:center;
+  color: var(--primary-green);
+  font-weight:700;
+}
+.student-actions {
+  display: flex; 
+  gap: 1.438rem;
+  align-items: center
+}
+.action-btn{
+  margin-top: 0.5rem;
+  background: transparent;
+  color: var(--primary-white-bg-text);
+  font-weight:600; cursor:pointer; font-size:13px;
+}
+.progress-wrap { 
+  width: 8.75rem;
+  text-align: right; 
+  font-size: 13px;
+}
+.progress-bar{
+  width:100%;
+  height:8px;
+  background: var(--border-color);
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:8px;
+}
+.progress-fill{
+  height:100%;
+  background: linear-gradient(90deg, var(--primary-green) 0%, var(--primary-green) 100%);
+  width: 0%;
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+.badge{
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 0.5rem;
+}
+.percent {
+  font-size: 16px;
+  font-weight: 500;
+}
+    /*Ativo e Inativo*/
+.badge.active {
+  background: rgba(51, 255, 85, 0.4);
+  color: var(--primary-green);
+}
+.badge.inactive {
+  background: rgba(239, 67, 67, 0.4);
+  color: var(--primary-red);
+}
+    /*Ativo e Inativo*/
+  /*Lista e Cards dos Estudantes */
+/*Seção Principal*/ 

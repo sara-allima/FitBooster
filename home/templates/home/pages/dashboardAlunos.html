@@ -26,7 +26,18 @@
         <div class="navegacao" aria-label="Navegação do dashboard">
             {% include "home/partials/dashboard/menuNavegacao.html" %}
         </div>
-    </div> 
+    </div>
+    <div class="main-grid">
+        <main>
+            <section class="main-section">
+                {% include "home/partials/dashboard/mainSectionHeader.html" %}
+
+                <div class="student-list">
+                    {% include "home/partials/dashboard/studentCard.html" %}
+                </div>
+            </section>
+        </main>
+    </div>
 
     <script src="{% static "dashboard/js/script.js" %}"></script>
 </body>
