@@ -23,7 +23,6 @@ body {
 .container{
   max-width: 1180px;
   margin: 0 auto;
-  border: 1px solid red;
 }
     /*Header*/
 header {
@@ -83,3 +82,32 @@ header {
     color: var(--primary-green);
 }
     /*Cards Principais*/
+    /*Menu Navegação*/
+.navegacao {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0 1.25rem 0;
+  background: var(--secundary-dark-bg);
+  width: fit-content;
+  border-radius: 9px;
+}
+.tab {
+  padding: 0.688rem 0.875rem;
+  border-radius: 9px;
+  color: var(--secundary-dark-text);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background var(--primary-green), color var(--primary-dark-text) ease-in-out;
+  text-decoration: none;
+  margin: 0.313rem 0;
+}
+.tab:hover {
+  color: var(--primary-white-bg-text);
+}
+.tab.active { /*classe "active" é acionada com JS*/
+  background: var(--primary-green) ;
+  color: var(--primary-dark-text);
+  border-color: transparent;
+  font-weight: 400;
+}
+    /*Menu Navegação*/
