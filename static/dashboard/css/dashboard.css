@@ -150,6 +150,7 @@ header {
   padding: 0.938rem 0.625rem;
   border-radius: 9px;
   height: 100%;
+  color: var(--primary-white-bg-text);
 }
 .btn{
   display: inline-flex;
@@ -261,3 +262,14 @@ header {
     /*Ativo e Inativo*/
   /*Lista e Cards dos Estudantes */
 /*Seção Principal*/ 
+
+/*Side Bar*/
+.sidebar-card{
+  background: hsl(var(--card));
+  padding:18px;border-radius:12px;border:1px solid hsla(var(--border),0.45);
+}
+.sidebar-title {
+  font-weight: 700;
+  margin-bottom: 0.625rem;
+}
+/*Side Bar*/
