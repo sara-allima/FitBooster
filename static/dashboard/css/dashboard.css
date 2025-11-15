@@ -1,0 +1,44 @@
+:root {
+  --primary-white-bg-text: #F6F6F6; /*Cor primária clara do background e de textos*/
+  --primary-dark-bg: #101318;
+  --secundary-dark-bg: #1C2126; /*Cor primária escura do background*/
+  --tertiary-dark-bg: #121010; /*Cor secundária escura do background*/
+  --quaternary-dark-bg: #272C35;
+
+  --primary-green: #33FF55; /*Verde Principal*/
+  --focus-button: #23FE48;
+  --border-color: #363D49; /*Cor das bordas*/
+  --primary-dark-text: #121010; /*Tom escuro primário dos textos*/
+  --secundary-dark-text: #B3B3B3; /*Tom escuro secundário dos textos*/
+  --primary-red: #EF4343; /*Vermelho Primário*/
+}
+html, body{
+    height:100%
+}
+body {
+    background: var(--primary-dark-bg);
+    color: var(--primary-white-bg-text);
+    padding: 2rem;
+}
+/* Layout container */
+.container{
+  max-width: 1180px;
+  margin: 0 auto;
+  border: 1px solid red;
+}
+/* Header */
+header {
+  margin-bottom: 4.125rem;
+}
+.title{
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+.subtitle{
+  margin: 6px 0 0 0;
+  color: hsl(var(--muted-foreground));
+  font-size: 20px;
+  color: var(--secundary-dark-text);
+}
