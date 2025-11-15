@@ -20,13 +20,12 @@ body {
     color: var(--primary-white-bg-text);
     padding: 2rem;
 }
-/* Layout container */
 .container{
   max-width: 1180px;
   margin: 0 auto;
   border: 1px solid red;
 }
-/* Header */
+    /*Header*/
 header {
   margin-bottom: 4.125rem;
 }
@@ -38,7 +37,49 @@ header {
 }
 .subtitle{
   margin: 6px 0 0 0;
-  color: hsl(var(--muted-foreground));
-  font-size: 20px;
   color: var(--secundary-dark-text);
+  font-size: 20px;
 }
+    /*Header*/
+
+    /*Cards Principais*/
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1.125rem;
+  margin: 1.125rem 0 1.625rem 0;
+}
+.card-container{
+  background: var(--secundary-dark-bg);
+  border-radius: 14px;
+  padding: 1.375rem;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.card-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(51, 255, 85, 0.4);
+  border: 1px solid var(--primary-green);
+}
+.card-value {
+    font-size: 24px;
+    font-weight: 500;
+    margin-top: 0.813rem;
+}
+.card-label {
+    font-size: 16px;
+    margin-top: 4px
+}
+.card-change {
+    font-size: 14px;
+    color: var(--primary-green);
+}
+    /*Cards Principais*/
