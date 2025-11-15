@@ -6,3 +6,7 @@ def home(request):
     return render(request, 'home/pages/home.html')
 def cadastro(request):
     return render(request, 'home/pages/cadastro.html')
+def formularioTreinador(request):
+    return render(request, 'home/pages/formularioTreinador.html')
+def dashboardAlunos(request):
+    return render(request, 'home/pages/dashboardAlunos.html')

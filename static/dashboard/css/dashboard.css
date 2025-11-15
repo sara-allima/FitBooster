@@ -1,0 +1,85 @@
+:root {
+  --primary-white-bg-text: #F6F6F6; /*Cor primária clara do background e de textos*/
+  --primary-dark-bg: #101318;
+  --secundary-dark-bg: #1C2126; /*Cor primária escura do background*/
+  --tertiary-dark-bg: #121010; /*Cor secundária escura do background*/
+  --quaternary-dark-bg: #272C35;
+
+  --primary-green: #33FF55; /*Verde Principal*/
+  --focus-button: #23FE48;
+  --border-color: #363D49; /*Cor das bordas*/
+  --primary-dark-text: #121010; /*Tom escuro primário dos textos*/
+  --secundary-dark-text: #B3B3B3; /*Tom escuro secundário dos textos*/
+  --primary-red: #EF4343; /*Vermelho Primário*/
+}
+html, body{
+    height:100%
+}
+body {
+    background: var(--primary-dark-bg);
+    color: var(--primary-white-bg-text);
+    padding: 2rem;
+}
+.container{
+  max-width: 1180px;
+  margin: 0 auto;
+  border: 1px solid red;
+}
+    /*Header*/
+header {
+  margin-bottom: 4.125rem;
+}
+.title{
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+.subtitle{
+  margin: 6px 0 0 0;
+  color: var(--secundary-dark-text);
+  font-size: 20px;
+}
+    /*Header*/
+
+    /*Cards Principais*/
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1.125rem;
+  margin: 1.125rem 0 1.625rem 0;
+}
+.card-container{
+  background: var(--secundary-dark-bg);
+  border-radius: 14px;
+  padding: 1.375rem;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.card-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(51, 255, 85, 0.4);
+  border: 1px solid var(--primary-green);
+}
+.card-value {
+    font-size: 24px;
+    font-weight: 500;
+    margin-top: 0.813rem;
+}
+.card-label {
+    font-size: 16px;
+    margin-top: 4px
+}
+.card-change {
+    font-size: 14px;
+    color: var(--primary-green);
+}
+    /*Cards Principais*/

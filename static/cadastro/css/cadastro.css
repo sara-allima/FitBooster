@@ -39,7 +39,6 @@ body {
 .logo {
   width: 537px;
 }
-/* ======== CONTEÚDO PRINCIPAL ======== */
 .container {
   text-align: center;
   margin-top: 80px;
@@ -50,7 +49,6 @@ h1 {
   margin-bottom: 3.375rem;
 }
 
-/* ======== CARDS ======== */
 .cards {
   display: flex;
   justify-content: center;
@@ -73,15 +71,17 @@ h1 {
   box-shadow: 0 0 20px rgba(0, 255, 128, 0.4);
   border: var(--primary-green);
 }
-
+.card a {
+  color: var(--primary-dark-text);
+  text-decoration: none;
+}
 .avatar {
   margin: 0 7.688rem;
   height: auto;
 }
-
 .card-footer {
   background-color: var(--primary-green);
-  color: #000;
+  color: var(--primary-dark-text);
   font-weight: 700;
   padding: 10px;
   border-bottom-right-radius: 20px;
