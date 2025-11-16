@@ -4,7 +4,7 @@
 {% block title %}registro - FitBooster{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/registro.css' %}">
+<link rel="stylesheet" href="{% static 'login-registro/css/registro.css' %}">
 {% endblock %}
   
 
@@ -15,7 +15,7 @@
 
     <header>
       <button class="back-btn" aria-label="Voltar">
-        <img src="{% static 'imagens/seta-esquerda 1.png' %}" alt="Voltar">
+        <img src="{% static 'login-registro/imagens/seta-esquerda 1.png' %}" alt="Voltar">
       </button>
       <h1>Registro</h1>
     </header>
@@ -32,7 +32,7 @@
           <input type="password" id="password" placeholder="mínimo 6 caracteres" autocomplete="current-password" />
           
           <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar senha">
-            <img src="{% static 'imagens/fechar-o-olho.png' %}" alt="mostrar" />
+            <img src="{% static 'login-registro/imagens/fechar-o-olho.png' %}" alt="mostrar" />
           </button>
         </div>
 
@@ -56,5 +56,5 @@
 
   
 </body>
-<script src="{% static 'script/registro.js' %}"></script>
+<script src="{% static 'login-registro/script/registro.js' %}"></script>
   {% endblock %}

@@ -2,8 +2,8 @@
       const passwordInput = document.getElementById('password');
       const toggleBtn = document.getElementById('togglePassword');
       
-      const eyeOpen = '/static/imagens/fechar-o-olho.png';
-      const eyeClosed = '/static/imagens/olho.png';
+      const eyeOpen = '../static/login-registro/imagens/fechar-o-olho.png';
+      const eyeClosed = '../static/login-registro/imagens/olho.png';
      
       const img = toggleBtn.querySelector('img');
 
