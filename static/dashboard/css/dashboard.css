@@ -117,7 +117,7 @@ header {
   display: grid;
   grid-template-columns: 1fr 320px;
   gap: 1.25rem;
-  align-items: start;
+  /* align-items: start; */
 }
   /*Main card e side bar*/
 
@@ -304,3 +304,16 @@ header {
   font-size: 14px;
 }
 /*Side Bar*/
+
+@media (max-width: 900px){
+  .stats {
+    grid-template-columns: 1fr;
+  }
+  .main-grid {grid-template-columns: 1fr;
+  }
+  .templates-grid {grid-template-columns: 1fr
+  }
+  body {
+    padding: 18px;
+  }
+}

@@ -20,27 +20,29 @@
         <header>
             {% include "home/partials/dashboard/header.html" %}
         </header>
+
         <div class="cards">
             {% include "home/partials/dashboard/mainCards.html" %}
         </div>
         <div class="navegacao" aria-label="Navegação do dashboard">
             {% include "home/partials/dashboard/menuNavegacao.html" %}
         </div>
-    </div>
-    <div class="main-grid">
-        <main>
-            <section class="main-section">
-                {% include "home/partials/dashboard/mainSectionHeader.html" %}
-
-                <div class="student-list">
-                    {% include "home/partials/dashboard/studentCard.html" %}
-                </div>
-            </section>
-        </main>
-
-        <aside>
-            {% include "home/partials/dashboard/sidebar.html" %}
-        </aside>
+        
+        <div class="main-grid">
+            <main>
+                <section class="main-section">
+                    {% include "home/partials/dashboard/mainSectionHeader.html" %}
+    
+                    <div class="student-list">
+                        {% include "home/partials/dashboard/studentCard.html" %}
+                    </div>
+                </section>
+            </main>
+    
+            <aside>
+                {% include "home/partials/dashboard/sidebar.html" %}
+            </aside>
+        </div>
     </div>
 
     <script src="{% static "dashboard/js/script.js" %}"></script>
