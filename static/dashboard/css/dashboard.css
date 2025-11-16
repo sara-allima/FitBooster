@@ -114,10 +114,10 @@ header {
 
     /*Main card e side bar*/
 .main-grid{
-  display:grid;
+  display: grid;
   grid-template-columns: 1fr 320px;
-  gap:20px;
-  align-items:start;
+  gap: 1.25rem;
+  align-items: start;
 }
   /*Main card e side bar*/
 
@@ -142,7 +142,7 @@ header {
 .controls {
   display: flex;
   gap: 1.5rem;
-  align-items: center
+  align-items: center;
 }
 .input {
   background: transparent;
@@ -265,11 +265,42 @@ header {
 
 /*Side Bar*/
 .sidebar-card{
-  background: hsl(var(--card));
-  padding:18px;border-radius:12px;border:1px solid hsla(var(--border),0.45);
+  background: var(--secundary-dark-bg);
+  padding: 1.125rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 0.75rem;
 }
 .sidebar-title {
   font-weight: 700;
   margin-bottom: 0.625rem;
+  font-size: 24px;
+}
+.sidebar-card .btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.313rem;
+}
+.activity-item {
+  display: flex;
+  gap: 0.563rem;
+  margin-top: 1.25rem;
+  align-items: center;
+}
+.agenda-button {
+  color: var(--primary-white-bg-text);
+}
+.avatar img {
+  width: 20px;
+}
+.sidebar-subtitle {
+  font-size: 16px;
+  margin-bottom: 3px;
+}
+.sidebar-small-subtitle {
+  color: var(--secundary-dark-text);
+  font-size: 14px;
 }
 /*Side Bar*/
