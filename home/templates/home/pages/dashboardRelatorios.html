@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static "dashboard/css/dashboard.css" %}"/> <!--Mudar o caminho-->
+    <link rel="stylesheet" href="{% static "global/css/globais.css" %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alice&family=Roboto+Slab:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <title>FitBooster | Alunos</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            {% include "home/partials/dashboard/header.html" %}
+        </header>
+
+        <div class="cards">
+            {% include "home/partials/dashboard/mainCards.html" %}
+        </div>
+        <div class="navegacao" aria-label="Navegação do dashboard">
+            {% include "home/partials/dashboard/menuNavegacao.html" %}
+        </div>
+        
+        <div class="main-grid">
+            <main>
+                <section class="main-section">
+                    {% include "home/partials/dashboard/mainSectionHeaderRelatorios.html" %}
+                </section>
+            </main>
+    
+            <aside>
+                {% include "home/partials/dashboard/sidebar.html" %}
+            </aside>
+        </div>
+    </div>
+
+    <script src="{% static "dashboard/js/script.js" %}"></script>
+</body>
+</html>

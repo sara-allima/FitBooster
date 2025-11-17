@@ -12,3 +12,5 @@ def dashboard_alunos(request):
     return render(request, 'home/pages/dashboardAlunos.html')
 def dashboard_planos_treino(request):
     return render(request, 'home/pages/dashboardPlanosTreino.html')
+def dashboard_relatorios(request):
+    return render(request, "home/pages/dashboardRelatorios.html")
