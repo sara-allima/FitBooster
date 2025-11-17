@@ -32,4 +32,12 @@ document.addEventListener('DOMContentLoaded', function(){
             });
         });
     }
+
+    document.querySelectorAll('.btn-primary').forEach(btn=>{
+    btn.addEventListener('click', ()=> {
+      btn.animate([{transform:'scale(1)'},{transform:'scale(.98)'},{transform:'scale(1)'}],{
+        duration:160, easing:'ease-out'
+      });
+    });
+  });
 });

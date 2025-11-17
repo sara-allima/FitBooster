@@ -317,3 +317,31 @@ header {
     padding: 18px;
   }
 }
+
+  /*Página Planos de Treinos*/
+.display-trainings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.688rem;
+  margin-top: 2.313rem;
+}
+.training-card {
+  width: 48%;
+  background-color: var(--quaternary-dark-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  padding: 0.938rem;
+}
+.name-type {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.813rem;
+}
+.exercice-students {
+  display: flex;
+  justify-content: space-between;
+}
+.exercice-students p {
+  color: var(--secundary-dark-text);
+  font-size: 14px;
+}
