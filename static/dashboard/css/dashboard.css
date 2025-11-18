@@ -305,20 +305,7 @@ header {
 }
 /*Side Bar*/
 
-@media (max-width: 900px){
-  .stats {
-    grid-template-columns: 1fr;
-  }
-  .main-grid {grid-template-columns: 1fr;
-  }
-  .templates-grid {grid-template-columns: 1fr
-  }
-  body {
-    padding: 18px;
-  }
-}
-
-  /*Página Planos de Treinos*/
+/*Página Planos de Treinos*/
 .display-trainings {
   display: flex;
   flex-wrap: wrap;
@@ -345,7 +332,7 @@ header {
   color: var(--secundary-dark-text);
   font-size: 14px;
 }
-  /*Aba Relatórios*/
+/*Aba Relatórios*/
 .container-display {
   /* border: 1px solid red; */
   display: flex;
@@ -373,4 +360,29 @@ header {
 .container-text p:last-child {
   color: var(--secundary-dark-text);
 }
-  /*Aba Relatórios*/
+/*Aba Relatórios*/
+@media (max-width: 11310px) {
+  .training-card {
+    width: 100%;
+  }
+}
+@media (max-width: 900px){
+  .stats {
+    grid-template-columns: 1fr;
+  }
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+  .templates-grid {
+    grid-template-columns: 1fr
+  }
+  .card-header .controls {
+    gap: 1rem;
+  }
+  .student-actions .secundary-button {
+    padding: 0.500rem 1.427rem;
+  } 
+  body {
+    padding: 18px;
+  }
+}
