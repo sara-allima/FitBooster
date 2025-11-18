@@ -301,7 +301,7 @@ header {
 }
 .sidebar-small-subtitle {
   color: var(--secundary-dark-text);
-  font-size: 14px;
+  font-size: 14px;  
 }
 /*Side Bar*/
 
@@ -345,3 +345,32 @@ header {
   color: var(--secundary-dark-text);
   font-size: 14px;
 }
+  /*Aba Relatórios*/
+.container-display {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.content-relatorios {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid blue; */
+  width: fit-content;
+  gap: 2rem;
+}
+.container-text {
+  /* border: 1px solid green; */
+  text-align: center;
+}
+.container-text p:first-child {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 0.563rem;
+}
+.container-text p:last-child {
+  color: var(--secundary-dark-text);
+}
+  /*Aba Relatórios*/
