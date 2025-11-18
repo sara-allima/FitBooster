@@ -90,10 +90,10 @@ h1, h2, p {
     color: var(--primary-green);
 }
 #main-infos img {
-    width: 765px;
+    max-width: 765px;
 }
 #main-infos .text-box {
-    max-width: 800px;
+    width: 800px;
 }
 #benefits {
     margin: 0 auto 7.625rem;
@@ -150,7 +150,7 @@ h2 {
     width: fit-content;
 }
 #app-available img {
-    width: 226px;
+    max-width: 226px;
 }
 #app-available {
     display: flex;
@@ -246,3 +246,41 @@ footer p {
     margin-right: 12px;
 }
     /*Footer*/
+    /*Responsividade*/
+@media(max-width: 1675px) {
+    #main-infos {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    #main-infos .text-box {
+        width: 1000px;
+        text-align: center;
+    }
+    #main-infos .text-box h1{
+        margin-bottom: 3rem;
+    }
+    #main-infos-container ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3rem;
+    }
+    #benefits {
+        width: 62.5rem;
+    }
+    #showapp-section img {
+        width: 206px;
+    }
+    #install-app {
+        gap: 100px;
+    }
+}
+@media(max-width: 1137px) {
+    #install-app {
+        gap: 20px;
+    }
+}
+@media(max-width: 1051px) {
+    
+}
+    /*Responsividade*/
