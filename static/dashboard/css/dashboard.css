@@ -160,6 +160,7 @@ header {
   cursor: pointer;
   font-weight: 600;
   transition: all var(--transition);
+  font-size: 16px;
 }
 .fa-plus {
   margin-right: 0.75rem;
@@ -361,7 +362,7 @@ header {
   color: var(--secundary-dark-text);
 }
 /*Aba Relatórios*/
-@media (max-width: 11310px) {
+@media (max-width: 1310px) {
   .training-card {
     width: 100%;
   }
@@ -381,6 +382,9 @@ header {
   }
   .student-actions .secundary-button {
     padding: 0.500rem 1.427rem;
+  }
+  .btn {
+    font-size: 16px;
   } 
   body {
     padding: 18px;
