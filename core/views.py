@@ -21,3 +21,6 @@ def reg(request):
 
 def tela(request):
     return render(request, 'core/tela.html')
+
+def list(request):
+    return render(request, 'core/list.html')

@@ -14,3 +14,7 @@ def dashboard_planos_treino(request):
     return render(request, 'home/pages/dashboardPlanosTreino.html')
 def dashboard_relatorios(request):
     return render(request, "home/pages/dashboardRelatorios.html")
+def login(request):
+    return render(request, "home/pages/login.html")
+def redirect(request):
+    return render(request, "home/pages/redirect.html")
