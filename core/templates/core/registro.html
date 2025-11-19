@@ -1,0 +1,60 @@
+
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}registro - FitBooster{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'login-registro/css/registro.css' %}">
+{% endblock %}
+  
+
+{% block content %}
+<body>
+  <div class="login-container">
+    <div class="background-overlay"></div>
+
+    <header>
+      <button class="back-btn" aria-label="Voltar">
+        <img src="{% static 'login-registro/imagens/seta-esquerda 1.png' %}" alt="Voltar">
+      </button>
+      <h1>Registro</h1>
+    </header>
+
+    <main>
+      <form class="login-form" autocomplete="on">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="exemplo@gmail.com" />
+
+        <hr>
+
+        <label for="password">Senha</label>
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="mínimo 6 caracteres" autocomplete="current-password" />
+          
+          <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar senha">
+            <img src="{% static 'login-registro/imagens/fechar-o-olho.png' %}" alt="mostrar" />
+          </button>
+        </div>
+
+        <hr>
+
+        <label for="username">Nome de usuário</label>
+        <input type="text" id="username" placeholder="Nome de usuário" />
+
+        <hr>
+
+        <p class="terms">
+          Ao criar uma conta, o utilizador aceita com os 
+          <a href="#">termos e condições</a> e 
+          <a href="#">política de privacidade</a>.
+        </p>
+
+        <button type="submit" class="btn-continue">continuar</button>
+      </form>
+    </main>
+  </div>
+
+  
+</body>
+<script src="{% static 'login-registro/script/registro.js' %}"></script>
+  {% endblock %}
