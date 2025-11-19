@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Treino</title>
+  <link rel="stylesheet" href="{% static 'core/tela/css/style.css' %}">
+</head>
+
+<body>
+  <div class="cont">
+
+    <!-- TOPO -->
+    <div class="topo">
+      <header>
+        <img src="{% static 'core/img/seta-esquerda 1.png' %}" class="back-icon" alt="Voltar">
+
+        <div class="header-text"></div>
+
+        <img src="{% static 'core/img/3_pontinhos.png' %}" class="menu-icon open-menu" alt="Menu">
+      </header>
+      <h2 class="titulo">Meu treino</h2>
+    </div>
+
+    <div class="container">
+
+      <p id="titleDias" class="section-title" style="display:none;">Dias de treino</p>    
+      <!-- ESTADO VAZIO -->
+      <div id="emptyState" class="empty-state">
+        <img src="{% static 'core/img/calendario 1.png' %}" class="empty-icon">
+        <h3>Dias de treino</h3>
+        <p>Crie seus treinos separados por dias<br>da semana ou grupos musculares.</p>
+        <span id="btnAddEmpty" class="add-empty">+ adicionar divisão de treino</span>
+      </div>
+
+      <!-- LISTA DE TREINOS -->
+      <div id="treinoList" style="display:none;"></div>
+
+    </div>
+
+    <!-- BOTÃO FIXO -->
+    <button id="btnAdd" class="add-button">+ Adicionar</button>
+
+    <!-- POPUP ADICIONAR -->
+    <div id="popupAdd" class="popup">
+      <div class="popup-box">
+        <div class="popup-header">
+          <h3>Adicionar Treino</h3>
+          <span class="close-popup">✕</span>
+        </div>
+
+        <label>Nome do treino</label>
+        <input type="text" id="nomeTreino" placeholder="Nome do treino">
+
+        <label class="texto">Dias de treino</label>
+        <div class="dias-box">
+          <div class="botton"><span>Dom</span><input type="checkbox"></div>
+          <div class="botton"><span>Seg</span><input type="checkbox"></div>
+          <div class="botton"><span>Ter</span><input type="checkbox"></div>
+          <div class="botton"><span>Qua</span><input type="checkbox"></div>
+          <div class="botton"><span>Qui</span><input type="checkbox"></div>
+          <div class="botton"><span>Sex</span><input type="checkbox"></div>
+          <div class="botton"><span>Sab</span><input type="checkbox"></div>
+        </div>
+
+        <button class="btn-salvar">Salvar</button> 
+      </div>
+    </div>
+
+    <!-- POPUP MENU -->
+    <div id="popupMenu" class="popup-menu">
+      <p id="btnEditar">Editar</p>
+      <p id="btnCopiar">Copiar</p>
+      <p id="btnDuplicar">Duplicar</p>
+      <p id="btnExcluir" class="danger">Excluir</p>
+    </div>
+
+  </div>
+
+  <script src="{% static 'core/tela/script/script.js' %}"></script>
+</body>
+</html>
