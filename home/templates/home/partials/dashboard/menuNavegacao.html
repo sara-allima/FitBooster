@@ -2,4 +2,4 @@
 
 <a class="tab {% if request.resolver_match.url_name == 'dashboard-alunos'%}active{% endif %}" href="{% url "dashboard-alunos" %}">Alunos</a>
 <a class="tab {% if request.resolver_match.url_name == 'dashboard-planos-treino' %}active{% endif %}" href="{% url "dashboard-planos-treino" %}">Planos de Treinos</a>
-<a class="tab" href="relatorios.html">Relatórios</a>
+<a class="tab {% if request.resolver_match.url_name == 'dashboard-relatorios' %}active{% endif %}" href="{% url "dashboard-relatorios" %}">Relatórios</a>

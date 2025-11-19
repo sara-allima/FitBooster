@@ -6,5 +6,6 @@ urlpatterns = [
     path('cadastro/', cadastro, name="cadastro"),
     path('inscrever/', formulario_treinador, name="formTreinador"),
     path('dashboard-alunos/', dashboard_alunos, name="dashboard-alunos"),
-    path('dashboard-planos-de-treino/', dashboard_planos_treino, name="dashboard-planos-treino")
+    path('dashboard-planos-de-treino/', dashboard_planos_treino, name="dashboard-planos-treino"),
+    path('dashboard-relatorios/', dashboard_relatorios, name="dashboard-relatorios")
 ]

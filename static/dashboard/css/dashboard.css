@@ -160,6 +160,7 @@ header {
   cursor: pointer;
   font-weight: 600;
   transition: all var(--transition);
+  font-size: 16px;
 }
 .fa-plus {
   margin-right: 0.75rem;
@@ -301,24 +302,11 @@ header {
 }
 .sidebar-small-subtitle {
   color: var(--secundary-dark-text);
-  font-size: 14px;
+  font-size: 14px;  
 }
 /*Side Bar*/
 
-@media (max-width: 900px){
-  .stats {
-    grid-template-columns: 1fr;
-  }
-  .main-grid {grid-template-columns: 1fr;
-  }
-  .templates-grid {grid-template-columns: 1fr
-  }
-  body {
-    padding: 18px;
-  }
-}
-
-  /*Página Planos de Treinos*/
+/*Página Planos de Treinos*/
 .display-trainings {
   display: flex;
   flex-wrap: wrap;
@@ -344,4 +332,61 @@ header {
 .exercice-students p {
   color: var(--secundary-dark-text);
   font-size: 14px;
+}
+/*Aba Relatórios*/
+.container-display {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.content-relatorios {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid blue; */
+  width: fit-content;
+  gap: 2rem;
+}
+.container-text {
+  /* border: 1px solid green; */
+  text-align: center;
+}
+.container-text p:first-child {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 0.563rem;
+}
+.container-text p:last-child {
+  color: var(--secundary-dark-text);
+}
+/*Aba Relatórios*/
+@media (max-width: 1310px) {
+  .training-card {
+    width: 100%;
+  }
+}
+@media (max-width: 900px){
+  .stats {
+    grid-template-columns: 1fr;
+  }
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+  .templates-grid {
+    grid-template-columns: 1fr
+  }
+  .card-header .controls {
+    gap: 1rem;
+  }
+  .student-actions .secundary-button {
+    padding: 0.500rem 1.427rem;
+  }
+  .btn {
+    font-size: 16px;
+  } 
+  body {
+    padding: 18px;
+  }
 }
