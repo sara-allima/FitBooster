@@ -1,0 +1,311 @@
+/* =========================================================
+   BASE / ROOT
+========================================================= */
+:root {
+  --bg: #0f1113;
+  --card: #17191b;
+  --muted: #bdbdbd;
+  --accent: #00e676;
+  --border: rgba(255,255,255,0.06);
+
+  font-family: Inter, system-ui, sans-serif;
+}
+
+body { 
+
+  display: flex;
+  margin: 0;
+  background: linear-gradient(#1C2126, #121416 30%);
+  color: white;
+  justify-content: center;
+
+
+}
+.container{
+  padding: 18px;
+}
+.sheet {
+  max-width: 430px;
+
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.back {
+
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   TOP ROW → Foto + Data
+========================================================= */
+.top-row {
+  display: flex;
+  gap: 30px;
+  margin: 20px 0;
+  align-items: end;
+}
+
+.image-box {
+  width: 120px;
+  height: 120px;
+  border-radius: 20px;
+  border: 2px solid #FEFEFE;
+  display: grid;
+  place-items: center;
+}
+
+.date-box {
+  width: 286px;
+  height: 90px;
+  flex: 1;
+  border-radius: 20px;
+  border: 2px solid #FEFEFE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.date-text {
+  font-size: 15px;
+  color: #FEFEFE; ;
+}
+
+.date-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px;
+ 
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,0.05);
+  margin: 18px 0;
+}
+
+/* =========================================================
+   ACCORDION
+========================================================= */
+.accordion { background: transparent; }
+
+.acc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 4px;
+  border-bottom: 1px solid #FEFEFE;
+  cursor: pointer;
+}
+
+.Observações h4{
+  margin-top: 20px;
+  margin-left: 0;
+  padding-left: 4px;
+}
+
+.campo{
+  max-width: 400px;
+  margin-bottom: 70px;
+}
+
+.acc-body {
+  display: none;
+  margin-top: 10px;
+  padding: 2px;
+}
+
+.acc-body.active {
+  display: block;
+}
+
+/* =========================================================
+   INPUTS
+========================================================= */
+.input {
+  margin-top: 10px;
+  max-width: 368px;
+  width: 364px;
+  padding: 12px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #FEFEFE;
+  color: white;
+}
+
+.pesoinput {
+  max-width: 368px;
+  width: 364px;
+  padding: 12px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #FEFEFE;
+  color: white;
+}
+
+.input::placeholder {
+  color: #FEFEFE
+}
+
+.kg-label {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  color: rgba(255,255,255,0.25);
+}
+
+/* GRID de medidas */
+.measures-grid {
+
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* =========================================================
+   SAVE BUTTON
+========================================================= */
+.save-wrap {
+  position: fixed;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  padding: 20px;
+}
+
+.save-btn {
+  width: 200px;
+  padding: 14px;
+  border: none;
+  border-radius: 22px;
+  background: var(--accent);
+  color: black;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.inputt {
+  max-width: 368px;
+  width: 368px;
+  padding: 12px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #FEFEFE;
+  color: white;
+}
+
+.save-btn.inactive {
+  background: #222;
+  color: rgba(255,255,255,0.4);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* =========================================================
+   PICKER (ESTILO iOS)
+========================================================= */
+.picker-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.picker {
+  width: 100%;
+  max-width: 420px;
+  background: #121316;
+  padding: 14px;
+  border-radius: 14px;
+}
+
+.picker-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px;
+}
+
+.btn {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 20px;
+  font-weight: 700;
+  background: var(--accent);
+  color: black;
+}
+
+.btn.disabled {
+  background: #222;
+  color: #888;
+  opacity: 0.4;
+}
+
+/* ------- Wheels ------- */
+.picker-columns {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  height: 160px;
+}
+
+.col {
+  flex: 1;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.wheel {
+  height: 160px;
+  overflow-y: scroll;
+  padding: 20px 0;
+}
+
+.wheel::-webkit-scrollbar {
+  width: 0; /* esconder */
+}
+
+.wheel-item {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #bbb;
+}
+
+.wheel-item.selected {
+  color: white;
+  font-weight: 700;
+}
+
+/* Indicador central */
+.center-indicator {
+  position: absolute;
+  inset: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 36px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}

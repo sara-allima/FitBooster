@@ -4,7 +4,7 @@
 {% block title %}Login - FitBooster{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'login-registro/css/login.css' %}">
+<link rel="stylesheet" href="{% static 'core/login-registro/css/login.css' %}">
 {% endblock %}
   
 
@@ -15,7 +15,7 @@
     <div class="background-overlay"></div>
 
     <header>
-      <button class="back-btn"><img src="{% static 'login-registro/imagens/seta-esquerda 1.png' %}" alt="seta esquerda"></button>
+      <button class="back-btn"><img src="{% static 'core/login-registro/imagens/seta-esquerda 1.png' %}" alt="seta esquerda"></button>
       <h1>Login</h1>
     </header>
 
@@ -30,7 +30,7 @@
           <input type="password" id="password" placeholder="mínimo 6 caracteres" autocomplete="current-password" />
          
           <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar senha">
-            <img src="{% static 'login-registro/imagens/fechar-o-olho.png' %}" alt="mostrar" />
+            <img src="{% static 'core/login-registro/imagens/fechar-o-olho.png' %}" alt="mostrar" />
           </button>
         </div>
 
@@ -56,6 +56,6 @@
   </div>
 </body>
 
-<script src="{% static 'login-registro/script/login.js' %}"></script>
+<script src="{% static 'core/login-registro/script/login.js' %}"></script>
   {% endblock %}
 

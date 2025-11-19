@@ -1,17 +1,17 @@
    document.addEventListener('DOMContentLoaded', () => {
       const passwordInput = document.getElementById('password');
       const toggleBtn = document.getElementById('togglePassword');
-
-      const eyeOpen = '/static/login-registro/imagens/fechar-o-olho.png';
-      const eyeClosed = '/static/login-registro/imagens/olho.png';
-  
+      
+      const eyeOpen = '/static/core/login-registro/imagens/fechar-o-olho.png';
+      const eyeClosed = '/static/core/login-registro/imagens/olho.png';
+     
       const img = toggleBtn.querySelector('img');
 
       toggleBtn.addEventListener('click', () => {
         const isPassword = passwordInput.type === 'password';
         passwordInput.type = isPassword ? 'text' : 'password';
 
-        
+        // troca o ícone (tente trocar pelo URL externo)
         if (img) {
           img.src = isPassword ? eyeClosed : eyeOpen;
         }
