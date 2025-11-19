@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Conta</title>
+  <link rel="stylesheet" href="{% static 'core/perfil/css/styleperfil.css' %}">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="javascript:history.back()">
+      <img src="{% static 'core/img/seta-esquerda 1.png' %}" alt="">
+      </a>
+      <h2>Minha conta</h2>
+    </header>
+
+    <div class="profile-section">
+      <div class="profile-photo" id="photoBtn">
+        <img src="{% static 'core/img/ft.png' %}" alt="Foto de perfil">
+        <div class="photo-icon">
+          <img src="{% static 'core/img/galeria.png' %}" alt="">
+        </div>
+      </div>
+
+      <div class="lapis">
+        <h3 id="userName">Nome do usuario</h3>
+        <span id="editNameBtn">
+          <img src="{% static 'core/img/ferramenta-lapis .png' %}" alt="">
+        </span>
+      </div>
+    </div>
+
+    <div class="options">
+      <button class="option-btn">
+        <img src="{% static 'core/img/sino.png' %}" alt="">
+        Lembretes e notificações
+      </button>
+
+      <button class="option-btn" id="themeBtn">
+        <img src="{% static 'core/img/brilho-do-sol.png' %}" alt="">
+        Temas
+      </button>
+    </div>
+
+    <button class="logout-btn">
+      <img src="{% static 'core/img/sair .png' %}" alt="">
+      Sair
+    </button>
+  </div>
+
+  <!-- POP-UP FOTO -->
+  <div class="popup" id="popupPhoto">
+    <div class="popup-content">
+      <h4>Permissão para Câmera e Galeria</h4>
+      <p>Necessário acesso à câmera e galeria para adicionar sua foto de perfil.</p>
+      <button class="btn green">Salvar</button>
+      <button class="btn gray" id="closePhoto">Negar</button>
+    </div>
+  </div>
+
+  <!-- POP-UP NOME -->
+  <div class="popup" id="popupName">
+    <div class="popup-content">
+      <img src="{% static 'core/img/close.png' %}" alt="" class="close" id="closeNamePopup">
+
+      <label>Informe seu nome:</label>
+      <input type="text" id="nameInput" placeholder="digite seu nome aqui">
+
+      <button class="btn green" id="saveNameBtn">Salvar</button>
+    </div>
+  </div>
+
+  <!-- POP-UP TEMA -->
+  <div class="popup" id="popupTheme">
+    <div class="popup-content">
+      <img src="{% static 'core/img/close.png' %}" alt="" class="close" id="closeThemePopup">
+
+      <label>
+        <img src="{% static 'core/img/tema.png' %}" alt="">
+        Tema
+      </label>
+
+      <div class="radio-group">
+        <label><input type="radio" name="theme"> Claro</label>
+      </div>
+
+      <button class="btn green">Salvar</button>
+    </div>
+  </div>
+
+  <script src="{% static 'core/perfil/script/script.js' %}"></script>
+</body>
+</html>
