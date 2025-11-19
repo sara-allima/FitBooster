@@ -12,6 +12,11 @@ body, html {
     background-image: linear-gradient(transparent 35%,black );
 }
 
+a {
+  text-decoration: none;   /* remove sublinhado */
+  color: inherit;          /* usa a cor do elemento interno */
+}
+
 .background-slider {
     position: fixed;
     top: 0;
