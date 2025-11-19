@@ -11,6 +11,7 @@
     border-radius: 9px;
     text-decoration: none;
     font-weight: 700;
+    background: transparent;
 }
 .primary-button {
     background-color: var(--primary-green);
