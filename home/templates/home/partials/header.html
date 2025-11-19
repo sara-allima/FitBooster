@@ -1,7 +1,13 @@
 {% load static %}
 <header>
     <nav>
-        <a href="#"><img src="{% static "home/images/mainLogo.png" %}" alt="FitBooster logo" id="main-logo-img"></a>
+        <button id="menu-btn">
+            <img src="{% static 'home/images/menuBars.png' %}" alt="Menu">
+        </button>
+
+        <a class="logof" href="#">
+            <img src="{% static "home/images/mainLogo.png" %}" alt="FitBooster logo" id="main-logo-img">
+        </a>
 
         <ul id="nav-links">
             <li><a href="#" class="link">baixar</a></li>
@@ -10,3 +16,16 @@
         </ul>
     </nav>
 </header>
+
+<!-- MENU LATERAL -->
+<div id="sidebar">
+    <ul>
+        <li><a href="#" class="primary-button">Entrar</a></li>
+        <li><a href="{% url "cadastro" %}" class="secundary-button">Cadastrar</a></li>
+        <li><a href="#" class="link">baixar</a></li>
+    </ul>
+</div>
+
+<div id="overlay"></div>
+
+<script src="{% static 'home/js/menu.js' %}"></script>

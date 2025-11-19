@@ -1,3 +1,4 @@
+{% load static %}
 <section class="form-container">
     <div class="card">
 
@@ -76,7 +77,7 @@
                 <textarea placeholder="Descreva suas experiências profissionais..."></textarea>
             </div>
 
-            <button class="primary-button forms-button">Criar Conta</button>
+            <button type="button" class="primary-button forms-button" onclick="location.href='{% url 'dashboard-alunos' %}'">Criar Conta</button>
 
         </form>
     </div>
