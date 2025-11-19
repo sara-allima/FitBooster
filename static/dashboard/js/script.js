@@ -1,14 +1,4 @@
-document.addEventListener('DOMContentLoaded', function(){
-    // Deixa a página atual como "active" se baseando no nome do arquivo
-    const path = location.pathname.split('/').pop(); // Procura o caminho do arquivo e pega ele
-    const page = path === '' ? 'dashboard-alunos' : path;
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(t => {
-        const href = t.getAttribute('href');
-        if(!href) return;
-        if(href.includes(page)) t.classList.add('active');
-    });
-    
+document.addEventListener('DOMContentLoaded', function(){    
     // Barrinha de progresso
     document.querySelectorAll('.progress-fill').forEach(el => {
         const val = el.dataset.progress || 0;
@@ -32,4 +22,12 @@ document.addEventListener('DOMContentLoaded', function(){
             });
         });
     }
+
+    document.querySelectorAll('.btn-primary').forEach(btn=>{
+    btn.addEventListener('click', ()=> {
+      btn.animate([{transform:'scale(1)'},{transform:'scale(.98)'},{transform:'scale(1)'}],{
+        duration:160, easing:'ease-out'
+      });
+    });
+  });
 });
