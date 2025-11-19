@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FitBooster - Home</title>
+
+  <link rel="stylesheet" href="{% static 'core/homemobile/css/stylehome.css' %}">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="bar">
+        <div class="top-bar">
+          <div class="greeting">
+            <h2>Olá, Exemplo</h2>
+            <p>Prepare-se, hoje é dia de treino!</p>
+          </div>
+          <div class="profile">
+            <a href={% url 'perfil'%}> <img src="{% static 'core/img/perfil.png' %}" alt="perfil" class="profile-img"> </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="date-bar">
+        <div class="month" id="monthLabel">Out</div>
+        <div class="days" id="daysContainer" aria-label="dias do mês"></div>
+      </div>
+    </header>
+
+    <section class="my-trainings">
+      <h3>Meus treinos</h3>
+      <p class="subtitle">Crie suas próprias rotinas de treino</p>
+      <div class="carousel" id="carousel">
+        <div class="card create">
+          <p>Crie uma rotina de treino</p>
+          <img src="{% static 'core/img/mais_verde.png' %}" alt="adicionar" class="mais">
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section class="trainer">
+        <h3>Treinador</h3>
+        <p class="subtitle">Faça os treinos para cumprir a meta semanal</p>
+        <div class="trainer-grid">
+          <button class="trainer-btn">Semana 1</button>
+          <button class="trainer-btn">Semana 2</button>
+          <button class="trainer-btn">Semana 3</button>
+          <button class="trainer-btn">Semana 4</button>
+        </div>
+      </section>
+
+      <section class="more-options">
+        <h3>Mais opções</h3>
+        <div class="option"><img src="{% static 'core/img/historico.png' %}" alt="">Histórico de treinos</div>
+        <a href={% url 'note'%}> <div class="option" id="sino" ><img src="{% static 'core/img/sino.png' %}" alt="">Lembretes e notificações</div> </a>
+        <div class="option"><img src="{% static 'core/img/avaliar.png' %}" alt="">Avaliar o aplicativo</div>
+        <div class="option"><img src="{% static 'core/img/compartilhar.png' %}" alt="">Compartilhar FitBooster</div>
+      </section>
+    </main>
+  </div>
+
+  <script src="{% static 'core/homemobile/script/script.js' %}"></script>
+</body>
+</html>

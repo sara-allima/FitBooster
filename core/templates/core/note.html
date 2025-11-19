@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notificações</title>
+  <link rel="stylesheet" href="{% static 'core/note/css/stylenote.css' %}">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="javascript:history.back()">
+      <img src="{% static 'core/img/seta-esquerda 1.png' %}" alt="Voltar" class="back-icon">
+      </a>
+      <h2>Notificações</h2>
+    </header>
+
+    <div class="content">
+      <p class="subtitle">Horário dos seus treinos</p>
+
+      <div class="day-card">
+        <div class="day">Segunda-feira</div>
+        <div class="time editable">10:00</div>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="day-card">
+        <div class="day">Terça-feira</div>
+        <div class="time editable">10:00</div>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="day-card">
+        <div class="day">Quarta-feira</div>
+        <div class="time editable">10:00</div>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="day-card">
+        <div class="day">Quinta-feira</div>
+        <div class="time editable">10:00</div>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="day-card">
+        <div class="day">Sábado</div>
+        <div class="time editable">10:00</div>
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="day-card">
+        <div class="day">Domingo</div>
+        <div class="time editable">10:00</div>
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de seleção de hora -->
+  <div class="time-modal hidden" id="timeModal">
+    <div class="picker">
+      <div class=" close"><p>Editar alarme </p><div>❌</div></div>
+      <div class="HM"><P>H</P><p>M</p></div>
+      <div class="picke">
+        <div class="scroll hours"></div>
+        <span class="separator">:</span>
+        <div class="scroll minutes"></div>
+      </div>
+      <button id="confirmTime">Salvar</button>
+    </div>
+  </div>
+
+  <script src="{% static 'core/note/script/script.js' %}"></script>
+</body>
+</html>

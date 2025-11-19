@@ -1,0 +1,123 @@
+{% load static %}
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FitBooster</title>
+  <link rel="stylesheet" href="{% static 'core/form/css/styleform.css' %}" />
+</head>
+<body>
+  <div class="container" role="main">
+
+    <header>
+      <div class="back">
+        <a href="javascript:history.back()">
+        <img src="{% static 'core/img/seta-esquerda 1.png' %}" alt="">
+        </a>
+      </div>
+    </header>
+
+    <!-- NOME -->
+    <div class="field">
+      <label for="name">Como devemos chamá-lo(a)?</label>
+      <input id="name" class="input" placeholder="Digite aqui">
+    </div>
+
+    <!-- GÊNERO -->
+    <div class="field">
+      <label for="gender">Qual é o seu gênero?</label>
+      <input id="gender" class="input" placeholder="Digite aqui">
+    </div>
+
+    <!-- IDADE -->
+    <div class="field">
+      <label for="age">Adicione sua idade</label>
+      <input id="age" type="number" class="input" placeholder="Digite aqui" min="0">
+    </div>
+
+    <!-- ALTURA -->
+    <div class="field">
+      <label>Quanto mede?</label>
+
+      <div class="segmented" id="heightUnits">
+        <button id="unitCm" class="active" data-unit="cm">cm</button>
+        <button id="unitFt" data-unit="ft">pé &amp; polegada</button>
+      </div>
+
+      <div id="heightInputCm" class="mt10">
+        <input id="heightCm" type="number" class="input" placeholder="Altura em cm" min="0">
+      </div>
+
+      <div id="heightInputFt" class="mt10 hidden">
+        <div class="height-row">
+          <input id="heightFt" type="number" class="small-input" placeholder="pés" min="0">
+          <input id="heightIn" type="number" class="small-input" placeholder="polegadas" min="0" max="11">
+        </div>
+      </div>
+    </div>
+
+    <!-- PESO -->
+    <div class="field">
+      <label>Quanto pesa?</label>
+      <input id="weight" type="number" class="input" placeholder="Digite aqui" min="0" step="any">
+
+      <div class="kg-lbs">
+        <div class="muted">Unidade:</div>
+        <div class="segmented" id="weightUnits">
+          <button id="unitKg" class="active" data-unit="kg">kg</button>
+          <button id="unitLbs" data-unit="lbs">lbs</button>
+        </div>
+      </div>
+
+      <div class="bmi" id="bmiText">Seu IMC aparecerá aqui.</div>
+    </div>
+
+    <!-- OBJETIVO -->
+    <div class="field">
+      <label>Qual o seu objetivo?</label>
+      <div class="cards" id="bodyCards">
+        <div class="card" data-value="emagrecer" tabindex="0">
+          <h3 class="corpos">Emagrecer</h3>
+          <div class="radio"><div class="dot"></div></div>
+        </div>
+
+        <div class="card selected" data-value="hipertrofia" tabindex="0">
+          <h3 class="corpos">Hipertrofia</h3>
+          <div class="radio"><div class="dot"></div></div>
+        </div>
+
+        <div class="card" data-value="forca" tabindex="0">
+          <h3 class="corpos">Força</h3>
+          <div class="radio"><div class="dot"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIAS DE TREINO -->
+    <div class="field">
+      <label>Escolha os dias de treino!</label>
+    
+
+      <div class="days-grid" id="days">
+        <button data-day="dom" type="button">dom.</button>
+        <button data-day="seg" type="button">seg.</button>
+        <button data-day="ter" type="button">ter.</button>
+        <button data-day="qua" type="button">qua.</button>
+        <button data-day="qui" type="button">qui.</button>
+        <button data-day="sex" type="button">sex.</button>
+        <button data-day="sab" type="button">sáb.</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTÃO CONTINUAR -->
+<button class="continue-btn" id="continueBtn" type="button" aria-disabled="true" data-href="{% url 'home' %}">
+  Continuar
+</button>
+
+  <script src="{% static 'core/form/script/script.js' %}"></script>
+</body>
+</html>
