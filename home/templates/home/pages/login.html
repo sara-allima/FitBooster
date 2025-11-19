@@ -6,18 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FitBooster - Login</title>
   <link rel="stylesheet" href="{% static 'login/css/style.css' %}" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alice&family=Roboto+Slab:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
-    <!-- Imagem de fundo estilo Netflix -->
     <div class="background-image">
-        <img id="atleta" src="{% static 'login/img/bgImagegym-hero-3 1.png' %}"d>
+        <img id="atleta" src="{% static 'login/img/bgImagegym-hero-3 1.png' %}">
     </div>
-    
-    <!-- Conteúdo sobre a imagem (lado DIREITO) -->
-    
-    <!-- Login box sobreposto (lado ESQUERDO) -->
     <section class="login-box">
       <img src="{% static 'login/img/logo.png' %}" alt="FitBooster logo" class="logo" />
 
@@ -36,7 +33,7 @@
 
         <a href="#" class="forgot">Esqueceu a Senha?</a>
 
-        <button type="submit" class="btn-primary">continuar</button>
+        <button type="button" class="btn-primary" onclick="location.href='{% url 'dashboard-alunos' %}'">Continuar</button>
 
         <div class="divider">
           <span>ou</span>

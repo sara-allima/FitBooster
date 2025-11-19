@@ -63,6 +63,9 @@ header {
   padding: 0.625rem;
   cursor: pointer;
 }
+.container-back a {
+  color: var(--primary-white-bg-text);
+}
 .fa-arrow-left {
   font-size: 1.4rem;
   user-select: none;

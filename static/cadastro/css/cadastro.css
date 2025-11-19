@@ -89,6 +89,7 @@ h1 {
   width: 100%;
   text-align: center;
   font-size: 1.2rem;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {

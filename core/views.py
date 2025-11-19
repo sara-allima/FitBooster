@@ -15,6 +15,7 @@ def note(request):
 
 def perfil(request):
     return render(request, 'core/perfil.html')
+
 def login(request):
     return render(request, 'core/login.html')
 
