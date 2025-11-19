@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Histórico</title>
+  <link rel="stylesheet" href="{% static 'core/calendario/css/stylecalen.css' %}">
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <a href="javascript:history.back()">
+      <img src="{% static 'core/img/seta-esquerda 1.png' %}" alt="">
+      </a>
+      <h2>Histórico</h2>
+    </header>
+
+    <h3 class="subtitle">Calendário de treino</h3>
+
+    <div class="calendar-box">
+      <div class="calendar-header">
+        <span id="prevMonth">&#10094;</span>
+        <h4 id="monthLabel">Outubro 2025</h4>
+        <span id="nextMonth">&#10095;</span>
+      </div>
+
+      <table class="calendar">
+        <thead>
+          <tr>
+            <th>DOM</th><th>SEG</th><th>TER</th><th>QUA</th><th>QUI</th><th>SEX</th><th>SAB</th>
+          </tr>
+        </thead>
+        <tbody id="calendarBody"></tbody>
+      </table>
+    </div>
+
+    <h3 class="subtitle">Histórico</h3>
+
+    <div class="history-list">
+      <div class="history-item">
+        <img src="{% static 'core/img/halteres 2.png' %}" alt="">
+        <div>
+          <p class="title">Segunda-feira, 6 de janeiro</p>
+          <p class="desc">treino concluído</p>
+        </div>
+      </div>
+
+      <div class="history-item">
+        <img src="{% static 'core/img/halteres 2.png' %}" alt="">
+        <div>
+          <p class="title">Quarta-feira, 8 de janeiro</p>
+          <p class="desc">treino concluído</p>
+        </div>
+      </div>
+
+      <div class="history-item">
+        <img src="{% static 'core/img/halteres 2.png' %}" alt="">
+        <div>
+          <p class="title">Sexta-feira, 10 de janeiro</p>
+          <p class="desc">treino concluído</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="nav">
+    <button class="nav-btn">
+      <a href={% url 'home'%}>
+        <img src="{% static 'core/img/casa.png' %}" alt="">
+      </a>
+    </button>
+    <button class="nav-btn">
+      <a href={% url 'calendario'%}>
+        <img src="{% static 'core/img/escala.png' %}" alt="">
+      </a>
+    </button>
+    <button class="nav-btn ativo">
+      <a href={% url 'corpo'%}>
+        <img src="{% static 'core/img/corpo1.png' %}" alt="">
+      </a>
+    </button>
+  </nav>
+
+  <script src="{% static 'core/calendario/script/script.js' %}"></script>
+</body>
+</html>

@@ -214,6 +214,38 @@ main { padding: 16px; padding-top: 0; }
   transition:background 0.2s;
   font-size:14px;
 }
+
+.nav {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 60px;
+  max-width: 430px;
+  
+  background: #33FF55;
+  padding: 5px 0;
+  display: flex;
+  justify-content: space-around;
+
+  border-radius: 30px;
+  border: 1px solid #1f1f1f;
+}
+
+.nav-btn {
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: #777;
+}
+
+.nav-btn.ativo {
+  color: #00e676;
+}
+
+
+
 .menu-popup button:hover { background:#2b3038; }
 .menu-popup button.delete { color:#ff4040; }
 

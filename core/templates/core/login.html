@@ -15,7 +15,7 @@
     <div class="background-overlay"></div>
 
     <header>
-      <button class="back-btn"><img src="{% static 'core/login-registro/imagens/seta-esquerda 1.png' %}" alt="seta esquerda"></button>
+      <button class="back-btn"> <a href="javascript:history.back()"> <img src="{% static 'core/login-registro/imagens/seta-esquerda 1.png' %}" alt="seta esquerda"> </a> </button>
       <h1>Login</h1>
     </header>
 
@@ -38,7 +38,7 @@
 
         <a href="#" class="forgot-password">Esqueceu a Senha?</a>
         
-        <button type="submit" class="btn-continue"> <a href={% url 'home'%}> continuar </a> </button>
+        <button type="submit" class="btn-continue"> <a href={% url 'home'%} class="linkk"> continuar </a> </button>
 
         <div class="divider">ou</div>
 

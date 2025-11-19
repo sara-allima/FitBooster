@@ -19,7 +19,10 @@ a {
   text-decoration: none;   /* remove sublinhado */
   color: inherit;          /* usa a cor do elemento interno */
 }
-
+.linkk{
+    text-decoration: none;   /* remove sublinhado */
+    color: inherit;      
+}
     /* -------- LAYOUT -------- */
 .container {
   position: relative;
