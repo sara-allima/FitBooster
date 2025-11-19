@@ -1,0 +1,84 @@
+{% load static %}
+<section class="form-container">
+    <div class="card">
+
+        <div class="header-form">
+            <div class="container-back">
+                <i class="fa-solid fa-arrow-left"></i> 
+            </div>
+            <div>
+                <h2>Cadastro - Treinador</h2>
+                <p>Preencha seus dados para criar uma conta</p>
+            </div>
+        </div>
+
+        <form>
+
+            <div class="linha">
+                <div class="campo">
+                <label>Nome Completo</label>
+                <input type="text" placeholder="Seu nome completo">
+                </div>
+
+                <div class="campo">
+                <label>CPF</label>
+                <input type="text" placeholder="000.000.000-00">
+                </div>
+            </div>
+
+            <div class="linha">
+                <div class="campo">
+                    <label>Idade</label>
+                    <input type="number" placeholder="30">
+                </div>
+
+                <div class="campo">
+                    <label>Gênero</label>
+                    <select>
+                        <option>Selecionar</option>
+                        <option>Masculino</option>
+                        <option>Feminino</option>
+                        <option>Outro</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="linha">
+                <div class="campo">
+                    <label>Celular</label>
+                    <input type="text" placeholder="(99) 99999-9999">
+                </div>
+
+                <div class="campo">
+                    <label>E-mail</label>
+                    <input type="email" placeholder="seu@email.com">
+                </div>
+            </div>
+
+            <div class="linha">
+                <div class="campo">
+                    <label>CREF</label>
+                    <input type="text" placeholder="000000-G/SP">
+                </div>
+
+                <div class="campo">
+                    <label>Instagram</label>
+                    <input type="text" placeholder="@seuinstagram">
+                </div>
+            </div>
+
+            <div class="campo full">
+                <label>Formação/Qualificações</label>
+                <textarea placeholder="Descreva sua formação acadêmica e certificações aqui..."></textarea>
+            </div>
+
+            <div class="campo full">
+                <label>Experiências Profissionais</label>
+                <textarea placeholder="Descreva suas experiências profissionais..."></textarea>
+            </div>
+
+            <button type="button" class="primary-button forms-button" onclick="location.href='{% url 'dashboard-alunos' %}'">Criar Conta</button>
+
+        </form>
+    </div>
+</section>
