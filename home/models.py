@@ -98,3 +98,24 @@ class TreinoExercicio(models.Model):
         verbose_name = 'Exercício no Treino'
         verbose_name_plural = 'Exercícios nos Treinos'
         unique_together = ('treino', 'exercicio')
+
+class MedidasAluno(models.Model):
+    aluno = models.ForeignKey(
+        Aluno,
+        on_delete=models.CASCADE,
+        related_name='medidas'
+    )
+    objetivo = models.CharField(max_length=100)
+    peso = models.DecimalField(max_digits=5, decimal_places=2)
+    altura = models.DecimalField(max_digits=4, decimal_places=2)
+    data_registro = models.DateField(auto_now_add=True)
+
+    peito = models.DecimalField(max_digits=5, decimal_places=2)
+    braco_esquerdo = models.DecimalField(max_digits=5, decimal_places=2)
+    braco_direito = models.DecimalField(max_digits=5, decimal_places=2)
+    cintura = models.DecimalField(max_digits=5, decimal_places=2)
+    quadril = models.DecimalField(max_digits=5, decimal_places=2)
+    perna_esquerda = models.DecimalField(max_digits=5, decimal_places=2)
+    perna_direita = models.DecimalField(max_digits=5, decimal_places=2)
+    panturrilha_esquerda = models.DecimalField(max_digits=5, decimal_places=2)
+    panturrilha_direita = models.DecimalField(max_digits=5, decimal_places=2)
