@@ -119,3 +119,11 @@ class MedidasAluno(models.Model):
     perna_direita = models.DecimalField(max_digits=5, decimal_places=2)
     panturrilha_esquerda = models.DecimalField(max_digits=5, decimal_places=2)
     panturrilha_direita = models.DecimalField(max_digits=5, decimal_places=2)
+
+    class Meta:
+        verbose_name = "Medidas do Aluno"
+        verbose_name_plural = "Medidas dos Alunos"
+        ordering = ['-data_registro']
+
+    def __str__(self):
+        return f'Medidas de {self.aluno.nome} - {self.data_registro}'
