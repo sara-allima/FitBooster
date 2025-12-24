@@ -47,6 +47,7 @@ class Exercicio(models.Model):
     nome = models.CharField(max_length=100)
     grupo_muscular = models.CharField(max_length=50)
     descricao = models.TextField()
+    # Campos default que podem ser mudados mais especificamente para os treinos
     series = models.IntegerField(default=3)
     repeticoes = models.IntegerField(default=12)
     carga = models.IntegerField(default=0, help_text='Carga em Kg')
@@ -79,3 +80,21 @@ class Treino(models.Model):
 
     def __str__(self):
         return f'{self.nome} - {self.tipo}'
+
+class TreinoExercicio(models.Model):
+    treino = models.ForeignKey(
+        Treino,
+        on_delete=models.CASCADE
+    )
+    exercicio = models.ForeignKey(
+        Exercicio,
+        on_delete=models.CASCADE
+    )
+    series = models.IntegerField()
+    repeticoes = models.IntegerField()
+    carga = models.IntegerField(default=0 , help_text='Carga em Kg')
+
+    class Meta:
+        verbose_name = 'Exercício no Treino'
+        verbose_name_plural = 'Exercícios nos Treinos'
+        unique_together = ('treino', 'exercicio')
