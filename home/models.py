@@ -99,6 +99,25 @@ class TreinoExercicio(models.Model):
         verbose_name_plural = 'Exercícios nos Treinos'
         unique_together = ('treino', 'exercicio')
 
+class AlunoTreino(models.Model):
+    aluno = models.ForeignKey(
+        Aluno,
+        on_delete=models.CASCADE
+    )
+    treino = models.ForeignKey(
+        Treino,
+        on_delete=models.CASCADE
+    )
+    ativo = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = 'Treino do Aluno'
+        verbose_name_plural = 'Treinos dos Alunos'
+        unique_together = ['aluno', 'treino']
+    
+    def __str__(self):
+        return f'{self.aluno} - {self.treino}'
+
 class MedidasAluno(models.Model):
     aluno = models.ForeignKey(
         Aluno,
