@@ -7,9 +7,9 @@ class Treinador(models.Model):
     cref = models.CharField(primary_key=True, max_length=20)
     nome = models.CharField(max_length=100)
     genero = models.CharField(max_length=20, choices=[
-        ('Masculino'),
-        ('Feminino'),
-        ('Outro')
+        ('M', 'Masculino'),
+        ('F', 'Feminino'),
+        ('O', 'Outro')
     ])
     email = models.EmailField(unique=True)
     cpf = models.CharField(max_length=11, unique=True)
@@ -23,9 +23,9 @@ class Aluno(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nome = models.CharField(max_length=100)
     genero = models.CharField(max_length=20, choices=[
-        ('Masculino'),
-        ('Feminino'),
-        ('Outro')
+        ('M', 'Masculino'),
+        ('F', 'Feminino'),
+        ('O', 'Outro')
     ])
     email = models.EmailField(unique=True)
     objetivo = models.CharField(max_length=100)
