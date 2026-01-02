@@ -7,6 +7,7 @@ class TreinoExercicioInline(admin.TabularInline):
     extra = 1
 
 class TreinoAdmin(admin.ModelAdmin):
+    inlines = [TreinoExercicioInline]
     list_display = (
         'nome',
         'treinador',
