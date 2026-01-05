@@ -20,20 +20,21 @@
 
       <h1>Entrar no <span>FitBooster</span></h1>
 
-      <form>
+      <form method="POST">
+        {% csrf_token %}
         <div class="input-group">
-          <label for="email">Email ou nome de usuário</label>
-          <input type="text" id="email" placeholder="exemplo@gmail.com" />
+          <label for="email">Email</label>
+          <input type="text" id="email" placeholder="exemplo@gmail.com" name='email' required/>
         </div>
 
         <div class="input-group">
           <label for="senha">Senha</label>
-          <input type="password" id="senha" placeholder="mínimo 6 caracteres" />
+          <input type="password" id="senha" placeholder="mínimo 6 caracteres" name='senha' required/>
         </div>
 
         <a href="#" class="forgot">Esqueceu a Senha?</a>
 
-        <button type="button" class="btn-primary" onclick="location.href='{% url 'dashboard-alunos' %}'">Continuar</button>
+        <button type="submit" class="btn-primary">Continuar</button>
 
         <div class="divider">
           <span>ou</span>
@@ -50,7 +51,7 @@
         </button>
 
         <p class="register">
-          Ainda não tem uma conta? <a href="#">Cadastrar</a>
+          Ainda não tem uma conta? <a href="{% url 'cadastro' %}">Cadastrar</a>
         </p>
       </form>
     </section>

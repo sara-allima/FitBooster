@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login as auth_login
 from .decorators import treinador_required
 from django.contrib.auth.models import User
 from .models import Treinador
@@ -71,6 +72,25 @@ def dashboard_planos_treino(request):
 def dashboard_relatorios(request):
     return render(request, "home/pages/dashboardRelatorios.html")
 def login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        senha = request.POST.get('senha')
+
+        user = authenticate(request, username=email, password=senha)
+
+        if user is not None:
+            auth_login(request, user)
+
+            if Treinador.objects.filter(user=user).exists():
+                return redirect('dashboard-alunos')
+            else:
+                return redirect('formTreinador')
+            
+        return render(request, 'home/pages/login.html'), {
+            'erro': 'Email ou senha inválidos.'
+        }
+
     return render(request, "home/pages/login.html")
+
 def redirecionar(request):
     return render(request, "home/pages/redirect.html")
