@@ -19,7 +19,7 @@ def formulario_treinador(request):
         email = request.POST.get('email')
         cpf = request.POST.get('cpf')
         formacao = request.POST.get('formacao')
-        idade = request.POST.get('idade')
+        idade = int(request.POST.get('idade'))
         senha = request.POST.get('senha')
         confirmar_senha = request.POST.get('confirmar_senha')
 
@@ -30,11 +30,11 @@ def formulario_treinador(request):
 
         try:
             user = User.objects.create_user(
-                username=nome,
+                username=email,
                 email=email,
                 password=senha
             )
-            treinador = Treinador.objects.create(
+            Treinador.objects.create(
                 user=user,
                 nome=nome,
                 email=email,
@@ -45,7 +45,7 @@ def formulario_treinador(request):
                 formacao=formacao
             )
 
-            return redirect('home/pages/dashboardAlunos.html')
+            return redirect('dashboard-alunos')
         
         except IntegrityError:
             return render(request, 'home/pages/formularioTreinador.html', {
