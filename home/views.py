@@ -62,5 +62,5 @@ def dashboard_relatorios(request):
     return render(request, "home/pages/dashboardRelatorios.html")
 def login(request):
     return render(request, "home/pages/login.html")
-def redirect(request):
+def redirecionar(request):
     return render(request, "home/pages/redirect.html")

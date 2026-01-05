@@ -9,5 +9,5 @@ urlpatterns = [
     path('dashboard-planos-de-treino/', dashboard_planos_treino, name="dashboard-planos-treino"),
     path('dashboard-relatorios/', dashboard_relatorios, name="dashboard-relatorios"),
     path('login/', login, name="desktop-login"),
-    path('redirect/', redirect, name="redirect")
+    path('redirect/', redirecionar, name="redirect")
 ]
