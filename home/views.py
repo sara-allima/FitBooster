@@ -60,17 +60,30 @@ def formulario_treinador(request):
 @login_required
 @treinador_required
 def dashboard_alunos(request):
-    return render(request, 'home/pages/dashboardAlunos.html')
+    treinador = Treinador.objects.get(user=request.user)
+
+    return render(request, 'home/pages/dashboardAlunos.html', {
+        'treinador': treinador
+    })
 
 @login_required
 @treinador_required
 def dashboard_planos_treino(request):
-    return render(request, 'home/pages/dashboardPlanosTreino.html')
+    treinador = Treinador.objects.get(user=request.user)
+    
+    return render(request, 'home/pages/dashboardPlanosTreino.html', {
+        'treinador': treinador
+    })
 
 @login_required
 @treinador_required
 def dashboard_relatorios(request):
-    return render(request, "home/pages/dashboardRelatorios.html")
+    treinador = Treinador.objects.get(user=request.user)
+
+    return render(request, 'home/pages/dashboardRelatorios.html', {
+        'treinador': treinador
+    })
+
 def login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
