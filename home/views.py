@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout
 from .decorators import treinador_required
 from django.contrib.auth.models import User
 from .models import Treinador
@@ -86,11 +86,15 @@ def login(request):
             else:
                 return redirect('formTreinador')
             
-        return render(request, 'home/pages/login.html'), {
+        return render(request, 'home/pages/login.html', {
             'erro': 'Email ou senha inválidos.'
-        }
+        })
 
     return render(request, "home/pages/login.html")
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
 def redirecionar(request):
     return render(request, "home/pages/redirect.html")

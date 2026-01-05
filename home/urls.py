@@ -10,4 +10,5 @@ urlpatterns = [
     path('dashboard-relatorios/', dashboard_relatorios, name="dashboard-relatorios"),
     path('login/', login, name="desktop-login"),
     path('redirect/', redirecionar, name="redirect")
+    path('logout/', logout_view, name='logout'),
 ]
