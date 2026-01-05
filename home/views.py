@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
+from .decorators import treinador_required
 from django.contrib.auth.models import User
 from .models import Treinador
 
@@ -56,14 +57,17 @@ def formulario_treinador(request):
     return render(request, 'home/pages/formularioTreinador.html')
 
 @login_required
+@treinador_required
 def dashboard_alunos(request):
     return render(request, 'home/pages/dashboardAlunos.html')
 
 @login_required
+@treinador_required
 def dashboard_planos_treino(request):
     return render(request, 'home/pages/dashboardPlanosTreino.html')
 
 @login_required
+@treinador_required
 def dashboard_relatorios(request):
     return render(request, "home/pages/dashboardRelatorios.html")
 def login(request):
