@@ -27,6 +27,9 @@ body {
     /*Header*/
 header {
   margin-bottom: 4.125rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .title{
   margin: 0;

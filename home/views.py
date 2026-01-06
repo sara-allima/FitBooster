@@ -107,7 +107,7 @@ def login(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('desktop-login')
 
 def redirecionar(request):
     return render(request, "home/pages/redirect.html")
