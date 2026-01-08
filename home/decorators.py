@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from .models import Treinador
+from .models import Treinador, Aluno
 
 def treinador_required(view_func):
     def _wrapped_view(request, *args, **kwargs):
@@ -10,3 +10,14 @@ def treinador_required(view_func):
         
         return view_func(request, *args, **kwargs)
     return _wrapped_view
+
+def aluno_required(view_func):
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')
+        
+        if not Aluno.objects.filter(user=request.user).exists():
+            return redirect('login')
+        
+        return view_func(request, *args, **kwargs)
+    return wrapper

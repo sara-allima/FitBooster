@@ -19,104 +19,86 @@
       </div>
     </header>
 
-    <!-- NOME -->
-    <div class="field">
-      <label for="name">Como devemos chamá-lo(a)?</label>
-      <input id="name" class="input" placeholder="Digite aqui">
-    </div>
 
-    <!-- GÊNERO -->
-    <div class="field">
-      <label for="gender">Qual é o seu gênero?</label>
-      <input id="gender" class="input" placeholder="Digite aqui">
-    </div>
+    <form action="POST">
 
-    <!-- IDADE -->
-    <div class="field">
-      <label for="age">Adicione sua idade</label>
-      <input id="age" type="number" class="input" placeholder="Digite aqui" min="0">
-    </div>
-
-    <!-- ALTURA -->
-    <div class="field">
-      <label>Quanto mede?</label>
-
-      <div class="segmented" id="heightUnits">
-        <button id="unitCm" class="active" data-unit="cm">cm</button>
-        <button id="unitFt" data-unit="ft">pé &amp; polegada</button>
+      <!-- NOME -->
+      <div class="field">
+        <label for="name">Nome Completo:</label>
+        <input id="name" name="nome" class="input" placeholder="Digite aqui">
       </div>
 
-      <div id="heightInputCm" class="mt10">
-        <input id="heightCm" type="number" class="input" placeholder="Altura em cm" min="0">
+      <!--EMAIL-->
+      <div class="field">
+        <label for="email">Seu email:</label>
+        <input id="email" name="email" class="input" placeholder="Digite aqui">
       </div>
 
-      <div id="heightInputFt" class="mt10 hidden">
-        <div class="height-row">
-          <input id="heightFt" type="number" class="small-input" placeholder="pés" min="0">
-          <input id="heightIn" type="number" class="small-input" placeholder="polegadas" min="0" max="11">
+      <!-- GÊNERO -->
+      <div class="field">
+        <label for="genero">Gênero:</label>
+        <select id="genero" name="genero" class="input">
+            <option value="">Selecionar</option>
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+            <option value="O">Outro</option>
+        </select>
+      </div>
+
+      <!-- IDADE -->
+      <div class="field">
+        <label for="age">Idade:</label>
+        <input id="age" name="idade" type="number" class="input" placeholder="Digite aqui" min="0">
+      </div>
+
+      <!-- ALTURA -->
+      <div class="field">
+        <label for="heightCm">Altura (em centímetros):</label>
+          <input id="heightCm" name="altura" type="number" class="input" placeholder="Altura em cm" min="0">
+      </div>
+
+      <!-- PESO -->
+      <div class="field">
+        <label for="weight">Seu peso atual (em Kg):</label>
+        <input id="weight" name="peso" type="number" class="input" placeholder="Digite aqui" min="0" step="any">
+
+        <div class="bmi" id="bmiText">Seu IMC aparecerá aqui.</div>
+      </div>
+
+      <!-- OBJETIVO -->
+      <div class="field">
+        <label for="objetivo">Qual o seu objetivo com os treinos?</label>
+        <select name="objetivo" id="objetivo" class="input">
+          <option value="" disabled selected>Selecione uma opção</option>
+          <option value="emagrecer">Emagrecer</option>
+          <option value="hipertrofia">Hipertrofia</option>
+          <option value="forca">Força</option>
+        </select>
+      </div>
+
+      <!-- DIAS DE TREINO -->
+      <div class="field">
+        <label>Escolha os dias de treino!</label>
+      
+
+        <div class="days-grid" id="days">
+          <button data-day="dom" type="button">dom.</button>
+          <button data-day="seg" type="button">seg.</button>
+          <button data-day="ter" type="button">ter.</button>
+          <button data-day="qua" type="button">qua.</button>
+          <button data-day="qui" type="button">qui.</button>
+          <button data-day="sex" type="button">sex.</button>
+          <button data-day="sab" type="button">sáb.</button>
         </div>
       </div>
-    </div>
 
-    <!-- PESO -->
-    <div class="field">
-      <label>Quanto pesa?</label>
-      <input id="weight" type="number" class="input" placeholder="Digite aqui" min="0" step="any">
-
-      <div class="kg-lbs">
-        <div class="muted">Unidade:</div>
-        <div class="segmented" id="weightUnits">
-          <button id="unitKg" class="active" data-unit="kg">kg</button>
-          <button id="unitLbs" data-unit="lbs">lbs</button>
-        </div>
-      </div>
-
-      <div class="bmi" id="bmiText">Seu IMC aparecerá aqui.</div>
-    </div>
-
-    <!-- OBJETIVO -->
-    <div class="field">
-      <label>Qual o seu objetivo?</label>
-      <div class="cards" id="bodyCards">
-        <div class="card" data-value="emagrecer" tabindex="0">
-          <h3 class="corpos">Emagrecer</h3>
-          <div class="radio"><div class="dot"></div></div>
-        </div>
-
-        <div class="card selected" data-value="hipertrofia" tabindex="0">
-          <h3 class="corpos">Hipertrofia</h3>
-          <div class="radio"><div class="dot"></div></div>
-        </div>
-
-        <div class="card" data-value="forca" tabindex="0">
-          <h3 class="corpos">Força</h3>
-          <div class="radio"><div class="dot"></div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- DIAS DE TREINO -->
-    <div class="field">
-      <label>Escolha os dias de treino!</label>
-    
-
-      <div class="days-grid" id="days">
-        <button data-day="dom" type="button">dom.</button>
-        <button data-day="seg" type="button">seg.</button>
-        <button data-day="ter" type="button">ter.</button>
-        <button data-day="qua" type="button">qua.</button>
-        <button data-day="qui" type="button">qui.</button>
-        <button data-day="sex" type="button">sex.</button>
-        <button data-day="sab" type="button">sáb.</button>
-      </div>
-    </div>
-
+      
+      <!-- BOTÃO CONTINUAR -->
+      <button class="continue-btn" id="continueBtn" type="button" aria-disabled="true" data-href="{% url 'home' %}">
+        Continuar
+      </button>
+    </form>
   </div>
-
-  <!-- BOTÃO CONTINUAR -->
-<button class="continue-btn" id="continueBtn" type="button" aria-disabled="true" data-href="{% url 'home' %}">
-  Continuar
-</button>
 
   <script src="{% static 'core/form/script/script.js' %}"></script>
 </body>
