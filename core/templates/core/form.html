@@ -21,6 +21,7 @@
 
 
     <form action="POST">
+      {% csrf_token %}
 
       <!-- NOME -->
       <div class="field">
@@ -94,7 +95,7 @@
 
       
       <!-- BOTÃO CONTINUAR -->
-      <button class="continue-btn" id="continueBtn" type="button" aria-disabled="true" data-href="{% url 'home' %}">
+      <button type="submit" class="continue-btn" id="continueBtn" type="submit" aria-disabled="true" data-href="{% url 'home' %}">
         Continuar
       </button>
     </form>

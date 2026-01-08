@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db import IntegrityError
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login as auth_login
 from home.models import Aluno
 from django.http import HttpResponse
 
@@ -20,6 +21,22 @@ def perfil(request):
     return render(request, 'core/perfil.html')
 
 def login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        senha = request.POST.get('senha')
+
+        user = authenticate(request, username=email, password=senha)
+
+        if user:
+            auth_login(request, user)
+
+            if Aluno.objects.filter(user=user).exists():
+                return redirect('home')
+            
+        return render(request, 'core/login.html', {
+            'erro': 'Email ou senha inválidos.'
+        })
+    
     return render(request, 'core/login.html')
 
 def registro(request):
