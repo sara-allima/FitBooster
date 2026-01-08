@@ -20,25 +20,25 @@
     </header>
 
 
-    <form action="POST">
+    <form method="POST">
       {% csrf_token %}
 
       <!-- NOME -->
       <div class="field">
         <label for="name">Nome Completo:</label>
-        <input id="name" name="nome" class="input" placeholder="Digite aqui">
+        <input id="name" name="nome" class="input" placeholder="Digite aqui" required>
       </div>
 
       <!--EMAIL-->
       <div class="field">
         <label for="email">Seu email:</label>
-        <input id="email" name="email" class="input" placeholder="Digite aqui">
+        <input id="email" name="email" class="input" placeholder="Digite aqui" required>
       </div>
 
       <!-- GÊNERO -->
       <div class="field">
         <label for="genero">Gênero:</label>
-        <select id="genero" name="genero" class="input">
+        <select id="genero" name="genero" class="input" required>
             <option value="">Selecionar</option>
             <option value="M">Masculino</option>
             <option value="F">Feminino</option>
@@ -49,27 +49,25 @@
       <!-- IDADE -->
       <div class="field">
         <label for="age">Idade:</label>
-        <input id="age" name="idade" type="number" class="input" placeholder="Digite aqui" min="0">
+        <input id="age" name="idade" type="number" class="input" placeholder="Digite aqui" min="0" required>
       </div>
 
       <!-- ALTURA -->
       <div class="field">
         <label for="heightCm">Altura (em centímetros):</label>
-          <input id="heightCm" name="altura" type="number" class="input" placeholder="Altura em cm" min="0">
+          <input id="heightCm" name="altura" type="number" class="input" placeholder="Altura em cm" min="0" required>
       </div>
 
       <!-- PESO -->
       <div class="field">
         <label for="weight">Seu peso atual (em Kg):</label>
-        <input id="weight" name="peso" type="number" class="input" placeholder="Digite aqui" min="0" step="any">
-
-        <div class="bmi" id="bmiText">Seu IMC aparecerá aqui.</div>
+        <input id="weight" name="peso" type="number" class="input" placeholder="Digite aqui" min="0" step="any" required>
       </div>
 
       <!-- OBJETIVO -->
       <div class="field">
         <label for="objetivo">Qual o seu objetivo com os treinos?</label>
-        <select name="objetivo" id="objetivo" class="input">
+        <select name="objetivo" id="objetivo" class="input" required>
           <option value="" disabled selected>Selecione uma opção</option>
           <option value="emagrecer">Emagrecer</option>
           <option value="hipertrofia">Hipertrofia</option>
@@ -77,25 +75,8 @@
         </select>
       </div>
 
-      <!-- DIAS DE TREINO -->
-      <div class="field">
-        <label>Escolha os dias de treino!</label>
-      
-
-        <div class="days-grid" id="days">
-          <button data-day="dom" type="button">dom.</button>
-          <button data-day="seg" type="button">seg.</button>
-          <button data-day="ter" type="button">ter.</button>
-          <button data-day="qua" type="button">qua.</button>
-          <button data-day="qui" type="button">qui.</button>
-          <button data-day="sex" type="button">sex.</button>
-          <button data-day="sab" type="button">sáb.</button>
-        </div>
-      </div>
-
-      
       <!-- BOTÃO CONTINUAR -->
-      <button type="submit" class="continue-btn" id="continueBtn" type="submit" aria-disabled="true" data-href="{% url 'home' %}">
+      <button class="continue-btn" id="continueBtn" type="submit" href="{% url 'home' %}">
         Continuar
       </button>
     </form>
