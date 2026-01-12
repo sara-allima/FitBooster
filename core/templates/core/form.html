@@ -55,13 +55,13 @@
       <!-- ALTURA -->
       <div class="field">
         <label for="heightCm">Altura (em centímetros):</label>
-          <input id="heightCm" name="altura" type="number" class="input" placeholder="Altura em cm" min="0" required>
+          <input id="heightCm" name="altura" type="number" class="input" placeholder="Ex: 1.75" min="1.00" max="2.50" step="0.01" required>
       </div>
 
       <!-- PESO -->
       <div class="field">
         <label for="weight">Seu peso atual (em Kg):</label>
-        <input id="weight" name="peso" type="number" class="input" placeholder="Digite aqui" min="0" step="any" required>
+        <input id="weight" name="peso" type="number" class="input" placeholder="Ex: 69.50" min="20" max="400" step="0.01" required>
       </div>
 
       <!-- OBJETIVO -->
@@ -75,8 +75,18 @@
         </select>
       </div>
 
+      <!--SENHA-->
+      <div class="field">
+        <label for="senha">Senha:</label>
+        <input class="input" type="password" name="senha" id="senha" placeholder="Digite sua senha aqui" required>
+      </div>
+      <div class="field">
+        <label for="senha">Repita a senha:</label>
+        <input class="input" type="password" name="confirmar_senha" id="confirmar_senha" placeholder="Repita a mesma senha que você digitou agora a pouco" required>
+      </div>
+
       <!-- BOTÃO CONTINUAR -->
-      <button class="continue-btn" id="continueBtn" type="submit" href="{% url 'home' %}">
+      <button class="continue-btn" id="continueBtn" type="submit">
         Continuar
       </button>
     </form>

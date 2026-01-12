@@ -4,11 +4,61 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
 from home.models import Aluno
 from django.http import HttpResponse
+from decimal import Decimal, InvalidOperation
 
 def index(request):
     return render(request, 'core/index.html')
 
 def form(request):
+    if request.method == 'POST':
+        nome = request.POST.get('nome', '').strip()
+        email = request.POST.get('email', '').strip()
+        senha = request.POST.get('senha')
+        confirmar_senha = request.POST.get('confirmar_senha')
+        genero = request.POST.get('genero')
+        objetivo = request.POST.get('objetivo')
+
+        # Conversões seguras
+        try:
+            idade = int(request.POST.get('idade'))
+            peso = Decimal(request.POST.get('peso').replace(',', '.'))
+            altura = Decimal(request.POST.get('altura').replace(',', '.'))
+        except (TypeError, ValueError, InvalidOperation, AttributeError):
+            return render(request, 'core/form.html', {
+                'erro': 'Preencha corretamente idade, peso e altura.'
+            })
+
+        # Validação de senha
+        if senha != confirmar_senha:
+            return render(request, 'core/form.html', {
+                'erro': 'Senhas não coincidem.'
+            })
+
+        try:
+            user = User.objects.create_user(
+                username=email,
+                email=email,
+                password=senha
+            )
+
+            Aluno.objects.create(
+                user=user,
+                nome=nome,
+                email=email,
+                genero=genero,
+                idade=idade,
+                peso=peso,
+                altura=altura,
+                objetivo=objetivo
+            )
+
+            return redirect('login')
+
+        except IntegrityError:
+            return render(request, 'core/form.html', {
+                'erro': 'Email já cadastrado.'
+            })
+
     return render(request, 'core/form.html')
 
 def home(request):
@@ -40,44 +90,6 @@ def login(request):
     return render(request, 'core/login.html')
 
 def registro(request):
-    if request.mothod == 'POST':
-        nome = request.POST.get('nome')
-        email = request.POST.get('email')
-        senha = request.POST.get('senha')
-        confirmar_senha = request.POST.get('confirmar_senha')
-        genero = request.POST.get('genero')
-        idade = request.POST.get('idade')
-        peso = request.POST.get('peso')
-        altura = request.POST.get('altura')
-        objetivo = request.POST.get('objetivo')
-
-        if senha != confirmar_senha:
-            return render(request, 'core/registro.html', {
-                'erro': 'Senhas não coincidem'
-            })
-        
-        try:
-            user = User.objects.create_user(
-                username=email,
-                email=email,
-                password=senha
-            )
-            Aluno = Aluno.objects.create(
-                user=user,
-                nome=nome,
-                email=email,
-                genero=genero,
-                idade=idade,
-                peso=peso,
-                altura=altura,
-                objetivo=objetivo 
-            )
-            return redirect('login')
-        except IntegrityError:
-            return render(request, 'core/registro.html', {
-                'erro': 'Email já cadastrado'
-            })
-        
     return render(request, 'core/registro.html')
 
 def clicar(request):
