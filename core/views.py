@@ -39,3 +39,12 @@ def tela(request):
 
 def list(request):
     return render(request, 'core/list.html')
+
+def treino(request):
+    return render(request, 'core/treino.html')
+
+def treinoa(request):
+    return render(request, 'core/treinoA.html')
+
+def calendario(request):
+    return render(request, 'core/calendario.html')

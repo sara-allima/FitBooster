@@ -55,9 +55,13 @@ function renderTreinos() {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
+    <a href="/mobile/tela">
       <p>${t.nome}</p>
+    </a>
       <div class="pontinhos">
+          <a href={% url 'tela'%}>
         <img src="/static/core/img/3_pontinhos.png" alt="menu" class="menu-opcoes" data-index="${i}">
+        </a>
       </div>`;
     carousel.insertBefore(card, baseCard);
   });

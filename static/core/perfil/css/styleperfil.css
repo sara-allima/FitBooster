@@ -21,6 +21,11 @@ body {
   color: #fff;
 }
 
+a {
+    text-decoration: none;   /* remove sublinhado */
+    color: inherit;      
+}
+
 .container {
   width: 100%;
   max-width: 420px;
@@ -175,7 +180,7 @@ header h2 {
 }
 
 .close {
-  position: absolute;
+  justify-content: right;
   top: 10px;
   right: 10px;
   cursor: pointer;
