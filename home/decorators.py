@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
 from .models import Treinador, Aluno
+from functools import wraps
 
 def treinador_required(view_func):
     def _wrapped_view(request, *args, **kwargs):
@@ -12,7 +13,8 @@ def treinador_required(view_func):
     return _wrapped_view
 
 def aluno_required(view_func):
-    def wrapper(request, *args, **kwargs):
+    @wraps(view_func)
+    def _wrapper_view(request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('login')
         
@@ -20,4 +22,4 @@ def aluno_required(view_func):
             return redirect('login')
         
         return view_func(request, *args, **kwargs)
-    return wrapper
+    return _wrapper_view

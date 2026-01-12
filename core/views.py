@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect
 from django.db import IntegrityError
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import login_required
 from home.models import Aluno
 from django.http import HttpResponse
 from decimal import Decimal, InvalidOperation
+from home.decorators import aluno_required
 
 def index(request):
     return render(request, 'core/index.html')
@@ -61,12 +63,18 @@ def form(request):
 
     return render(request, 'core/form.html')
 
+@login_required
+@aluno_required
 def home(request):
     return render(request,  'core/home.html')
 
+@login_required
+@aluno_required
 def note(request):
     return render(request, 'core/note.html')
 
+@login_required
+@aluno_required
 def perfil(request):
     return render(request, 'core/perfil.html')
 
@@ -89,21 +97,33 @@ def login(request):
     
     return render(request, 'core/login.html')
 
+@login_required
+@aluno_required
 def registro(request):
     return render(request, 'core/registro.html')
 
+@login_required
+@aluno_required
 def clicar(request):
     return render(request, 'core/clicartreino.html')
 
+@login_required
+@aluno_required
 def corpo(request):
     return render(request, 'core/corpo.html')
 
+@login_required
+@aluno_required
 def escolher(request):
     return render(request, 'core/escolher.html')
 
+@login_required
+@aluno_required
 def reg(request):
     return render(request, 'core/reg.html')
 
+@login_required
+@aluno_required
 def tela(request):
     return render(request, 'core/tela.html')
 
