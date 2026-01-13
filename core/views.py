@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db import IntegrityError
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.decorators import login_required
 from home.models import Aluno
 from django.http import HttpResponse
@@ -126,6 +126,10 @@ def reg(request):
 @aluno_required
 def tela(request):
     return render(request, 'core/tela.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('mobile-login')
 
 def list(request):
     return render(request, 'core/list.html')
