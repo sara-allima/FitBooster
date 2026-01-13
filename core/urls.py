@@ -14,6 +14,6 @@ urlpatterns = [
     path('escolher/', views.escolher, name="escolher"),
     path('reg/', views.reg, name="reg"),
     path('tela/', views.tela, name="tela"),
-    path('list/', views.logout_view, name="mobile-logout"),
+    path('logout/', views.logout_view, name="mobile-logout"),
     path('list/', views.list, name="list"),
 ]
