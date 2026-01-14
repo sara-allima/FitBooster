@@ -23,7 +23,7 @@ function criarTreino(nome) {
   card.innerHTML = `
     <div class="card-line">
       <h3>${nome}</h3>
-      <img src="{% static 'core/img/3_pontinhos.png' %}" class="menu-card open-menu">
+      <img src="/static/core/img/3_pontinhos.png" class="menu-card open-menu">
     </div>
     <p class="sub-info">0 min · 0 exercício</p>
   `;

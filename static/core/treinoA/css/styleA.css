@@ -1,0 +1,127 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "SF Pro Display", "Poppins", sans-serif;
+}
+
+:root {
+  --bg:#0f1113;
+  --card:#272C35;
+  --muted:#99a0a6;
+  --accent:#00e676;
+  --white:#ffffff;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: black;
+  color: #fff;
+}
+
+a {
+  text-decoration: none;   /* remove sublinhado */
+  color: inherit;          /* usa a cor do elemento interno */
+}
+
+.cont {
+  max-width: 420px;
+  width: 100%;
+  background: linear-gradient(#1C2126, #121416 35%);
+}
+
+/* TOPO */
+.topo {
+  background: #1C2126;
+  padding: 18px;
+  padding-bottom: 15px;
+}
+
+header {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+}
+
+.back-icon {
+  width: 25px;
+}
+.menu-icon {
+  width: 22px;
+  margin-left: auto;
+}
+
+.titulo-topo {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.sub-titulo {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* CONTAINER */
+.container {
+  width: 100%;
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+/* DICA */
+.dica {
+
+  padding: 12px;
+  border-radius: 10px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.dica img {
+  width: 28px;
+  height: 28px;
+}
+
+.dica p {
+  font-size: 13px;
+  color: var(--white)
+}
+
+/* TÍTULO EXERCÍCIOS */
+.titulo-sec {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+/* CARDS */
+.card-exercicio {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.card-exercicio h4 {
+  font-size: 16px;
+  text-transform: capitalize;
+  margin-bottom: 10px;
+}
+
+.linha {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.linha p {
+  font-size: 14px;
+}
+
+.linha span {
+  font-size: 12px;
+  color: var(--muted);
+}

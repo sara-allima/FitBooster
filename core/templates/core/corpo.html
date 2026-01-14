@@ -121,20 +121,26 @@
     </div>
 
     <!-- BOTÃO MEDIDAS -->
-    <button class="btn-add hidden" id="btnmedida">+ Adicionar</button>
+    <a href={% url 'reg'%}>  <button class="btn-add hidden" id="btnmedida">+ Adicionar  </button> </a>
 
 </div>
 
 <!-- NAV BAR FIXA -->
 <nav class="nav">
     <button class="nav-btn">
+      <a href={% url 'home'%}>
         <img src="{% static 'core/img/casa.png' %}" alt="">
+      </a>
     </button>
     <button class="nav-btn">
+      <a href={% url 'calendario'%}>
         <img src="{% static 'core/img/escala.png' %}" alt="">
+      </a>
     </button>
     <button class="nav-btn ativo">
+         <a href={% url 'corpo'%}>
         <img src="{% static 'core/img/corpo1.png' %}" alt="">
+        </a>
     </button>
 </nav>
 

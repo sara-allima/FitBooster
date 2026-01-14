@@ -36,10 +36,11 @@
         </div>
 
         <p class="text">Registre facilmente os seus treinos, tudo num só lugar.</p>
-
         <button class="btn email">
+            <a href={% url 'registro'%}>
             <img src="{% static 'core/img/correspondencia (1) 1.png' %}" alt="Email">
             Inscreva-se com E-mail
+            </a>
         </button>
 
         <button class="btn google">
@@ -47,7 +48,7 @@
             Registro com o Google
         </button>
 
-        <p class="login">Já tem uma conta? <a href="#">Iniciar sessão</a></p>
+        <p class="login">Já tem uma conta? <a href={% url 'login'%}>Iniciar sessão</a></p>
     </main>
 
     <script src="{% static 'core/index/script/script.js' %}"></script>
