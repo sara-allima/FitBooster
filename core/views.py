@@ -48,3 +48,6 @@ def treinoa(request):
 
 def calendario(request):
     return render(request, 'core/calendario.html')
+
+def treinadores(request):
+    return render(request, 'core/treinadores.html')

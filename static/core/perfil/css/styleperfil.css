@@ -125,6 +125,25 @@ header h2 {
   cursor: pointer;
   width: 100%;
 }
+.flex{
+  display: flex;
+  justify-content: space-around;
+ 
+}
+
+.alinhar{
+  margin-top: 5px;
+  align-items: center;
+  margin-left: 5px;
+  font-size: 20px;
+
+}
+
+.treino-img{
+  width: 24px;
+  height: 24px;
+
+}
 
 .logout-btn {
   position: absolute;
@@ -180,10 +199,12 @@ header h2 {
 }
 
 .close {
-  justify-content: right;
-  top: 10px;
+  margin-left: 180px;
+  margin-top: 5px;
   right: 10px;
   cursor: pointer;
+  height: 20px;
+  width: 20px;
 }
 
 input[type="text"] {
@@ -194,4 +215,9 @@ input[type="text"] {
   background-color: #2a2a2a;
   border: none;
   color: #fff;
+}
+
+.radio-group{
+  margin-top: 15px;
+  margin-bottom: 10px;
 }
