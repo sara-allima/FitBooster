@@ -12,33 +12,34 @@
             </div>
         </div>
 
-        <form>
+        <form method="POST">
+            {% csrf_token %}
 
             <div class="linha">
                 <div class="campo">
                 <label>Nome Completo</label>
-                <input type="text" placeholder="Seu nome completo">
+                <input type="text" name="nome" placeholder="Seu nome completo">
                 </div>
 
                 <div class="campo">
                 <label>CPF</label>
-                <input type="text" placeholder="000.000.000-00">
+                <input type="text" name="cpf" placeholder="000.000.000-00">
                 </div>
             </div>
 
             <div class="linha">
                 <div class="campo">
                     <label>Idade</label>
-                    <input type="number" placeholder="30">
+                    <input type="number" name="idade" placeholder="30">
                 </div>
 
                 <div class="campo">
-                    <label>Gênero</label>
-                    <select>
-                        <option>Selecionar</option>
-                        <option>Masculino</option>
-                        <option>Feminino</option>
-                        <option>Outro</option>
+                    <label for="genero">Gênero</label>
+                    <select id="genero" name="genero">
+                        <option value="">Selecionar</option>
+                        <option value="M">Masculino</option>
+                        <option value="F">Feminino</option>
+                        <option value="O">Outro</option>
                     </select>
                 </div>
             </div>
@@ -51,14 +52,14 @@
 
                 <div class="campo">
                     <label>E-mail</label>
-                    <input type="email" placeholder="seu@email.com">
+                    <input type="email" name="email" placeholder="seu@email.com">
                 </div>
             </div>
 
             <div class="linha">
                 <div class="campo">
                     <label>CREF</label>
-                    <input type="text" placeholder="000000-G/SP">
+                    <input type="text" name="cref" placeholder="000000-G/SP">
                 </div>
 
                 <div class="campo">
@@ -69,15 +70,27 @@
 
             <div class="campo full">
                 <label>Formação/Qualificações</label>
-                <textarea placeholder="Descreva sua formação acadêmica e certificações aqui..."></textarea>
+                <textarea placeholder="Descreva sua formação acadêmica e certificações aqui..." name="formacao"></textarea>
             </div>
 
             <div class="campo full">
                 <label>Experiências Profissionais</label>
                 <textarea placeholder="Descreva suas experiências profissionais..."></textarea>
             </div>
+            
+            <div class="linha">
+                <div class="campo">
+                    <label>Senha</label>
+                    <input type="password" name="senha" placeholder="Digite sua senha">
+                </div>
 
-            <button type="button" class="primary-button forms-button" onclick="location.href='{% url 'dashboard-alunos' %}'">Criar Conta</button>
+                <div class="campo">
+                    <label>Confirmar Senha</label>
+                    <input type="password" name="confirmar_senha" placeholder="Confirme sua senha">
+                </div>
+            </div>
+
+            <button type="submit" class="primary-button forms-button" onclick="location.href='{% url 'dashboard-alunos' %}'">Criar Conta</button>
 
         </form>
     </div>
