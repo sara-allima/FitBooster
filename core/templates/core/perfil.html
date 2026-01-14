@@ -10,7 +10,7 @@
 <body>
   <div class="container">
     <header>
-      <a href="javascript:history.back()">
+      <a href="{% url 'home' %}">
       <img src="{% static 'core/img/seta-esquerda 1.png' %}" alt="">
       </a>
       <h2>Minha conta</h2>
@@ -33,15 +33,23 @@
     </div>
 
     <div class="options">
-      <button class="option-btn">
-        <img src="{% static 'core/img/sino.png' %}" alt="">
-        <a href={% url 'note'%}>Lembretes e notificações </a>
-      </button>
+      <a href={% url 'note'%}>
+        <button class="option-btn">
+          <img src="{% static 'core/img/sino.png' %}" alt="">
+          Lembretes e notificações 
+        </button>
+      </a>
 
       <button class="option-btn" id="themeBtn">
         <img src="{% static 'core/img/brilho-do-sol.png' %}" alt="">
         Temas
       </button>
+      <a href={% url 'treinadores' %}>
+        <button class="option-btn" id="themeBtn">
+          <img src="{% static 'core/img/treinador.png' %}" alt="" class="treino-img">
+          Treinadores 
+        </button>
+      </a>
     </div>
 
     <a class="logout-btn" href={% url "mobile-logout" %}>
@@ -75,13 +83,13 @@
   <!-- POP-UP TEMA -->
   <div class="popup" id="popupTheme">
     <div class="popup-content">
-      <img src="{% static 'core/img/close.png' %}" alt="" class="close" id="closeThemePopup">
-
-      <label>
-        <img src="{% static 'core/img/tema.png' %}" alt="">
-        Tema
-      </label>
-
+      <div class="flex">
+        <img src="{% static 'core/img/brilho-do-sol.png' %}" alt="" class="sol">
+        <label class="alinhar">
+          Tema
+        </label>
+        <img src="{% static 'core/img/close.png' %}" alt="" class="close" id="closeThemePopup">
+      </div>
       <div class="radio-group">
         <label><input type="radio" name="theme"> Claro</label>
       </div>

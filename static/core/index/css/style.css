@@ -17,6 +17,7 @@ a {
   color: inherit;          /* usa a cor do elemento interno */
 }
 
+
 .background-slider {
     position: fixed;
     top: 0;
@@ -180,6 +181,7 @@ a {
 }
 
 .btn img {
+    margin-top: 5px;
     width: 22px;
     height: 22px;
 }

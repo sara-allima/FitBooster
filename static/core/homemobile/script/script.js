@@ -189,3 +189,28 @@ function scrollToCurrentWeek() {
 }
 
 scrollToCurrentWeek();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const openPopup = document.getElementById("openPopup");
+  const popupOverlay = document.getElementById("popupOverlay");
+  const closePopup = document.getElementById("closePopup");
+
+  // Abrir popup
+  openPopup.addEventListener("click", (e) => {
+    e.preventDefault(); // impede o redirect
+    popupOverlay.style.display = "flex";
+  });
+
+  // Fechar no X
+  closePopup.addEventListener("click", () => {
+    popupOverlay.style.display = "none";
+  });
+
+  // Fechar clicando fora do popup
+  popupOverlay.addEventListener("click", (e) => {
+    if (e.target === popupOverlay) {
+      popupOverlay.style.display = "none";
+    }
+  });
+});
+
