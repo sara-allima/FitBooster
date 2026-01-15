@@ -54,7 +54,7 @@ def form(request):
                 objetivo=objetivo
             )
 
-            return redirect('login')
+            return redirect('mobile-login')
 
         except IntegrityError:
             return render(request, 'core/form.html', {
