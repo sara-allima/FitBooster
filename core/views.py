@@ -63,17 +63,17 @@ def form(request):
 
     return render(request, 'core/form.html')
 
-@login_required
+@login_required(login_url='mobile-login')
 @aluno_required
 def home(request):
     return render(request,  'core/home.html')
 
-@login_required
+@login_required(login_url='mobile-login')
 @aluno_required
 def note(request):
     return render(request, 'core/note.html')
 
-@login_required
+@login_required(login_url='mobile-login')
 @aluno_required
 def perfil(request):
     return render(request, 'core/perfil.html')
@@ -97,32 +97,32 @@ def login(request):
     
     return render(request, 'core/login.html')
 
-@login_required
+@login_required(login_url='mobile-login')
 @aluno_required
 def registro(request):
     return render(request, 'core/registro.html')
 
-@login_required
+@login_required(login_url='mobile-login')
 @aluno_required
 def clicar(request):
     return render(request, 'core/clicartreino.html')
 
-@login_required
+@login_required(login_url='mobile-login')
 @aluno_required
 def corpo(request):
     return render(request, 'core/corpo.html')
 
-@login_required
+@login_required(login_url='mobile-login')
 @aluno_required
 def escolher(request):
     return render(request, 'core/escolher.html')
 
-@login_required
+@login_required(login_url='mobile-login')
 @aluno_required
 def reg(request):
     return render(request, 'core/reg.html')
 
-@login_required
+@login_required(login_url='mobile-login')
 @aluno_required
 def tela(request):
     return render(request, 'core/tela.html')
@@ -134,14 +134,22 @@ def logout_view(request):
 def list(request):
     return render(request, 'core/list.html')
 
+@login_required(login_url='mobile-login')
+@aluno_required
 def treino(request):
     return render(request, 'core/treino.html')
 
+@login_required(login_url='mobile-login')
+@aluno_required
 def treinoa(request):
     return render(request, 'core/treinoA.html')
 
+@login_required(login_url='mobile-login')
+@aluno_required
 def calendario(request):
     return render(request, 'core/calendario.html')
 
+@login_required(login_url='mobile-login')
+@aluno_required
 def treinadores(request):
     return render(request, 'core/treinadores.html')
