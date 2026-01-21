@@ -13,7 +13,7 @@ class Treinador(models.Model):
         ('O', 'Outro')
     ])
     email = models.EmailField(unique=True)
-    cpf = models.CharField(max_length=11, unique=True)
+    cpf = models.CharField(max_length=14, unique=True)
     formacao = models.TextField()
     idade = models.IntegerField()
 
