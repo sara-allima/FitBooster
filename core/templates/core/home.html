@@ -9,16 +9,6 @@
   <link rel="stylesheet" href="{% static 'core/homemobile/css/stylehome.css' %}">
 </head>
 
-  <div class="popup-overlay" id="popupOverlay" >
-    <div class="popup">
-      <button class="close-btn" id="closePopup">✕</button>
-      <h3>Adicionar treinador</h3>
-      <input type="text" id="nameInput" placeholder="Digite o nome do treinador">
-      <input type="text" placeholder="Digite o CREF do treinador">
-      <button>Adicionar</button>
-    </div>
-  </div>
-
 <body>
   <div class="container">
     <header>
@@ -29,7 +19,7 @@
             <p>Prepare-se, hoje é dia de treino!</p>
           </div>
           <div class="Addtreinador">
-            <a href="{% url 'perfil' %}" id="openPopup">
+            <a href="{% url 'treinadores' %}" id="openPopup">
               <img src="{% static 'core/img/adicionar-usuario.png' %}" alt="perfil" class="Add-img">
             </a>
           </div>
@@ -44,17 +34,6 @@
         <div class="days" id="daysContainer" aria-label="dias do mês"></div>
       </div>
     </header>
-
-    <section class="my-trainings">
-      <h3>Meus treinos</h3>
-      <p class="subtitle">Crie suas próprias rotinas de treino</p>
-      <div class="carousel" id="carousel">
-        <div class="card create">
-          <p>Crie uma rotina de treino</p>
-          <img src="{% static 'core/img/mais_verde.png' %}" alt="adicionar" class="mais">
-        </div>
-      </div>
-    </section>
 
     <main>
       <section class="trainer">
@@ -71,7 +50,7 @@
       <section class="more-options">
         <h3>Mais opções</h3>
         <div class="option"><img src="{% static 'core/img/historico.png' %}" alt="">Histórico de treinos</div>
-        <a href={% url 'note'%}> <div class="option" id="sino" ><img src="{% static 'core/img/sino.png' %}" alt="">Lembretes e notificações</div> </a>
+        <div class="option" id="sino" ><img src="{% static 'core/img/sino.png' %}" alt=""><a href={% url 'note'%}>Lembretes e notificações</a></div>
         <div class="option"><img src="{% static 'core/img/avaliar.png' %}" alt="">Avaliar o aplicativo</div>
         <div class="option"><img src="{% static 'core/img/compartilhar.png' %}" alt="">Compartilhar FitBooster</div>
       </section>

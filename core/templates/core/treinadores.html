@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meus Treinadores</title>
+  <title>Meu Treinador</title>
   <link rel="stylesheet" href="{% static 'core/treinadores/css/treinadores.css' %}">
 </head>
 <body>
@@ -15,11 +15,11 @@
     <a href="{% url 'perfil' %}" class="back-btn">
       <img src="{% static 'core/img/seta-esquerda 1.png' %}" alt="">
     </a>
-    <h2>Meus treinadores</h2>
+    <h2>Meu treinador</h2>
   </header>
 
   <p class="empty-message" id="emptyMessage">
-    você não tem um treinador, adicione um para receber seu plano de treino
+    você não tem um treinador, adicione o seu para receber seu plano de treino
   </p>
 
   <section class="trainer-list" id="trainerList"></section>
@@ -33,7 +33,6 @@
     <button class="close-btn" id="closePopup">✕</button>
     <h3>Adicionar treinador</h3>
 
-    <input type="text" id="nameInput" placeholder="Digite o nome do treinador">
     <input type="text" id="crefInput" placeholder="Digite o CREF do treinador">
 
     <button class="confirm-btn" id="addTrainer">Adicionar</button>

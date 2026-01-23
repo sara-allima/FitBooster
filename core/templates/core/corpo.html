@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'core/corpo/css/stylecorpo.css' %}">
 </head>
 <body>
+
 <div class="cinza">
     <header class="topo">
         <h1>Corpo</h1>
@@ -39,7 +40,7 @@
         <div class="box1">
             <div class="vertical">
                 <div class="horizontal">
-                    <img src="{% static 'core/img/ponto verde.png' %}" alt="" class="ponto"> 
+                    <img src="{% static 'core/img/ponto verde.png' %}" class="ponto"> 
                     <p>Atual</p>
                 </div>
                 <div class="pesoatual">75,5 kg</div>
@@ -47,7 +48,7 @@
 
             <div class="vertical">
                 <div class="horizontal">
-                    <img src="{% static 'core/img/ponto azul.png' %}" alt="" class="ponto"> 
+                    <img src="{% static 'core/img/ponto azul.png' %}" class="ponto"> 
                     <p>Meta</p>
                 </div>
                 <div class="metaatual">60,5 kg</div>
@@ -59,42 +60,16 @@
             </div>  
         </div>
 
-        <p class="Diagnostico"> Diagnóstico</p>
-
-        <div class="box1">
-            <div class="vertical">
-                <p>IMC</p>
-                <div class="pesoatual">00,00</div>
-            </div>
-
-            <div class="vertical">
-                <p>Gordura</p>
-                <div class="metaatual">00,00 %</div>
-            </div>
-
-            <div class="vertical">
-                <p>Peso ideal</p>
-                <div class="diferencaatual">00,00 kg</div>
-            </div>  
-        </div>
-
-        <!-- HISTÓRICO PESO -->
-        <div class="Historico" id="hispeso">
-            <p class="Diagnostico"> Histórico</p>
-            <div class="data-hist">
-                <img src="{% static 'core/img/calendario 1.png' %}" alt="">
-                <span>2 de outubro de 2025</span>
-                <button class="lixeira"><img src="{% static 'core/img/lixo 1.png' %}" alt=""></button>
-            </div>
-        </div>
+        
     </div>
 
     <!-- BOTÃO PESO -->
-    <button class="btn-add hidden" id="btnpeso">+ Adicionar</button>
+    <a href="{% url 'reg' %}">
+        <button class="btn-add hidden" id="btnpeso">Alterar</button>
+    </a>
 
     <!-- MEDIDAS -->
     <div class="box hidden" id="boxMedidas">
-
         <div class="medida"><span>Ombros</span><span>-- cm</span></div>
         <div class="medida"><span>Peito</span><span>-- cm</span></div>
         <div class="medida"><span>Antebraço (E)</span><span>-- cm</span></div>
@@ -107,44 +82,21 @@
         <div class="medida"><span>Pernas (D)</span><span>-- cm</span></div>
         <div class="medida"><span>Panturrilha (E)</span><span>-- cm</span></div>
         <div class="medida"><span>Panturrilha (D)</span><span>-- cm</span></div>
-
-    </div>
-
-    <!-- HISTÓRICO MEDIDAS -->
-    <div class="Historico hidden" id="hismedida">
-        <p class="Diagnostico"> Histórico</p>
-        <div class="data-hist">
-            <img src="{% static 'core/img/calendario 1.png' %}" alt="">
-            <span>2 de outubro de 2025</span>
-            <button class="lixeira"><img src="{% static 'core/img/lixo 1.png' %}" alt=""></button>
-        </div>
     </div>
 
     <!-- BOTÃO MEDIDAS -->
-    <a href={% url 'reg'%}>  <button class="btn-add hidden" id="btnmedida">+ Adicionar  </button> </a>
-
+    <a href="{% url 'reg' %}">
+        <button class="btn-add hidden" id="btnmedida">Alterar</button>
+    </a>
 </div>
 
-<!-- NAV BAR FIXA -->
+<!-- NAV BAR -->
 <nav class="nav">
-    <button class="nav-btn">
-      <a href={% url 'home'%}>
-        <img src="{% static 'core/img/casa.png' %}" alt="">
-      </a>
-    </button>
-    <button class="nav-btn">
-      <a href={% url 'calendario'%}>
-        <img src="{% static 'core/img/escala.png' %}" alt="">
-      </a>
-    </button>
-    <button class="nav-btn ativo">
-         <a href={% url 'corpo'%}>
-        <img src="{% static 'core/img/corpo1.png' %}" alt="">
-        </a>
-    </button>
+    <a href="{% url 'home' %}" class="nav-btn"><img src="{% static 'core/img/casa.png' %}"></a>
+    <a href="{% url 'calendario' %}" class="nav-btn"><img src="{% static 'core/img/escala.png' %}"></a>
+    <a href="{% url 'corpo' %}" class="nav-btn ativo"><img src="{% static 'core/img/corpo1.png' %}"></a>
 </nav>
 
 <script src="{% static 'core/corpo/script/script.js' %}"></script>
-
 </body>
 </html>
