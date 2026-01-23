@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitBooster</title>
+    <link rel="stylesheet" href="{% static 'core/index/css/style.css' %}">
+</head>
+<body>
+    <div class="background-slider">
+        <img src="{% static 'core/img/image 6.png' %}" class="bg active">
+        <img src="{% static 'core/img/pexels-alesiakozik-7289369.jpg' %}" class="bg">
+        <img src="{% static 'core/img/pexels-pixabay-416809.jpg' %}" class="bg">
+    </div>
+
+    <div class="overlay"></div>
+
+    <main class="content">
+        <div class="logotitle">
+            <img src="{% static 'core/img/logo.png' %}" alt="FitBooster Logo" class="logo">
+            <p class="FitBooster">FitBooster</p>
+        </div>
+
+            <div class="addimg">
+            <img src="{% static 'core/img/image-1-Photoroom.png' %}" class="card-img active" alt="Card 1">
+            <img src="{% static 'core/img/image-2-Photoroom.png' %}" class="card-img" alt="Card 2">
+            <img src="{% static 'core/img/image-3-Photoroom.png' %}" class="card-img" alt="Card 3">
+            </div>
+
+
+            <div class="dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+
+            <p class="text">Registre facilmente os seus treinos, tudo num só lugar.</p>
+            <button class="btn email">
+                <a href={% url 'form'%}>
+                Inscreva-se com E-mail
+                </a>
+        </button>
+
+        <button class="btn google">
+            Registro com o Google
+        </button>
+
+        <p class="login">Já tem uma conta? <a href={% url 'mobile-login'%}>Iniciar sessão</a></p>
+    </main>
+
+    <script src="{% static 'core/index/script/script.js' %}"></script>
+</body>
+</html>

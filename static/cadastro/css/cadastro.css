@@ -1,0 +1,131 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+    --primary-white-bg-text: #F6F6F6; /*Cor primária clara do background*/
+    --primary-dark-bg: #101318;
+    --secundary-dark-bg: #1C2126; /*Cor primária escura do background*/
+    --tertiary-dark-bg: #121010; /*Cor secundária escura do background*/
+    --quaternary-dark-bg: #272C35;
+
+    --primary-green: #33FF55; /*Verde Principal*/
+    --focus-button: #23FE48;
+    --border-color: #363D49; /*Cor das bordas*/
+    --primary-dark-text: #121010; /*Tom escuro primário dos textos*/
+    --secundary-dark-text: #B3B3B3; /*Tom escuro secundário dos textos*/
+    --primary-red: #EF4343; /*Vermelho Primário*/
+}
+body {
+  background: linear-gradient(rgba(28,33,38,0.69), rgba(28,33,38,0.69)),
+              url("../images/bgImagegym-hero-3.png") no-repeat center center/cover;
+  background-color: var(--primary-dark-bg);
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.logo {
+  width: 537px;
+}
+.container {
+  text-align: center;
+  margin-top: 80px;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 3.375rem;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: rgba(28, 33, 38, 0.86);
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(0, 255, 128, 0.4);
+  border: var(--primary-green);
+}
+.card a {
+  color: var(--primary-dark-text);
+  text-decoration: none;
+}
+.avatar {
+  margin: 0 7.688rem;
+  height: auto;
+}
+.card-footer {
+  background-color: var(--primary-green);
+  color: var(--primary-dark-text);
+  font-weight: 700;
+  padding: 10px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .titulo {
+    font-size: 1.6rem;
+  }
+
+  .subtitulo {
+    font-size: 1.3rem;
+  }
+
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    width: 32px;
+    height: 32px;
+  }
+
+  .titulo {
+    font-size: 1.4rem;
+  }
+
+  .subtitulo {
+    font-size: 1.1rem;
+  }
+
+  .card-footer {
+    font-size: 1rem;
+  }
+}

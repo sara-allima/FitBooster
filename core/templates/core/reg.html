@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Adicionar Registro</title>
+
+<link rel="stylesheet" href="{% static 'core/reg/css/stylereg.css' %}" />
+</head>
+<body>
+  <div class="sheet"> 
+    <div class="container">
+      <div class="header">
+        <div class="back"><img src="{% static 'core/img/seta-esquerda 1.png' %}" alt=""></div>
+        <div class="title">Adicionar Registro</div>
+      </div>
+
+      <div class="top-row">
+        <div class="image-box"><img src="{% static 'core/img/galeria-de-fotos (1).png' %}" alt=""></div>
+
+        <div class="date-box" id="dateTrigger">
+          <div class="date-text" id="dateDisplay">Carregando...</div>
+          <div class="date-icon"><img src="{% static 'core/img/calendario 1.png' %}" alt=""></div>
+        </div>
+      </div>
+
+      <div class="accordion">
+
+        <!-- PESO -->
+        <div class="acc-row" data-target="peso">
+          <h4>Peso</h4><div class="icon"><img src="{% static 'core/img/sinal-de-seta-para-baixo-para-navegar.png' %}" alt=""></div>
+        </div>
+        <div class="acc-body" id="body-peso">
+          <div style="position:relative">
+            <input id="inputPeso" class="pesoinput" type="number" step="0.1" placeholder="--" />
+            <div class="kg-label">kg</div>
+          </div>
+        </div>
+
+        <!-- MEDIDAS -->
+        <div class="acc-row" data-target="medidas">
+          <h4>Medidas</h4><div class="icon"><img src="{% static 'core/img/sinal-de-seta-para-baixo-para-navegar.png' %}" alt=""></div>
+        </div>
+        <div class="acc-body" id="body-medidas">
+          <div class="measures-grid">
+            <input class="input measure" id="ombros" placeholder="Ombros (cm)" type="number">
+            <input class="input measure" id="peito" placeholder="Peito (cm)" type="number">
+            <input class="input measure" id="antebraço_e" placeholder="Antebraço (E)" type="number">
+            <input class="input measure" id="antebraço_d" placeholder="Antebraço (D)" type="number">
+            <input class="input measure" id="braco_e" placeholder="Braço (E)" type="number">
+            <input class="input measure" id="braco_d" placeholder="Braço (D)" type="number">
+            <input class="input measure" id="cintura" placeholder="Cintura (cm)" type="number">
+            <input class="input measure" id="quadril" placeholder="Quadril (cm)" type="number">
+            <input class="input measure" id="perna_e" placeholder="Perna (E)" type="number">
+            <input class="input measure" id="perna_d" placeholder="Perna (D)" type="number">
+            <input class="input measure" id="panturrilha_e" placeholder="Panturrilha (E)" type="number">
+            <input class="input measure" id="panturrilha_d" placeholder="Panturrilha (D)" type="number">
+          </div>
+        </div>
+
+        <div class="Observações">
+          <h4>Observações</h4>
+          <div class="campo">
+            <textarea id="obs" class="inputt" rows="4" placeholder="Adicione uma observações"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTÃO SALVAR SEM RESTRIÇÃO -->
+      <div class="save-wrap">
+        <button id="saveBtn" class="save-btn">Salvar</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PICKER -->
+  <div class="picker-backdrop" id="pickerBackdrop">
+    <div class="picker">
+      <div class="picker-top">
+        <span class="muted">Selecione a data</span>
+        <div style="display:flex;gap:8px">
+          <button id="cancelPick" class="btn disabled">Cancelar</button>
+          <button id="okPick" class="btn">OK</button>
+        </div>
+      </div>
+
+      <div class="picker-columns">
+        <div class="col"><div class="wheel" id="dayWheel"></div><div class="center-indicator"></div></div>
+        <div class="col"><div class="wheel" id="monthWheel"></div><div class="center-indicator"></div></div>
+        <div class="col"><div class="wheel" id="yearWheel"></div><div class="center-indicator"></div></div>
+      </div>
+    </div>
+  </div>
+
+<script src="{% static 'core/reg/script/script.js' %}"></script>
+</body>
+</html>

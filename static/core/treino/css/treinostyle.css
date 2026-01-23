@@ -1,0 +1,160 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "SF Pro Display", "Poppins", sans-serif;
+}
+
+:root {
+  --bg:#0f1113;
+  --card:#272C35;
+  --muted:#99a0a6;
+  --accent:#00e676;
+  --white:#ffffff;
+}
+
+body {
+  
+  min-height: 100vh;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  background: black;
+  color: #fff;
+}
+
+a {
+  text-decoration: none;   /* remove sublinhado */
+  color: inherit;          /* usa a cor do elemento interno */
+}
+
+.cont{
+  max-width: 420px;
+  width: 100%;
+  background: linear-gradient(#1C2126, #121416 35%);
+  
+}
+.container {  
+  width: 100%;
+  max-width: 420px;
+  padding: 18px;
+}
+.topo {
+  background: #1C2126;
+  padding: 18px;
+
+}
+
+
+/* HEADER */
+header { 
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.back-icon {
+  width: 25px;
+}
+
+.menu-icon {
+  width: 22px;
+}
+
+.header-text {
+  margin-left: 15px;
+
+}
+
+.ola {
+  font-size: 18px;
+  opacity: .8;
+}
+
+.nome {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* TITULOS */
+.titulo {
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.sub {
+  font-size: 14px;
+  color: var(--muted);
+
+}
+
+/* CARDS */
+.treino-card {
+  background: var(--card);
+  border-radius: 14px;  
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.treino-card h3 {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.info-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.info-groupp{
+  width: 150px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-group img {
+  width: 18px;
+}
+
+.info-group span {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* NAV BOTTOM */
+.nav {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 60px;
+  max-width: 420px;
+  background: #33FF55;
+  padding: 5px 0;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 30px;
+  border: 1px solid #1f1f1f;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+}
+
+.nav-btn img {
+  width: 28px;
+  opacity: .6;
+}
+
+.nav-btn.ativo img {
+  opacity: 1;
+}

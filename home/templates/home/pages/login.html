@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FitBooster - Login</title>
+  <link rel="stylesheet" href="{% static 'login/css/style.css' %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alice&family=Roboto+Slab:wght@100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="background-image">
+        <img id="atleta" src="{% static 'login/img/bgImagegym-hero-3 1.png' %}">
+    </div>
+    <section class="login-box">
+      <img src="{% static 'login/img/logo.png' %}" alt="FitBooster logo" class="logo" />
+
+      <h1>Entrar no <span>FitBooster</span></h1>
+
+      <form method="POST">
+        {% csrf_token %}
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="text" id="email" placeholder="exemplo@gmail.com" name='email' required/>
+        </div>
+
+        <div class="input-group">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" placeholder="mínimo 6 caracteres" name='senha' required/>
+        </div>
+
+        <a href="#" class="forgot">Esqueceu a Senha?</a>
+
+        <button type="submit" class="btn-primary">Continuar</button>
+
+        <div class="divider">
+          <span>ou</span>
+        </div>
+
+        <button type="button" class="btn-social google">
+          <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" />
+          Entrar com o Google
+        </button>
+
+        <button type="button" class="btn-social facebook">
+          <img src="https://www.svgrepo.com/show/157818/facebook.svg" alt="Facebook" />
+          Entrar com o Facebook
+        </button>
+
+        <p class="register">
+          Ainda não tem uma conta? <a href="{% url 'cadastro' %}">Cadastrar</a>
+        </p>
+      </form>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> redirect</title>
+  <link rel="stylesheet" href="{% static 'redirect/css/style.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+
+    <div class="logo">
+      <a href="www.google.com">
+        <img src="{% static 'redirect/imgs/logo.png' %}" alt="logo da pagina">
+      </a>
+    </div>
+    
+    <div class="div-h1">
+
+      <h1>Para se cadastrar como aluno(a), baixe nosso app!</h1>
+
+      <h3>Escaneie o código QR abaixo e acesse nosso aplicativo</h3>
+    </div>
+    <!-- Imagem de fundo estilo Netflix -->
+    <div class="background-image">
+      
+        <img id="atleta" src="{% static 'redirect/imgs/backgorund_image.png' %}" alt="atleta">
+    </div>
+    
+    <!-- Conteúdo sobre a imagem (lado DIREITO) -->
+    <section class="redirect">
+
+      <img class="redirect-qrcode" src="{% static 'redirect/imgs/qrcode.png' %}" alt="qr_code">
+
+      <div class="realocar">
+        <a href="https://play.google.com/store/apps?hl=pt_BR">
+
+          <img id="play-store" src="{% static 'redirect/imgs/playstore.jpg' %}" alt="Play Store">
+          
+        </a>
+        <a href="https://www.apple.com/app-store/">
+          <img id="app-store" src="{% static 'redirect/imgs/image.png' %}" alt="App Store">
+        </a>
+
+      </div>
+      
+    </section>
+  </div>
+
+</body>
+</html>
+    </section>
+
+</body>
+</html>
