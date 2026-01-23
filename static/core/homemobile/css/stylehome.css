@@ -15,6 +15,7 @@ body {
   background: linear-gradient(#1C2126, #121416 35%);
   color: var(--white);
   overflow-x: hidden;
+  height: 107vh;
 }
 a {
   text-decoration: none;   /* remove sublinhado */
@@ -24,7 +25,7 @@ a {
 header { background-color: var(--card); }
 main { padding: 16px; padding-top: 0; }
 .bar { padding: 10px 16px; }
-.container { max-width: 420px; margin: 0 auto; }
+.container { max-width: 420px; margin: 0 auto; max-height: 100%;}
 
 /* Header */
 .top-bar {
@@ -262,6 +263,8 @@ main { padding: 16px; padding-top: 0; }
 .nav-btn.ativo {
   color: #00e676;
 }
+
+
 
 
 

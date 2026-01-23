@@ -1,4 +1,3 @@
-// Alternar tabs
 const tabPeso = document.getElementById("tabPeso");
 const tabMedidas = document.getElementById("tabMedidas");
 
@@ -8,21 +7,14 @@ const boxMedidas = document.getElementById("boxMedidas");
 const btnpeso = document.getElementById("btnpeso");
 const btnmedida = document.getElementById("btnmedida");
 
-const hispeso = document.getElementById("hispeso");
-const hismedida = document.getElementById("hismedida");
-
 // Estado inicial
-btnpeso.classList.remove("hidden");
-btnmedida.classList.add("hidden");
-
-hispeso.classList.remove("hidden");
-hismedida.classList.add("hidden");
-
 boxPeso.classList.remove("hidden");
 boxMedidas.classList.add("hidden");
 
-// ---- EVENTOS -----
+btnpeso.classList.remove("hidden");
+btnmedida.classList.add("hidden");
 
+// Tabs
 tabPeso.onclick = () => {
     tabPeso.classList.add("ativo");
     tabMedidas.classList.remove("ativo");
@@ -32,9 +24,6 @@ tabPeso.onclick = () => {
 
     btnpeso.classList.remove("hidden");
     btnmedida.classList.add("hidden");
-
-    hispeso.classList.remove("hidden");
-    hismedida.classList.add("hidden");
 };
 
 tabMedidas.onclick = () => {
@@ -46,12 +35,9 @@ tabMedidas.onclick = () => {
 
     btnmedida.classList.remove("hidden");
     btnpeso.classList.add("hidden");
-
-    hispeso.classList.add("hidden");
-    hismedida.classList.remove("hidden");
 };
 
-// Foto (não implementado ainda)
+// Foto
 document.querySelector(".btn-add-foto").onclick = () => {
     alert("Função de adicionar foto ainda não criada!");
 };

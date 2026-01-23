@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const addTrainer = document.getElementById("addTrainer");
   const trainerList = document.getElementById("trainerList");
   const crefInput = document.getElementById("crefInput");
-  const nameInput = document.getElementById("nameInput");
   const emptyMessage = document.getElementById("emptyMessage");
 
   const deleteOverlay = document.getElementById("deleteOverlay");
@@ -34,14 +33,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   addTrainer.addEventListener("click", () => {
-    const name = nameInput.value.trim();
     const cref = crefInput.value.trim();
-    if (!name || !cref) return;
+    if (!cref) return;
 
     const card = document.createElement("div");
     card.className = "trainer-card";
     card.innerHTML = `
-      <span>${name} (CREF: ${cref})</span>
+      <span>CREF: ${cref}</span>
       <button class="delete-btn">✕</button>
     `;
 
@@ -52,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     trainerList.appendChild(card);
 
-    nameInput.value = "";
     crefInput.value = "";
     popupOverlay.style.display = "none";
     checkEmpty();

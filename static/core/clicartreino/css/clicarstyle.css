@@ -97,3 +97,30 @@ header {
   font-size: 15px;
   font-weight: 600;
 }
+
+/* ÁREA DO BOTÃO */
+.area-botao {
+  margin-top: 22px;
+}
+
+/* ESTADO CONCLUÍDO */
+.btn-concluir.concluido {
+  background: #2a2a2a;
+  color: #9aa0a6;
+  cursor: default;
+}
+ 
+.btn-concluir {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  background: var(--accent);
+  color: #000;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+

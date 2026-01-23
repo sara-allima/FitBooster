@@ -12,21 +12,22 @@
 }
 
 body { 
-
   display: flex;
   margin: 0;
   background: linear-gradient(#1C2126, #121416 30%);
   color: white;
   justify-content: center;
-
-
+  height: 100vh;
 }
-.container{
-  padding: 18px;
-}
+
 .sheet {
-  max-width: 430px;
+  width: 100vw;
+}
 
+.container {
+  padding: 18px;
+  background: linear-gradient(#1C2126, #121416 30%);
+  max-width: 420px;
 }
 
 /* =========================================================
@@ -39,7 +40,6 @@ body {
 }
 
 .back {
-
   border-radius: 10px;
   display: grid;
   place-items: center;
@@ -51,61 +51,11 @@ body {
 }
 
 /* =========================================================
-   TOP ROW → Foto + Data
-========================================================= */
-.top-row {
-  display: flex;
-  gap: 30px;
-  margin: 20px 0;
-  align-items: end;
-}
-
-.image-box {
-  width: 120px;
-  height: 120px;
-  border-radius: 20px;
-  border: 2px solid #FEFEFE;
-  display: grid;
-  place-items: center;
-}
-
-.date-box {
-  width: 286px;
-  height: 90px;
-  flex: 1;
-  border-radius: 20px;
-  border: 2px solid #FEFEFE;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  cursor: pointer;
-}
-
-.date-text {
-  font-size: 15px;
-  color: #FEFEFE; ;
-}
-
-.date-icon {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 6px;
- 
-}
-
-/* Divider */
-.divider {
-  height: 1px;
-  background: rgba(255,255,255,0.05);
-  margin: 18px 0;
-}
-
-/* =========================================================
    ACCORDION
 ========================================================= */
-.accordion { background: transparent; }
+.accordion {
+  background: transparent;
+}
 
 .acc-row {
   display: flex;
@@ -114,17 +64,6 @@ body {
   padding: 5px 4px;
   border-bottom: 1px solid #FEFEFE;
   cursor: pointer;
-}
-
-.Observações h4{
-  margin-top: 20px;
-  margin-left: 0;
-  padding-left: 4px;
-}
-
-.campo{
-  max-width: 400px;
-  margin-bottom: 70px;
 }
 
 .acc-body {
@@ -137,23 +76,18 @@ body {
   display: block;
 }
 
+/* 👉 SOMENTE MEDIDAS tem espaço para o botão */
+.acc-body-medidas {
+  margin-bottom: 120px;
+}
+
 /* =========================================================
    INPUTS
 ========================================================= */
 .input {
   margin-top: 10px;
-  max-width: 368px;
-  width: 364px;
-  padding: 12px;
-  border-radius: 8px;
-  background: transparent;
-  border: 1px solid #FEFEFE;
-  color: white;
-}
-
-.pesoinput {
-  max-width: 368px;
-  width: 364px;
+  width: 100%;
+  max-width: 364px;
   padding: 12px;
   border-radius: 8px;
   background: transparent;
@@ -162,25 +96,20 @@ body {
 }
 
 .input::placeholder {
-  color: #FEFEFE
+  color: #FEFEFE;
 }
 
-.kg-label {
-  position: absolute;
-  top: 10px;
-  right: 14px;
-  color: rgba(255,255,255,0.25);
-}
-
-/* GRID de medidas */
+/* =========================================================
+   GRID DE MEDIDAS
+========================================================= */
 .measures-grid {
-
-  grid-template-columns: 1fr 1fr;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 10px;
 }
 
 /* =========================================================
-   SAVE BUTTON
+   BOTÃO SALVAR
 ========================================================= */
 .save-wrap {
   position: fixed;
@@ -202,16 +131,6 @@ body {
   font-weight: 700;
 }
 
-.inputt {
-  max-width: 368px;
-  width: 368px;
-  padding: 12px;
-  border-radius: 8px;
-  background: transparent;
-  border: 1px solid #FEFEFE;
-  color: white;
-}
-
 .save-btn.inactive {
   background: #222;
   color: rgba(255,255,255,0.4);
@@ -219,7 +138,7 @@ body {
 }
 
 /* =========================================================
-   PICKER (ESTILO iOS)
+   PICKER (ESTILO iOS) — mantido
 ========================================================= */
 .picker-backdrop {
   position: fixed;
@@ -259,7 +178,7 @@ body {
   opacity: 0.4;
 }
 
-/* ------- Wheels ------- */
+/* Wheels */
 .picker-columns {
   display: flex;
   gap: 6px;
@@ -282,7 +201,7 @@ body {
 }
 
 .wheel::-webkit-scrollbar {
-  width: 0; /* esconder */
+  width: 0;
 }
 
 .wheel-item {
@@ -299,7 +218,6 @@ body {
   font-weight: 700;
 }
 
-/* Indicador central */
 .center-indicator {
   position: absolute;
   inset: 0;
