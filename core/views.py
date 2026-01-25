@@ -7,6 +7,11 @@ from home.models import Aluno
 from django.http import HttpResponse
 from decimal import Decimal, InvalidOperation
 from home.decorators import aluno_required
+from home.models import Treinador, ConexaoAlunoTreinador
+from django.http import JsonResponse
+from django.utils import timezone
+import json
+from django.shortcuts import get_object_or_404
 
 def index(request):
     return render(request, 'core/index.html')
@@ -152,4 +157,78 @@ def calendario(request):
 @login_required(login_url='mobile-login')
 @aluno_required
 def treinadores(request):
-    return render(request, 'core/treinadores.html')
+    aluno = request.user.aluno
+
+    conexoes = ConexaoAlunoTreinador.objects.filter(aluno=aluno)
+
+    treinadores = Treinador.objects.all()
+
+    return render(request, 'core/treinadores.html', {
+        'treinadores': treinadores,
+        'conexoes': conexoes,
+    })
+
+
+
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def solicitar_treinador(request, cref):
+    aluno = request.user.aluno
+    treinador = get_object_or_404(Treinador, cref=cref)
+
+    conexao, criada = ConexaoAlunoTreinador.objects.get_or_create(
+        aluno=aluno,
+        treinador=treinador,
+        defaults={'status': 'PENDENTE'}
+    )
+
+    return redirect('treinadores')
+
+
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def listar_conexoes(request):
+    aluno = request.user.aluno
+
+    conexoes = ConexaoAlunoTreinador.objects.filter(
+        aluno=aluno,
+        status__in=['PENDENTE', 'ACEITA']
+    )
+
+    data = []
+    for c in conexoes:
+        data.append({
+            'id': c.id,
+            'nome': c.treinador.nome,
+            'cref': c.treinador.cref,
+            'status': c.status
+        })
+
+    return JsonResponse(data, safe=False)
+
+@login_required
+def encerrar_conexao(request):
+    if request.method != 'POST':
+        return JsonResponse({'erro': 'Método inválido'}, status=400)
+
+    body = json.loads(request.body)
+    conexao_id = body.get('id')
+
+    conexao = get_object_or_404(ConexaoAlunoTreinador, id=conexao_id)
+
+    # segurança: só aluno ou treinador da conexão
+    user = request.user
+    if hasattr(user, 'aluno') and conexao.aluno == user.aluno:
+        pass
+    elif hasattr(user, 'treinador') and conexao.treinador == user.treinador:
+        pass
+    else:
+        return JsonResponse({'erro': 'Sem permissão'}, status=403)
+
+    conexao.status = 'ENCERRADA'
+    conexao.data_encerramento = timezone.now()
+    conexao.save()
+
+    return JsonResponse({'sucesso': True})

@@ -22,7 +22,34 @@
     você não tem um treinador, adicione o seu para receber seu plano de treino
   </p>
 
-  <section class="trainer-list" id="trainerList"></section>
+<section class="trainer-list">
+
+  {% for treinador in treinadores %}
+    <div class="trainer-card">
+      <div>
+        <strong>{{ treinador.nome }}</strong><br>
+        <small>CREF: {{ treinador.cref }}</small><br>
+
+        {% for conexao in conexoes %}
+          {% if conexao.treinador.cref == treinador.cref %}
+            <small>Status: {{ conexao.status }}</small>
+          {% endif %}
+        {% empty %}
+          <small>Disponível</small>
+        {% endfor %}
+      </div>
+
+      {% if treinador.cref not in conexoes.values %}
+        <form method="post" action="{% url 'solicitar-treinador' treinador.cref %}">
+          {% csrf_token %}
+          <button class="add-btn" style="margin-top:0">Adicionar</button>
+        </form>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+</section>
+
 
   <button class="add-btn" id="openPopup">+ Adicionar treinador</button>
 </div>

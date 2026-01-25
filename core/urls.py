@@ -19,4 +19,15 @@ urlpatterns = [
     path('treinoa/', views.treinoa, name="treinoa"),
     path('calendario/', views.calendario, name="calendario"),
     path('treinadores/', views.treinadores, name="treinadores"),
+    path('conexoes/', views.listar_conexoes, name='listar-conexoes'),
+    path('conexoes/solicitar/', views.solicitar_treinador, name='solicitar-treinador'),
+    path('conexoes/encerrar/', views.encerrar_conexao, name='encerrar-conexao'),
+    path(
+    'treinadores/solicitar/<str:cref>/',
+    views.solicitar_treinador,
+    name='solicitar-treinador'
+    ),
+
     ]
+
+
