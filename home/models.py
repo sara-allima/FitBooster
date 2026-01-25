@@ -34,6 +34,12 @@ class Aluno(models.Model):
     altura = models.DecimalField(max_digits=4, decimal_places=2)
     idade = models.IntegerField()
 
+    # 👇 NOVO CAMPO
+    dias_disponiveis = models.CharField(
+        max_length=100,
+        help_text="Dias da semana separados por vírgula. Ex: Segunda,Quarta,Sexta"
+    )
+
 
     def __str__(self):
         return self.nome or self.user.username
@@ -172,3 +178,30 @@ class ConexaoAlunoTreinador(models.Model):
 
     class Meta:
         unique_together = ('aluno', 'treinador')
+    
+    
+class DiaTreinoAluno(models.Model):
+    DIAS_SEMANA = [
+        ('DOM', 'Domingo'),
+        ('SEG', 'Segunda'),
+        ('TER', 'Terça'),
+        ('QUA', 'Quarta'),
+        ('QUI', 'Quinta'),
+        ('SEX', 'Sexta'),
+        ('SAB', 'Sábado'),
+    ]
+
+    aluno = models.ForeignKey(
+        Aluno,
+        on_delete=models.CASCADE,
+        related_name='dias_treino'
+    )
+    dia = models.CharField(max_length=3, choices=DIAS_SEMANA)
+
+    class Meta:
+        unique_together = ('aluno', 'dia')
+        verbose_name = 'Dia de treino do aluno'
+        verbose_name_plural = 'Dias de treino do aluno'
+
+    def __str__(self):
+        return f'{self.aluno.nome} - {self.get_dia_display()}'
