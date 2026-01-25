@@ -53,3 +53,21 @@ class MedidasAlunoAdmin(admin.ModelAdmin):
     search_fields = ('aluno__nome',)
 
 admin.site.register(MedidasAluno, MedidasAlunoAdmin)
+
+class ConexaoAlunoTreinadorAdmin(admin.ModelAdmin):
+    list_display = (
+        'aluno',
+        'treinador',
+        'status',
+        'data_solicitacao',
+        'data_resposta',
+        'data_encerramento'
+    )
+    list_filter = ('status',)
+    search_fields = (
+        'aluno__nome',
+        'treinador__nome',
+        'treinador__cref'
+    )
+
+admin.site.register(ConexaoAlunoTreinador, ConexaoAlunoTreinadorAdmin)

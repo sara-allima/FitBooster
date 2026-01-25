@@ -40,13 +40,6 @@ class Aluno(models.Model):
         help_text="Dias da semana separados por vírgula. Ex: Segunda,Quarta,Sexta"
     )
 
-    treinador = models.ForeignKey(
-        Treinador,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='alunos'
-    )
 
     def __str__(self):
         return self.nome or self.user.username
@@ -154,6 +147,37 @@ class MedidasAluno(models.Model):
 
     def __str__(self):
         return f'Medidas de {self.aluno.nome} - {self.data_registro}'
+
+
+class ConexaoAlunoTreinador(models.Model):
+    STATUS_CHOICES = [
+        ('PENDENTE', 'Pendente'),
+        ('ACEITA', 'Aceita'),
+        ('RECUSADA', 'Recusada'),
+        ('ENCERRADA', 'Encerrada'),
+    ]
+
+    aluno = models.ForeignKey(
+        Aluno,
+        on_delete=models.CASCADE,
+        related_name='conexoes'
+    )
+    treinador = models.ForeignKey(
+        Treinador,
+        on_delete=models.CASCADE,
+        related_name='conexoes'
+    )
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='PENDENTE'
+    )
+    data_solicitacao = models.DateTimeField(auto_now_add=True)
+    data_resposta = models.DateTimeField(null=True, blank=True)
+    data_encerramento = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ('aluno', 'treinador')
     
     
 class DiaTreinoAluno(models.Model):
