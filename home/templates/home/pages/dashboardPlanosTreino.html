@@ -7,6 +7,8 @@
 
     <link rel="stylesheet" href="{% static "dashboard/css/dashboard.css" %}"/> <!--Mudar o caminho-->
     <link rel="stylesheet" href="{% static "global/css/globais.css" %}">
+ 
+
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,5 +45,10 @@
     </div>
 
     <script src="{% static "dashboard/js/script.js" %}"></script>
+    
+
+
+    {% include "home/partials/dashboard/modal-criar-plano.html" %}
+
 </body>
 </html>

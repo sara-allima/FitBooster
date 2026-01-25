@@ -5,4 +5,51 @@
     <p class="subtitle">Gerencie seus alunos e acompanhe o progresso</p>
 </div>
 
-<a href="{% url 'logout' %}" class="primary-button">Sair</a>
+
+<!-- Sino -->
+<div class="notificacao">
+    <div class="noti" id="btnNotificacao">
+        <img src="{% static 'dashboard/images/notificacao.png' %}">
+    </div>
+
+    <a href="{% url 'logout' %}" class="primary-buttonn">Sair</a>
+</div>
+
+<!-- MODAL -->
+<div class="modal-notificacao" id="modalNotificacao">
+    <div class="modal-conteudo">
+
+        <div class="modal-header">
+            <h3>Pedidos de Conexão</h3>
+            <button class="modal-close" id="fecharModal">&times;</button>
+        </div>
+
+        {% for pedido in pedidos %}
+        <div class="pedido">
+            <span>{{ pedido.aluno.nome }}</span>
+
+            <div class="acoes">
+                <form method="post" action="{% url 'aceitar_pedido' pedido.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-aceitar">Aceitar</button>
+                </form>
+
+                <form method="post" action="{% url 'recusar_pedido' pedido.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-recusar">Recusar</button>
+                </form>
+            </div>
+        </div>
+        {% empty %}
+        <div class="pedido">
+            <span>Lucas Ferreira</span>
+
+            <div class="acoes">
+                <button class="btn-aceitar">Aceitar</button>
+                <button class="btn-recusar">Recusar</button>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>

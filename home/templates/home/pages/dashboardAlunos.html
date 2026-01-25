@@ -16,39 +16,62 @@
     <title>FitBooster | Alunos</title>
 </head>
 
+
+
 <!-- MODAL RELATÓRIO DO ALUNO -->
+
 <div class="modal-overlay" id="reportModal">
-  <div class="modal-card">
-    <button class="modal-close" id="closeModal">&times;</button>
+    <div class="modal-card">
+        <button class="modal-close" id="closeModal">&times;</button>
 
-    <h2 class="modal-title">Relatório do Aluno</h2>
-    <p class="modal-subtitle" id="modalStudentName"></p>
+        <h2 class="modal-title">Relatório do Aluno</h2>
+        <p class="modal-subtitle" id="modalStudentName"></p>
 
-    <div class="modal-grid">
-      <div class="modal-item"><span>Peso Atual</span><strong>82 kg</strong></div>
-      <div class="modal-item"><span>Meta</span><strong>Hipertrofia</strong></div>
+        <div class="modal-grid">
+        <div class="modal-item"><span>Peso Atual</span><strong>82 kg</strong></div>
+        <div class="modal-item"><span>Meta</span><strong>Hipertrofia</strong></div>
 
-      <div class="modal-item"><span>Ombro</span><strong>110 cm</strong></div>
-      <div class="modal-item"><span>Peito</span><strong>102 cm</strong></div>
+        <div class="modal-item"><span>Ombro</span><strong>110 cm</strong></div>
+        <div class="modal-item"><span>Peito</span><strong>102 cm</strong></div>
 
-      <div class="modal-item"><span>Antebraço (E)</span><strong>30 cm</strong></div>
-      <div class="modal-item"><span>Antebraço (D)</span><strong>31 cm</strong></div>
+        <div class="modal-item"><span>Antebraço (E)</span><strong>30 cm</strong></div>
+        <div class="modal-item"><span>Antebraço (D)</span><strong>31 cm</strong></div>
 
-      <div class="modal-item"><span>Braço (E)</span><strong>38 cm</strong></div>
-      <div class="modal-item"><span>Braço (D)</span><strong>39 cm</strong></div>
+        <div class="modal-item"><span>Braço (E)</span><strong>38 cm</strong></div>
+        <div class="modal-item"><span>Braço (D)</span><strong>39 cm</strong></div>
 
-      <div class="modal-item"><span>Cintura</span><strong>84 cm</strong></div>
-      <div class="modal-item"><span>Quadril</span><strong>96 cm</strong></div>
+        <div class="modal-item"><span>Cintura</span><strong>84 cm</strong></div>
+        <div class="modal-item"><span>Quadril</span><strong>96 cm</strong></div>
 
-      <div class="modal-item"><span>Pernas (E)</span><strong>62 cm</strong></div>
-      <div class="modal-item"><span>Pernas (D)</span><strong>63 cm</strong></div>
+        <div class="modal-item"><span>Pernas (E)</span><strong>62 cm</strong></div>
+        <div class="modal-item"><span>Pernas (D)</span><strong>63 cm</strong></div>
 
-      <div class="modal-item"><span>Panturrilha (E)</span><strong>40 cm</strong></div>
-      <div class="modal-item"><span>Panturrilha (D)</span><strong>41 cm</strong></div>
+        <div class="modal-item"><span>Panturrilha (E)</span><strong>40 cm</strong></div>
+        <div class="modal-item"><span>Panturrilha (D)</span><strong>41 cm</strong></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-disconnect" id="openDisconnectModal">
+                Desconectar aluno
+            </button>
+        </div>
     </div>
-  </div>
-</div>
 
+    </div>
+    <div class="modal-overlay" id="disconnectModal">
+    <div class="modal-card small">
+        <button class="modal-close" id="closeDisconnectModal">&times;</button>
+
+        <h3 class="modal-title">Confirmar ação</h3>
+        <p class="modal-subtitle">
+        Você tem certeza que quer desconectar o aluno?
+        </p>
+
+        <div class="confirm-actions">
+        <button class="btn-cancel" id="cancelDisconnect">Cancelar</button>
+        <button class="btn-confirm" id="confirmDisconnect">Confirmar</button>
+        </div>
+    </div>
+</div>
 <body>
     <div class="container">
         <header>
@@ -80,5 +103,8 @@
     </div>
 
     <script src="{% static "dashboard/js/script.js" %}"></script>
+    {% include "home/partials/dashboard/modal-criar-plano.html" %}
+
+
 </body>
 </html>
