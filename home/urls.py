@@ -1,14 +1,21 @@
-from django.urls import path, include
+from django.urls import path
+from .views import login_view
 from home.views import *
 
 urlpatterns = [
     path('', home),
     path('cadastro/', cadastro, name="cadastro"),
     path('inscrever/', formulario_treinador, name="formTreinador"),
-    path('dashboard-alunos/', dashboard_alunos, name="dashboard-alunos"),
+
+    path('dashboard/alunos/', dashboard_alunos, name="dashboard-alunos"),
     path('dashboard-planos-de-treino/', dashboard_planos_treino, name="dashboard-planos-treino"),
     path('dashboard-relatorios/', dashboard_relatorios, name="dashboard-relatorios"),
-    path('login/', login, name="desktop-login"),
+
+    path('pedido/<int:pedido_id>/aceitar/', aceitar_pedido, name='aceitar_pedido'),
+    path('pedido/<int:pedido_id>/recusar/', recusar_pedido, name='recusar_pedido'),
+
+    path('login/', login_view, name='desktop-login'),
+
     path('redirect/', redirecionar, name="redirect"),
     path('logout/', logout_view, name='logout'),
 ]

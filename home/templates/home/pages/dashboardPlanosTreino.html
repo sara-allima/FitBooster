@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static "dashboard/css/dashboard.css" %}"/> <!--Mudar o caminho-->
     <link rel="stylesheet" href="{% static "global/css/globais.css" %}">
  
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,10 +46,22 @@
     </div>
 
     <script src="{% static "dashboard/js/script.js" %}"></script>
+
+    <!-- jQuery (obrigatório) -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Bootstrap Select JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+
     
 
 
     {% include "home/partials/dashboard/modal-criar-plano.html" %}
+    {% include "home/partials/dashboard/modal-training-manager.html" %}
+
 
 </body>
 </html>

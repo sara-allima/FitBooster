@@ -1,18 +1,26 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as auth_login, logout
-from .decorators import treinador_required
 from django.contrib.auth.models import User
-from .models import Treinador
+from django.utils import timezone
 
-# Create your views here.
+from .decorators import treinador_required
+from .models import Treinador, ConexaoAlunoTreinador
+
+
+# =========================
+# PÁGINAS PÚBLICAS
+# =========================
+
 def home(request):
     return render(request, 'home/pages/home.html')
 
+
 def cadastro(request):
     return render(request, 'home/pages/cadastro.html')
+
 
 def formulario_treinador(request):
     if request.method == 'POST':
@@ -37,6 +45,7 @@ def formulario_treinador(request):
                 email=email,
                 password=senha
             )
+
             Treinador.objects.create(
                 user=user,
                 nome=nome,
@@ -48,43 +57,22 @@ def formulario_treinador(request):
                 formacao=formacao
             )
 
+            auth_login(request, user)
             return redirect('dashboard-alunos')
-        
+
         except IntegrityError:
             return render(request, 'home/pages/formularioTreinador.html', {
                 'erro': 'Erro ao cadastrar treinador. Email ou CPF já cadastrados.'
             })
-        
+
     return render(request, 'home/pages/formularioTreinador.html')
 
-@login_required
-@treinador_required
-def dashboard_alunos(request):
-    treinador = Treinador.objects.get(user=request.user)
 
-    return render(request, 'home/pages/dashboardAlunos.html', {
-        'treinador': treinador
-    })
+# =========================
+# AUTENTICAÇÃO
+# =========================
 
-@login_required
-@treinador_required
-def dashboard_planos_treino(request):
-    treinador = Treinador.objects.get(user=request.user)
-    
-    return render(request, 'home/pages/dashboardPlanosTreino.html', {
-        'treinador': treinador
-    })
-
-@login_required
-@treinador_required
-def dashboard_relatorios(request):
-    treinador = Treinador.objects.get(user=request.user)
-
-    return render(request, 'home/pages/dashboardRelatorios.html', {
-        'treinador': treinador
-    })
-
-def login(request):
+def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         senha = request.POST.get('senha')
@@ -98,16 +86,96 @@ def login(request):
                 return redirect('dashboard-alunos')
             else:
                 return redirect('formTreinador')
-            
+
         return render(request, 'home/pages/login.html', {
             'erro': 'Email ou senha inválidos.'
         })
 
-    return render(request, "home/pages/login.html")
+    return render(request, 'home/pages/login.html')
+
 
 def logout_view(request):
     logout(request)
     return redirect('desktop-login')
 
+
 def redirecionar(request):
-    return render(request, "home/pages/redirect.html")
+    return render(request, 'home/pages/redirect.html')
+
+
+# =========================
+# DASHBOARD TREINADOR
+# =========================
+
+@login_required
+@treinador_required
+def dashboard_alunos(request):
+    treinador = Treinador.objects.get(user=request.user)
+
+    pedidos = ConexaoAlunoTreinador.objects.filter(
+        treinador=treinador,
+        status='PENDENTE'
+    ).select_related('aluno')
+
+    return render(request, 'home/pages/dashboardAlunos.html', {
+        'treinador': treinador,
+        'pedidos': pedidos
+    })
+
+
+@login_required
+@treinador_required
+def dashboard_planos_treino(request):
+    treinador = Treinador.objects.get(user=request.user)
+
+    return render(request, 'home/pages/dashboardPlanosTreino.html', {
+        'treinador': treinador
+    })
+
+
+@login_required
+@treinador_required
+def dashboard_relatorios(request):
+    treinador = Treinador.objects.get(user=request.user)
+
+    return render(request, 'home/pages/dashboardRelatorios.html', {
+        'treinador': treinador
+    })
+
+
+# =========================
+# AÇÕES DO TREINADOR
+# =========================
+
+@login_required
+@treinador_required
+def aceitar_pedido(request, pedido_id):
+    pedido = get_object_or_404(
+        ConexaoAlunoTreinador,
+        id=pedido_id,
+        treinador__user=request.user
+    )
+
+    if request.method == 'POST':
+        pedido.status = 'ACEITA'
+        pedido.data_resposta = timezone.now()
+        pedido.save()
+
+    return redirect('dashboard-alunos')
+
+@login_required
+@treinador_required
+def recusar_pedido(request, pedido_id):
+    pedido = get_object_or_404(
+        ConexaoAlunoTreinador,
+        id=pedido_id,
+        treinador__user=request.user
+    )
+
+    if request.method == 'POST':
+        pedido.status = 'RECUSADA'
+        pedido.data_resposta = timezone.now()
+        pedido.save()
+
+    return redirect('dashboard-alunos')
+
