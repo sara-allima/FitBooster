@@ -39,6 +39,13 @@ class Aluno(models.Model):
         max_length=100,
         help_text="Dias da semana separados por vírgula. Ex: Segunda,Quarta,Sexta"
     )
+    
+        # 👇 FOTO DE PERFIL
+    foto = models.ImageField(
+        upload_to='fotos_alunos/',
+        null=True,
+        blank=True
+    )
 
 
     def __str__(self):

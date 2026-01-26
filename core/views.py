@@ -175,6 +175,31 @@ def treinoa(request):
 def calendario(request):
     return render(request, 'core/calendario.html')
 
+@login_required(login_url='mobile-login')
+@aluno_required
+def atualizar_foto(request):
+    if request.method == 'POST' and request.FILES.get('foto'):
+        aluno = request.user.aluno
+        aluno.foto = request.FILES['foto']
+        aluno.save()
+        return redirect('perfil')
+
+    return JsonResponse({'erro': 'Imagem não enviada'}, status=400)
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def atualizar_nome(request):
+    if request.method == 'POST':
+        nome = request.POST.get('nome', '').strip()
+
+        if nome:
+            aluno = request.user.aluno
+            aluno.nome = nome
+            aluno.save()
+            return JsonResponse({'sucesso': True, 'nome': nome})
+
+    return JsonResponse({'erro': 'Nome inválido'}, status=400)
+
 
 @login_required(login_url='mobile-login')
 @aluno_required

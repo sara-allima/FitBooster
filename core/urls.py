@@ -27,6 +27,10 @@ urlpatterns = [
     views.solicitar_treinador,
     name='solicitar-treinador'
     ),
+    path('perfil/foto/', views.atualizar_foto, name='atualizar-foto'),
+    path('perfil/nome/', views.atualizar_nome, name='atualizar-nome'),
+
+
 
     ]
 
