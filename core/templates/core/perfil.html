@@ -16,21 +16,43 @@
       <h2>Minha conta</h2>
     </header>
 
-    <div class="profile-section">
-      <div class="profile-photo" id="photoBtn">
-        <img src="{% static 'core/img/ft.png' %}" alt="Foto de perfil">
-        <div class="photo-icon">
-          <img src="{% static 'core/img/galeria.png' %}" alt="">
-        </div>
-      </div>
+<div class="profile-section">
 
-      <div class="lapis">
-        <h3 id="userName">Nome do usuario</h3>
-        <span id="editNameBtn">
-          <img src="{% static 'core/img/ferramenta-lapis .png' %}" alt="">
-        </span>
-      </div>
-    </div>
+  <div class="profile-photo">
+    {% if request.user.aluno.foto %}
+      <img src="{{ request.user.aluno.foto.url }}" alt="Foto de perfil">
+    {% else %}
+      <img src="{% static 'core/img/ft.png' %}" alt="Foto padrão">
+    {% endif %}
+
+    <form
+      method="POST"
+      action="{% url 'atualizar-foto' %}"
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %}
+      <label class="photo-icon">
+        <img src="{% static 'core/img/galeria.png' %}" alt="">
+        <input
+          type="file"
+          name="foto"
+          accept="image/*"
+          onchange="this.form.submit()"
+          hidden
+        >
+      </label>
+    </form>
+  </div>
+
+  <div class="lapis">
+    <h3 id="userName">{{ request.user.aluno.nome }}</h3>
+    <span id="editNameBtn">
+      <img src="{% static 'core/img/ferramenta-lapis .png' %}" alt="">
+    </span>
+  </div>
+
+</div>
+
 
     <div class="options">
       <a href={% url 'note'%}>
@@ -59,18 +81,20 @@
   </div>
 
   <!-- POP-UP FOTO -->
-  <div class="popup" id="popupPhoto">
+  {% comment %} <div class="popup" id="popupPhoto">
     <div class="popup-content">
       <h4>Permissão para Câmera e Galeria</h4>
       <p>Necessário acesso à câmera e galeria para adicionar sua foto de perfil.</p>
       <button class="btn green">Salvar</button>
       <button class="btn gray" id="closePhoto">Negar</button>
     </div>
-  </div>
+  </div> {% endcomment %}
 
   <!-- POP-UP NOME -->
   <div class="popup" id="popupName">
     <div class="popup-content">
+      {% csrf_token %}
+
       <img src="{% static 'core/img/close.png' %}" alt="" class="close" id="closeNamePopup">
 
       <label>Informe seu nome:</label>

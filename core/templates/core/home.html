@@ -15,7 +15,7 @@
       <div class="bar">
         <div class="top-bar">
           <div class="greeting">
-            <h2>Olá, Exemplo</h2>
+            <h2>Olá, {{ request.user.aluno.nome }}</h2>
             <p>Prepare-se, hoje é dia de treino!</p>
           </div>
           <div class="Addtreinador">
@@ -23,9 +23,16 @@
               <img src="{% static 'core/img/adicionar-usuario.png' %}" alt="perfil" class="Add-img">
             </a>
           </div>
-          <div class="profile">
-            <a href={% url 'perfil'%}> <img src="{% static 'core/img/perfil.png' %}" alt="perfil" class="profile-img"> </a>
-          </div>
+            <div class="profile">
+              <a href="{% url 'perfil' %}">
+                {% if request.user.aluno.foto %}
+                  <img src="{{ request.user.aluno.foto.url }}" alt="perfil" class="profile-img">
+                {% else %}
+                  <img src="{% static 'core/img/perfil.png' %}" alt="perfil" class="profile-img">
+                {% endif %}
+              </a>
+            </div>
+
         </div>
       </div>
 
