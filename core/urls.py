@@ -29,8 +29,8 @@ urlpatterns = [
     ),
     path('perfil/foto/', views.atualizar_foto, name='atualizar-foto'),
     path('perfil/nome/', views.atualizar_nome, name='atualizar-nome'),
-
-
+    path('corpo/salvar-peso/', views.salvar_peso, name='salvar-peso'),
+    path('corpo/salvar-medidas/', views.salvar_medidas, name='salvar-medidas'),
 
     ]
 
