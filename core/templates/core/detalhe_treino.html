@@ -14,11 +14,9 @@
   <!-- TOPO -->
   <div class="topo">
     <header>
-      <img 
-        src="{% static 'core/img/seta-esquerda 1.png' %}" 
-        class="back-icon" 
-        onclick="history.back()"
-      >
+      <a href="{% url 'treino' %}">
+          <img src="{% static 'core/img/seta-esquerda 1.png' %}" class="back-icon" alt="Voltar">
+      </a>
 
       <div class="header-text">
         <h2 class="titulo-topo">{{ treino.nome }}</h2>

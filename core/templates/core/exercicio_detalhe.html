@@ -14,11 +14,10 @@
   <!-- TOPO -->
   <div class="topo">
     <header>
-      <img 
-        src="{% static 'core/img/seta-esquerda 1.png' %}" 
-        class="back-icon" 
-        onclick="history.back()"
-      >
+      <a href="{% url 'detalhe-treino' item.treino.id %}">
+          <img src="{% static 'core/img/seta-esquerda 1.png' %}" class="back-icon" alt="Voltar">
+      </a>
+
       <h2 class="titulo-topo">
         {{ forloop.counter|default:"" }}{{ item.exercicio.nome }}
       </h2>
@@ -63,10 +62,20 @@
     <!-- BOTÃO -->
     <form method="post" action="{% url 'concluir_exercicio' item.id %}">
       {% csrf_token %}
-      <button class="btn-concluir">
-        Concluir treino
+
+      <button
+        type="submit"
+        class="btn-concluir {% if concluido %}concluido{% endif %}"
+        {% if concluido %}disabled{% endif %}
+      >
+        {% if concluido %}
+          Exercício concluído
+        {% else %}
+          Concluir exercício
+        {% endif %}
       </button>
     </form>
+
 
 
   </div>
