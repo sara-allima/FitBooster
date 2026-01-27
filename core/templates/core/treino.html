@@ -16,67 +16,46 @@
           <img src="{% static 'core/img/seta-esquerda 1.png' %}" class="back-icon" alt="Voltar">
           </a>
           <div class="header-text">
-              <p class="ola">Olá, Exemplo</p>
+              <p class="ola">Olá, {{ aluno.nome }}</p>
            
           </div>
           <img src="{% static 'core/img/3pontos.png' %}" class="menu-icon" alt="">
           </header>
 
           <h2 class="titulo">Seus treinos</h2>
-          <p class="sub">3 Treinos Disponíveis</p>
+          <p class="sub">{{ total_treinos }} Treinos Disponíveis</p>
       </div>
       <div class="container">
 
         
 
 
+        {% for treino in treinos %}
         <div class="treino-card">
-          <a href={% url 'treinoa'%}> <h3>Treino A - Peito e Tríceps</h3> </a>
+
+          <a href="{% url 'detalhe-treino' treino.id %}">
+            <h3>{{ treino.nome }}</h3>
+          </a>
 
           <div class="info-line">
             <div class="info-group">
               <img src="{% static 'core/img/calendario 1.png' %}">
-              <span>Segunda, 00 jan</span>
+              <span>{{ treino.data|date:"d M Y" }}</span>
             </div>
 
             <div class="info-groupp">
               <img src="{% static 'core/img/halteres 1.png' %}">
-              <span>6 Exercícios</span>
+              <span>{{ treino.qtd_exercicios }} Exercícios</span>
             </div>
           </div>
+
         </div>
+        {% empty %}
+        <p style="text-align:center; opacity:.6;">
+          Nenhum treino disponível
+        </p>
+        {% endfor %}
 
-        <div class="treino-card">
-          <h3>Treino B - Costas e Bíceps</h3>
-
-          <div class="info-line">
-            <div class="info-group">
-              <img src="{% static 'core/img/calendario 1.png' %}">
-              <span>Quarta, 00 jan</span>
-            </div>
-
-            <div class="info-groupp">
-              <img src="{% static 'core/img/halteres 1.png' %}">
-              <span>6 Exercícios</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="treino-card">
-          <h3>Treino C - Pernas</h3>
-
-          <div class="info-line">
-            <div class="info-group">
-              <img src="{% static 'core/img/calendario 1.png' %}">
-              <span>Sexta, 00 jan</span>
-            </div>
-
-            <div class="info-groupp">
-              <img src="{% static 'core/img/halteres 1.png' %} ">
-              <span>5 Exercícios</span>
-            </div>
-          </div>
-        </div>
 
       </div>
     </div>

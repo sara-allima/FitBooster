@@ -36,6 +36,22 @@ urlpatterns = [
         views.treinadores_disponiveis,
         name='treinadores-disponiveis'
     ),
+    path(
+        'treino/<int:treino_id>/',
+        views.detalhe_treino,
+        name='detalhe-treino'
+    ),
+    path(
+    'mobile/exercicio/<int:id>/',
+    views.exercicio_detalhe,
+    name='exercicio_detalhe'
+    ),
+    path(
+    'mobile/exercicio/<int:id>/concluir/',
+    views.concluir_exercicio,
+    name='concluir_exercicio'
+    ),
+
 
     ]
 

@@ -7,7 +7,7 @@ from home.models import Aluno
 from django.http import HttpResponse
 from decimal import Decimal, InvalidOperation
 from home.decorators import aluno_required
-from home.models import Treinador, ConexaoAlunoTreinador
+from home.models import Treinador, ConexaoAlunoTreinador, Treino, AlunoTreino, TreinoExercicio, ExercicioConcluido
 from django.http import JsonResponse
 from django.utils import timezone
 import json
@@ -211,8 +211,99 @@ def list(request):
 @login_required(login_url='mobile-login')
 @aluno_required
 def treino(request):
-    return render(request, 'core/treino.html')
+    aluno = request.user.aluno
 
+    # pega os vínculos ativos do aluno com treinos
+    aluno_treinos = (
+        AlunoTreino.objects
+        .filter(aluno=aluno, ativo=True)
+        .select_related('treino')
+    )
+
+    treinos_formatados = []
+
+    for at in aluno_treinos:
+        treino = at.treino
+
+        qtd_exercicios = TreinoExercicio.objects.filter(
+            treino=treino
+        ).count()
+
+        treinos_formatados.append({
+            'id': treino.id,
+            'nome': treino.nome,
+            'descricao': treino.descricao,
+            'data': treino.data_criacao,
+            'qtd_exercicios': qtd_exercicios,
+        })
+
+    context = {
+        'aluno': aluno,
+        'treinos': treinos_formatados,
+        'total_treinos': len(treinos_formatados),
+    }
+
+    return render(request, 'core/treino.html', context)
+
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def detalhe_treino(request, treino_id):
+    aluno = request.user.aluno
+
+    # garante que o treino pertence ao aluno
+    treino = get_object_or_404(
+        Treino,
+        id=treino_id,
+        alunos=aluno
+    )
+
+    exercicios = (
+        TreinoExercicio.objects
+        .filter(treino=treino)
+        .select_related('exercicio')
+    )
+
+    context = {
+        'treino': treino,
+        'exercicios': exercicios
+    }
+
+    return render(request, 'core/detalhe_treino.html', context)
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def exercicio_detalhe(request, id):
+    item = get_object_or_404(TreinoExercicio, id=id)
+
+    concluido = False
+    if request.user.is_authenticated:
+        concluido = ExercicioConcluido.objects.filter(
+            aluno=request.user.aluno,
+            treino_exercicio=item
+        ).exists()
+
+    return render(
+        request,
+        'core/exercicio_detalhe.html',
+        {
+            'item': item,
+            'concluido': concluido
+        }
+    )
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def concluir_exercicio(request, id):
+    item = get_object_or_404(TreinoExercicio, id=id)
+    aluno = request.user.aluno
+
+    ExercicioConcluido.objects.get_or_create(
+        aluno=aluno,
+        treino_exercicio=item
+    )
+
+    return redirect('exercicio_detalhe', id=id)
 
 @login_required(login_url='mobile-login')
 @aluno_required
