@@ -14,6 +14,7 @@ import json
 from django.shortcuts import get_object_or_404
 
 
+
 def index(request):
     return render(request, 'core/index.html')
 
@@ -125,10 +126,23 @@ def clicar(request):
     return render(request, 'core/clicartreino.html')
 
 
+
 @login_required(login_url='mobile-login')
 @aluno_required
 def corpo(request):
-    return render(request, 'core/corpo.html')
+    aluno = request.user.aluno
+
+    diferenca = None
+    if aluno.meta_peso:
+        diferenca = aluno.meta_peso - aluno.peso
+
+    context = {
+        'aluno': aluno,
+        'diferenca': diferenca
+    }
+
+    return render(request, 'core/corpo.html', context)
+
 
 
 @login_required(login_url='mobile-login')
@@ -140,7 +154,43 @@ def escolher(request):
 @login_required(login_url='mobile-login')
 @aluno_required
 def reg(request):
-    return render(request, 'core/reg.html')
+    aluno = request.user.aluno
+
+    if request.method == "POST":
+
+        try:
+            peso = request.POST.get("peso_atual")
+            meta = request.POST.get("meta_peso")
+
+            if peso:
+                aluno.peso = Decimal(peso.replace(",", "."))
+
+            if meta:
+                aluno.meta_peso = Decimal(meta.replace(",", "."))
+
+        except InvalidOperation:
+            pass  # evita quebrar a página se vier algo inválido
+
+        # MEDIDAS
+        aluno.ombros = request.POST.get("ombros") or aluno.ombros
+        aluno.peito = request.POST.get("peito") or aluno.peito
+        aluno.antebraco_esquerdo = request.POST.get("antebraco_e") or aluno.antebraco_esquerdo
+        aluno.antebraco_direito = request.POST.get("antebraco_d") or aluno.antebraco_direito
+        aluno.braco_esquerdo = request.POST.get("braco_e") or aluno.braco_esquerdo
+        aluno.braco_direito = request.POST.get("braco_d") or aluno.braco_direito
+        aluno.cintura = request.POST.get("cintura") or aluno.cintura
+        aluno.quadril = request.POST.get("quadril") or aluno.quadril
+        aluno.perna_esquerda = request.POST.get("perna_e") or aluno.perna_esquerda
+        aluno.perna_direita = request.POST.get("perna_d") or aluno.perna_direita
+        aluno.panturrilha_esquerda = request.POST.get("panturrilha_e") or aluno.panturrilha_esquerda
+        aluno.panturrilha_direita = request.POST.get("panturrilha_d") or aluno.panturrilha_direita
+
+        aluno.save()
+        return redirect("corpo")
+
+    return render(request, 'core/reg.html', {
+        "aluno": aluno
+    })
 
 
 @login_required(login_url='mobile-login')
@@ -255,7 +305,8 @@ def listar_conexoes(request):
 
     return JsonResponse(data, safe=False)
 
-@login_required
+@login_required(login_url='mobile-login')
+@aluno_required
 def encerrar_conexao(request):
     if request.method != 'POST':
         return JsonResponse({'erro': 'Método inválido'}, status=400)
@@ -279,3 +330,68 @@ def encerrar_conexao(request):
     conexao.save()
 
     return JsonResponse({'sucesso': True})
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def corpo_dados(request):
+    aluno = request.user.aluno
+
+    data = {
+        "peso": aluno.peso,
+        "meta": aluno.meta_peso,
+        "diferenca": (
+            aluno.meta_peso - aluno.peso
+            if aluno.meta_peso else None
+        ),
+        "medidas": {
+            "ombros": aluno.ombros,
+            "peito": aluno.peito,
+            "antebraco_e": aluno.antebraco_esquerdo,
+            "antebraco_d": aluno.antebraco_direito,
+            "braco_e": aluno.braco_esquerdo,
+            "braco_d": aluno.braco_direito,
+            "cintura": aluno.cintura,
+            "quadril": aluno.quadril,
+            "perna_e": aluno.perna_esquerda,
+            "perna_d": aluno.perna_direita,
+            "pant_e": aluno.panturrilha_esquerda,
+            "pant_d": aluno.panturrilha_direita,
+        }
+    }
+
+    return JsonResponse(data)
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def salvar_peso(request):
+    data = json.loads(request.body)
+    aluno = request.user.aluno
+
+    aluno.peso = Decimal(data["peso"])
+    aluno.meta_peso = Decimal(data["meta"])
+    aluno.save()
+
+    return JsonResponse({"sucesso": True})
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def salvar_medidas(request):
+    data = json.loads(request.body)
+    aluno = request.user.aluno
+
+    aluno.ombros = data["ombros"]
+    aluno.peito = data["peito"]
+    aluno.antebraco_esquerdo = data["antebraco_e"]
+    aluno.antebraco_direito = data["antebraco_d"]
+    aluno.braco_esquerdo = data["braco_e"]
+    aluno.braco_direito = data["braco_d"]
+    aluno.cintura = data["cintura"]
+    aluno.quadril = data["quadril"]
+    aluno.perna_esquerda = data["perna_e"]
+    aluno.perna_direita = data["perna_d"]
+    aluno.panturrilha_esquerda = data["pant_e"]
+    aluno.panturrilha_direita = data["pant_d"]
+
+    aluno.save()
+
+    return JsonResponse({"sucesso": True})

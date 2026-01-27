@@ -16,7 +16,4 @@ $$('.acc-row').forEach(row => {
 });
 
 /* SAVE */
-$("#saveBtn").addEventListener("click", () => {
-  $("#saveBtn").textContent = "Salvo";
-  setTimeout(() => $("#saveBtn").textContent = "Salvar", 1500);
-});
+

@@ -47,12 +47,6 @@ class ExercicioAdmin(admin.ModelAdmin):
 
 admin.site.register(Exercicio, ExercicioAdmin)
 
-class MedidasAlunoAdmin(admin.ModelAdmin):
-    list_display = ('aluno', 'data_registro', 'peso', 'altura')
-    list_filter = ('data_registro',)
-    search_fields = ('aluno__nome',)
-
-admin.site.register(MedidasAluno, MedidasAlunoAdmin)
 
 class ConexaoAlunoTreinadorAdmin(admin.ModelAdmin):
     list_display = (
