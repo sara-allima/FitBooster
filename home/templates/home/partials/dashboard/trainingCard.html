@@ -1,6 +1,6 @@
 <div class="display-trainings">
   {% for treino in treinos %}
-    <div class="training-card">
+    <div class="training-card" data-id="{{ treino.id }}">
       <div class="name-type">
         <p class="student-name">{{ treino.nome }}</p>
         <div class="badge active">{{ treino.tipo }}</div>

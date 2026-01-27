@@ -425,3 +425,395 @@ function resetAlunoSelecionado() {
 
 
 
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    /* =============================================================
+       LÓGICA DO MODAL "CRIAR TREINO" (ESTILO ADMIN INLINE)
+    ============================================================= */
+    
+    let availableExercises = []; // Armazena os exercícios carregados do back-end
+    const exerciseListContainer = document.getElementById('exerciseList');
+    const btnAddRow = document.getElementById('btnAddExerciseRow');
+    const confirmBtn = document.getElementById('confirmCreateTraining');
+
+    // 1. Carregar lista de exercícios assim que a página abre
+    fetch('/exercicios/')
+        .then(res => res.json())
+        .then(data => {
+            availableExercises = data;
+        })
+        .catch(err => console.error("Erro ao buscar exercícios:", err));
+
+    // 2. Função para criar uma nova linha de exercício
+    function addExerciseRow() {
+        if (!exerciseListContainer) return;
+
+        const rowId = Date.now(); // ID único para a linha
+        const row = document.createElement('div');
+        row.className = 'exercise-row';
+        row.dataset.rowId = rowId;
+
+        // Monta as opções do Select
+        let optionsHtml = '<option value="" disabled selected>Selecione...</option>';
+        availableExercises.forEach(ex => {
+            optionsHtml += `<option value="${ex.id}">${ex.nome}</option>`;
+        });
+
+        row.innerHTML = `
+            <div class="field-col">
+                <select class="exercise-select">
+                    ${optionsHtml}
+                </select>
+            </div>
+            <div class="field-col">
+                <input type="number" class="exercise-series" value="" min="1">
+            </div>
+            <div class="field-col">
+                <input type="number" class="exercise-reps" value="" min="1">
+            </div>
+            <div class="field-col">
+                <input type="number" class="exercise-load" value="" min="0">
+            </div>
+            <div class="field-col" style="text-align: center;">
+                <button type="button" class="btn-remove-row" title="Remover linha">
+                    <i class="fa-solid fa-times"></i> &times;
+                </button>
+            </div>
+        `;
+
+        // Adiciona evento de remover ao botão X desta linha
+        row.querySelector('.btn-remove-row').addEventListener('click', function() {
+            row.remove();
+        });
+
+        exerciseListContainer.appendChild(row);
+    }
+
+    // 3. Evento do botão "+ Adicionar outro Exercício"
+    if (btnAddRow) {
+        btnAddRow.addEventListener('click', addExerciseRow);
+    }
+
+    // 4. Limpar o modal ao fechar (Opcional, mas recomendado)
+    const modalCreate = document.getElementById('createPlanModal');
+    const closeBtns = [
+        document.getElementById('closeCreatePlan'), 
+        document.getElementById('cancelCreatePlan')
+    ];
+    
+    closeBtns.forEach(btn => {
+        if(btn) {
+            btn.addEventListener('click', () => {
+                if(modalCreate) modalCreate.classList.remove('active');
+                // Limpa os campos
+                document.getElementById('trainingName').value = '';
+                if(exerciseListContainer) exerciseListContainer.innerHTML = '';
+            });
+        }
+    });
+
+    // 5. ENVIAR O TREINO (Salvar)
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', async () => {
+            const nameInput = document.getElementById('trainingName');
+            const nomeTreino = nameInput.value.trim();
+
+            if (!nomeTreino) {
+                alert('Por favor, dê um nome ao treino.');
+                return;
+            }
+
+            // Coletar dados das linhas
+            const rows = document.querySelectorAll('.exercise-row');
+            if (rows.length === 0) {
+                alert('Adicione pelo menos um exercício ao treino.');
+                return;
+            }
+
+            const exerciciosData = [];
+            let error = false;
+
+            rows.forEach(row => {
+                const select = row.querySelector('.exercise-select');
+                const series = row.querySelector('.exercise-series').value;
+                const reps = row.querySelector('.exercise-reps').value;
+                const load = row.querySelector('.exercise-load').value;
+
+                if (!select.value) {
+                    error = true; // Se tiver linha sem exercício selecionado
+                }
+
+                exerciciosData.push({
+                    id: select.value,
+                    series: parseInt(series),
+                    repeticoes: parseInt(reps),
+                    carga: parseInt(load)
+                });
+            });
+
+            if (error) {
+                alert('Selecione o exercício em todas as linhas ou remova as linhas vazias.');
+                return;
+            }
+
+            // Enviar para o Back-end
+            try {
+                const response = await fetch('/treino/criar/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        nome: nomeTreino,
+                        tipo: 'Personalizado',
+                        exercicios: exerciciosData
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Sucesso! Recarrega a página
+                    window.location.reload();
+                } else {
+                    alert('Erro ao criar treino: ' + (data.error || 'Erro desconhecido'));
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Erro na comunicação com o servidor.');
+            }
+        });
+    }
+
+    // Função auxiliar para pegar o CSRF Token (padrão Django)
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ========================================================
+     MODAL GERENCIAR TREINO (ATRIBUIR ALUNO)
+  ======================================================== */
+  const managerModal = document.getElementById('trainingManagerModal');
+  const searchInput = document.getElementById('searchAluno');
+  const resultsDiv = document.getElementById('alunoResults');
+  const daysSection = document.getElementById('daysSection');
+  const daysGrid = document.getElementById('daysGrid');
+  const trainingIdInput = document.getElementById('currentTrainingId');
+  const studentNameDisplay = document.getElementById('selectedStudentName');
+  
+  let selectedStudentId = null;
+  let selectedDays = [];
+
+  // ABRIR O MODAL
+  document.querySelectorAll('.training-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+        // Evita abrir se clicar em botões específicos dentro do card, se houver
+        if(e.target.closest('button')) return;
+
+        const treinoId = card.dataset.id; // Certifique-se que seu HTML do card tem data-id="{{ treino.id }}"
+        const treinoNome = card.querySelector('.student-name')?.textContent || 'Treino';
+        
+        document.getElementById('trainingManagerTitle').textContent = treinoNome;
+        if(trainingIdInput) trainingIdInput.value = treinoId;
+
+        // Resetar campos
+        if(searchInput) searchInput.value = '';
+        if(resultsDiv) resultsDiv.innerHTML = '';
+        if(daysSection) daysSection.style.display = 'none';
+        selectedStudentId = null;
+        selectedDays = [];
+
+        // Carregar lista de alunos já vinculados (Implementar fetch se tiver endpoint)
+        // loadTrainingStudents(treinoId);
+
+        managerModal.classList.add('active');
+    });
+  });
+
+  // FECHAR MODAL
+  const closeManagerBtns = [
+      document.getElementById('closeTrainingManager'),
+      document.getElementById('cancelTrainingManager')
+  ];
+  closeManagerBtns.forEach(btn => {
+      if(btn) btn.addEventListener('click', () => managerModal.classList.remove('active'));
+  });
+
+
+  // BUSCAR ALUNO (Autocomplete)
+  if (searchInput) {
+    searchInput.addEventListener('input', async () => {
+      const query = searchInput.value.trim().toLowerCase();
+      resultsDiv.innerHTML = '';
+      
+      // Oculta seção de dias se mudar a busca
+      daysSection.style.display = 'none';
+      selectedStudentId = null;
+
+      if (query.length < 1) return;
+
+      try {
+        const res = await fetch('/alunos/buscar/'); // Seu endpoint existente
+        const alunos = await res.json();
+
+        // Filtra no front (ou no back se preferir)
+        const filtrados = alunos.filter(a => a.nome.toLowerCase().includes(query));
+
+        filtrados.forEach(aluno => {
+          const div = document.createElement('div');
+          div.className = 'search-item'; // Usar estilo existente ou criar
+          div.textContent = aluno.nome;
+          div.style.padding = '10px';
+          div.style.cursor = 'pointer';
+          div.style.borderBottom = '1px solid #333';
+          div.style.backgroundColor = '#222';
+
+          div.addEventListener('mouseenter', () => div.style.backgroundColor = '#333');
+          div.addEventListener('mouseleave', () => div.style.backgroundColor = '#222');
+
+          // CLIQUE NO ALUNO
+          div.addEventListener('click', () => {
+            searchInput.value = aluno.nome;
+            resultsDiv.innerHTML = ''; // Limpa lista
+            selectedStudentId = aluno.id;
+            
+            if(studentNameDisplay) studentNameDisplay.textContent = aluno.nome;
+
+            // Renderiza os dias
+            renderDays(aluno.dias_disponiveis || []);
+          });
+
+          resultsDiv.appendChild(div);
+        });
+
+      } catch (err) {
+        console.error("Erro ao buscar alunos:", err);
+      }
+    });
+  }
+
+  // RENDERIZAR DIAS
+  function renderDays(diasDisponiveisDoAluno) {
+    daysGrid.innerHTML = '';
+    daysSection.style.display = 'block';
+    selectedDays = []; // Reseta seleção anterior
+
+    const DIAS_SEMANA = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+
+    DIAS_SEMANA.forEach(dia => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = dia;
+        btn.className = 'day-btn';
+
+        // Verifica se o aluno tem esse dia disponível
+        // Assume que o back retorna array de strings ex: ["Segunda", "Sexta"]
+        if (diasDisponiveisDoAluno.includes(dia)) {
+            btn.classList.add('available');
+            
+            // Evento de clique para selecionar/deselecionar
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                
+                if (selectedDays.includes(dia)) {
+                    selectedDays = selectedDays.filter(d => d !== dia);
+                } else {
+                    selectedDays.push(dia);
+                }
+                console.log("Dias selecionados:", selectedDays);
+            });
+        } else {
+            // Dia indisponível
+            btn.disabled = true;
+            btn.title = "O aluno não marcou este dia como disponível";
+        }
+
+        daysGrid.appendChild(btn);
+    });
+  }
+
+  // BOTÃO SALVAR
+  const btnSaveManager = document.getElementById('saveTrainingManager');
+  if (btnSaveManager) {
+      btnSaveManager.addEventListener('click', async () => {
+          if (!trainingIdInput.value) {
+              alert("Erro: Treino não identificado.");
+              return;
+          }
+          if (!selectedStudentId) {
+              alert("Selecione um aluno primeiro.");
+              return;
+          }
+          if (selectedDays.length === 0) {
+              alert("Selecione pelo menos um dia para o treino.");
+              return;
+          }
+
+          const payload = {
+              treino_id: trainingIdInput.value,
+              aluno_id: selectedStudentId,
+              dias: selectedDays
+          };
+
+          try {
+              // Ajuste a URL para a sua rota de atribuição
+              const response = await fetch('/treino/atribuir/', { 
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRFToken': getCookie('csrftoken')
+                  },
+                  body: JSON.stringify(payload)
+              });
+
+              const data = await response.json();
+              if (data.success) {
+                  alert("Aluno atribuído com sucesso!");
+                  managerModal.classList.remove('active');
+                  window.location.reload();
+              } else {
+                  alert("Erro: " + (data.error || "Erro desconhecido"));
+              }
+
+          } catch (e) {
+              console.error(e);
+              alert("Erro na requisição.");
+          }
+      });
+  }
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+});

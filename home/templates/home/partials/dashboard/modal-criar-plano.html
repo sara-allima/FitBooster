@@ -1,9 +1,8 @@
 <div class="modal-overlay" id="createPlanModal">
-  <div class="modal-card modal-lg">
-    <button class="modal-close" id="closeCreatePlan">&times;</button>
+  <div class="modal-card modal-lg" > <button class="modal-close" id="closeCreatePlan">&times;</button>
 
     <h2 class="modal-title">Criar Treino</h2>
-    <p class="modal-subtitle">Defina o nome e selecione os exercícios</p>
+    <p class="modal-subtitle">Defina o nome e configure os exercícios (Séries, Repetições e Carga)</p>
 
     <div class="modal-field">
       <label class="modal-label">Nome do treino</label>
@@ -15,35 +14,30 @@
       />
     </div>
 
-    <div class="modal-field bootstrap-scope">
-      <label class="modal-label">Exercícios</label>
-      <select
-        id="exerciseSelect"
-        class="selectpicker"
-        multiple
-        data-live-search="true"
-        title="Selecione os exercícios"
-      >
-
-       
-
-
-        
-      </select>
+    <div class="exercise-table-header">
+      <span>Exercício</span>
+      <span>Séries</span>
+      <span>Repetições</span>
+      <span>Carga (kg)</span>
+      <span style="text-align: center;">Remover?</span>
     </div>
 
-    <div class="modal-actions">
-      <button class="secondary-button" id="cancelCreatePlan">Cancelar</button>
-            <button 
-            type="button"
-            class="primary-buttonn"
-            id="confirmCreateTraining"
-            >
-            Criar Treino
-            </button>
+    <div id="exerciseList" class="exercise-list-container">
+      </div>
 
+    <button type="button" class="btn-add-row" id="btnAddExerciseRow">
+      <i class="fa-solid fa-plus"></i> Adicionar outro(a) Exercício no Treino
+    </button>
+
+    <div class="modal-actions" style="margin-top: 20px;">
+      <button class="secondary-button" id="cancelCreatePlan">Cancelar</button>
+      <button 
+        type="button"
+        class="primary-buttonn"
+        id="confirmCreateTraining"
+      >
+        Criar Treino
+      </button>
     </div>
   </div>
 </div>
-
-

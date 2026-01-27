@@ -9,7 +9,7 @@ from django.utils import timezone
 from .decorators import treinador_required
 from .models import Treinador, ConexaoAlunoTreinador
 
-from .models import Treino, Aluno ,Exercicio, TreinoExercicio
+from .models import Treino, Aluno, Exercicio, TreinoExercicio, AlunoTreino, DiaTreinoAluno
 from django.http import JsonResponse
 import json
 
@@ -287,3 +287,61 @@ def buscar_alunos(request):
         })
 
     return JsonResponse(data, safe=False)
+
+# ============================================
+# NOVAS FUNÇÕES PARA O MODAL GERENCIAR TREINO
+# ============================================
+
+@login_required
+@treinador_required
+def atribuir_treino(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Método não permitido'}, status=405)
+
+    try:
+        data = json.loads(request.body)
+        treino_id = data.get('treino_id')
+        aluno_id = data.get('aluno_id')
+        dias = data.get('dias', [])
+
+        if not treino_id or not aluno_id:
+            return JsonResponse({'error': 'Dados incompletos'}, status=400)
+
+        treino = get_object_or_404(Treino, id=treino_id)
+        aluno = get_object_or_404(Aluno, id=aluno_id)
+
+        # 1. Cria ou recupera o vínculo do aluno com este treino
+        AlunoTreino.objects.update_or_create(
+            aluno=aluno,
+            treino=treino,
+            defaults={'ativo': True}
+        )
+
+        # 2. Salva os dias de treino
+        DiaTreinoAluno.objects.filter(aluno=aluno).delete()
+
+        DIAS_MAP = {
+            'Segunda': 'SEG', 'Terça': 'TER', 'Quarta': 'QUA',
+            'Quinta': 'QUI', 'Sexta': 'SEX', 'Sábado': 'SAB', 'Domingo': 'DOM'
+        }
+
+        for dia_nome in dias:
+            sigla = DIAS_MAP.get(dia_nome)
+            if sigla:
+                DiaTreinoAluno.objects.create(aluno=aluno, dia=sigla)
+
+        return JsonResponse({'success': True})
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+@login_required
+@treinador_required
+def get_alunos_treino(request, treino_id):
+    try:
+        vinculos = AlunoTreino.objects.filter(treino_id=treino_id, ativo=True).select_related('aluno')
+        lista = [{'id': v.aluno.id, 'nome': v.aluno.nome} for v in vinculos]
+        return JsonResponse(lista, safe=False)
+    except Exception:
+        return JsonResponse([], safe=False)

@@ -56,8 +56,8 @@ class Exercicio(models.Model):
     grupo_muscular = models.CharField(max_length=50)
     descricao = models.TextField()
     # Campos default que podem ser mudados mais especificamente para os treinos
-    series = models.IntegerField(default=3)
-    repeticoes = models.IntegerField(default=12)
+    series = models.IntegerField(default=0)
+    repeticoes = models.IntegerField(default=0)
     carga = models.IntegerField(default=0, help_text='Carga em Kg')
     
     def __str__(self):

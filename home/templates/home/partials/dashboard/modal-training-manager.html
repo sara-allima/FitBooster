@@ -1,53 +1,49 @@
-  <div class="modal-overlay" id="trainingManagerModal">
-    <div class="modal-card modal-lg">
-      <button class="modal-close" id="closeTrainingManager">&times;</button>
+<div class="modal-overlay" id="trainingManagerModal">
+  <div class="modal-card modal-lg">
+    <button class="modal-close" id="closeTrainingManager">&times;</button>
 
-      <h3 class="modal-title" id="trainingManagerTitle">Treino</h3>
-      <p class="modal-subtitle">Gerencie alunos e configurações do treino</p>
+    <h3 class="modal-title" id="trainingManagerTitle">Gerenciar Treino</h3>
+    <p class="modal-subtitle">Veja os alunos vinculados ou adicione novos</p>
 
-      <!-- ALUNOS DO TREINO -->
-      <div class="modal-field">
-        <label class="modal-label">Alunos usando este treino</label>
+    <input type="hidden" id="currentTrainingId" value="">
 
-        <div id="trainingStudents" class="student-list">
-           <p class="empty-text">Nenhum aluno atribuído a este treino</p>
-        </div>
+    <div class="modal-field">
+      <label class="modal-label">Alunos usando este treino atualmente:</label>
+      <div id="trainingStudents" class="student-list-container">
+         <p class="empty-text">Carregando...</p>
       </div>
+    </div>
 
-      <div class="modal-field">
-        <label class="modal-label">Selecione o aluno</label>
+    <hr style="border-color: #333; margin: 20px 0;">
 
+    <div class="modal-field">
+      <label class="modal-label">Adicionar novo aluno ao treino</label>
+      <div style="position: relative;">
         <input
           type="text"
           id="searchAluno"
           class="inputt"
-          placeholder="Pesquisar aluno..."
+          placeholder="Digite o nome do aluno..."
+          autocomplete="off"
         >
-
         <div id="alunoResults" class="search-results"></div>
       </div>
+    </div>
 
-
-      <!-- DIAS -->
-      <div class="modal-field" id="daysSection" style="display:none">
-        <label class="modal-label">Dias disponíveis do aluno</label>
-        <div class="days-grid" id="daysGrid"></div>
-      </div>
-
-
-      <!-- CONFIG EXERCÍCIO -->
-      <div id="exerciseConfig" style="display:none">
-        <div class="exercise-inputs">
-          <input class="inputt" id="setsInput" placeholder="Séries">
-          <input class="inputt" id="repsInput" placeholder="Repetições">
-          <input class="inputt" id="restInput" placeholder="Descanso (s)">
+    <div class="modal-field" id="daysSection" style="display:none; animation: fadeIn 0.3s;">
+      <label class="modal-label">
+        Dias de treino para <span id="selectedStudentName" style="color: #28a745;"></span>
+        <br>
+        <span style="font-size: 0.8rem; color: #888; font-weight: normal;">(Selecione os dias que este treino será aplicado)</span>
+      </label>
+      
+      <div class="days-grid" id="daysGrid">
         </div>
-      </div>
+    </div>
 
-      <!-- AÇÕES -->
-      <div class="modal-actions">
-        <button class="secondary-button" id="cancelTrainingManager">Cancelar</button>
-        <button class="primary-buttonn" id="saveTrainingManager">Salvar</button>
-      </div>
+    <div class="modal-actions">
+      <button class="secondary-button" id="cancelTrainingManager">Fechar</button>
+      <button class="primary-buttonn" id="saveTrainingManager">Salvar Atribuição</button>
     </div>
   </div>
+</div>
