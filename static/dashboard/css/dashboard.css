@@ -1106,3 +1106,31 @@
   color: var(--primary-dark-bg);
   font-weight: 700;
 }
+
+
+.search-results {
+  background: #1e1e1e;
+  border-radius: 6px;
+  margin-top: 4px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.search-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.search-item:hover {
+  background: #2ecc71;
+  color: #000;
+}
+
+.day-btn.available {
+  background: #2ecc71;
+  color: #000;
+}
+
+.day-btn.active {
+  outline: 2px solid #fff;
+}

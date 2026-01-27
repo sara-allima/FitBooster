@@ -18,4 +18,10 @@ urlpatterns = [
 
     path('redirect/', redirecionar, name="redirect"),
     path('logout/', logout_view, name='logout'),
+
+
+    path('treino/criar/', criar_treino, name='criar_treino'),
+    path('exercicios/', listar_exercicios, name='listar_exercicios'),
+
+
 ]

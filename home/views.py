@@ -9,6 +9,11 @@ from django.utils import timezone
 from .decorators import treinador_required
 from .models import Treinador, ConexaoAlunoTreinador
 
+from .models import Treino, Aluno ,Exercicio, TreinoExercicio
+from django.http import JsonResponse
+import json
+
+
 
 # =========================
 # PÁGINAS PÚBLICAS
@@ -117,9 +122,17 @@ def dashboard_alunos(request):
         status='PENDENTE'
     ).select_related('aluno')
 
+    conexoes_aceitas = ConexaoAlunoTreinador.objects.filter(
+        treinador=treinador,
+        status='ACEITA'
+    ).select_related('aluno')
+
+    alunos = [c.aluno for c in conexoes_aceitas]
+
     return render(request, 'home/pages/dashboardAlunos.html', {
         'treinador': treinador,
-        'pedidos': pedidos
+        'pedidos': pedidos,
+        'alunos': alunos
     })
 
 
@@ -128,9 +141,23 @@ def dashboard_alunos(request):
 def dashboard_planos_treino(request):
     treinador = Treinador.objects.get(user=request.user)
 
+    treinos = Treino.objects.filter(
+        treinador=treinador
+    ).prefetch_related('treinoexercicio_set')
+
+    conexoes_aceitas = ConexaoAlunoTreinador.objects.filter(
+        treinador=treinador,
+        status='ACEITA'
+    ).select_related('aluno')
+
+    alunos = [c.aluno for c in conexoes_aceitas]
+
     return render(request, 'home/pages/dashboardPlanosTreino.html', {
-        'treinador': treinador
+        'treinador': treinador,
+        'treinos': treinos,
+        'alunos': alunos
     })
+
 
 
 @login_required
@@ -141,6 +168,9 @@ def dashboard_relatorios(request):
     return render(request, 'home/pages/dashboardRelatorios.html', {
         'treinador': treinador
     })
+
+from home.models import ConexaoAlunoTreinador
+
 
 
 # =========================
@@ -179,3 +209,61 @@ def recusar_pedido(request, pedido_id):
 
     return redirect('dashboard-alunos')
 
+
+
+
+
+@login_required
+@treinador_required
+def criar_treino(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Método não permitido'}, status=405)
+
+    treinador = Treinador.objects.get(user=request.user)
+
+    try:
+        data = json.loads(request.body)
+
+        nome = data.get('nome')
+        tipo = data.get('tipo', 'Personalizado')
+        exercicios = data.get('exercicios', [])
+
+        if not nome or not exercicios:
+            return JsonResponse({'error': 'Dados incompletos'}, status=400)
+
+        # 1️⃣ Criar o treino
+        treino = Treino.objects.create(
+            nome=nome,
+            descricao='Treino criado pelo dashboard',
+            tipo=tipo,
+            treinador=treinador
+        )
+
+        # 2️⃣ Criar relação treino + exercícios
+        for ex in exercicios:
+            exercicio = Exercicio.objects.get(id=ex['id'])
+
+            TreinoExercicio.objects.create(
+                treino=treino,
+                exercicio=exercicio,
+                series=ex.get('series', exercicio.series),
+                repeticoes=ex.get('repeticoes', exercicio.repeticoes),
+                carga=ex.get('carga', exercicio.carga)
+            )
+
+        return JsonResponse({
+            'success': True,
+            'treino_id': treino.id,
+            'treino_nome': treino.nome
+        })
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+
+@login_required
+@treinador_required
+def listar_exercicios(request):
+    exercicios = Exercicio.objects.all().values('id', 'nome')
+    return JsonResponse(list(exercicios), safe=False)

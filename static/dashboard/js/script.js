@@ -30,43 +30,99 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+
 const confirmCreateTraining = document.getElementById('confirmCreateTraining');
+if (!confirmCreateTraining) return;
 
-confirmCreateTraining.addEventListener('click', () => {
-  console.log('CLIQUEI NO CRIAR TREINO'); // 👈 DEBUG
 
-  const trainingName = document.getElementById('trainingName').value.trim();
-  const selectedExercises = $('#exerciseSelect').val() || [];
 
-  if (!trainingName || selectedExercises.length === 0) {
-    alert('Preencha o nome e selecione exercícios');
+confirmCreateTraining.addEventListener('click', async () => {
+  const nome = document.getElementById('trainingName').value.trim();
+  const exerciciosSelecionados = $('#exerciseSelect').val(); // 👈 AQUI
+
+  // 👉 USA A LISTA REAL (tags)
+  if (!nome || !exerciciosSelecionados||exerciciosSelecionados.length === 0) {
+    alert('Preencha tudo');
     return;
   }
 
-  const container = document.querySelector('.display-trainings');
+  // monta exercícios a partir das tags
+   const exercicios = exerciciosSelecionados.map(id => ({
+    id: id,
+    series: 3,
+    repeticoes: 12,
+    carga: 0
+  }));
 
-  const card = document.createElement('div');
-  card.className = 'training-card';
+   console.log('Enviando:', exercicios);
 
-  card.innerHTML = `
-    <div class="name-type">
-      <p class="student-name">${trainingName}</p>
-      <div class="badge active">Personalizado</div>
-    </div>
-    <div class="exercice-students">
-      <p>${selectedExercises.length} exercícios</p>
-      <p>Usado por 0 alunos</p>
-    </div>
-  `;
+  const response = await fetch('/treino/criar/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': getCookie('csrftoken')
+    },
+    body: JSON.stringify({
+      nome: nome,
+      tipo: 'Personalizado',
+      exercicios: exercicios
+    })
+  });
 
-  container.prepend(card);
+  const data = await response.json();
 
-  // reset
-  document.getElementById('trainingName').value = '';
-  $('#exerciseSelect').selectpicker('deselectAll');
+  if (data.success) {
+   
+    window.location.reload();
+    document.getElementById('createPlanModal').classList.remove('active');
 
-  document.getElementById('createPlanModal').classList.remove('active');
+    $('#exerciseSelect').selectpicker('deselectAll');
+document.getElementById('trainingName').value = '';
+
+    document.getElementById('trainingName').value = '';
+  } else {
+    alert(data.error || 'Erro ao criar treino');
+  }
 });
+
+
+
+
+
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+      cookie = cookie.trim();
+      if (cookie.startsWith(name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+
+
+fetch('/exercicios/')
+  .then(res => res.json())
+  .then(data => {
+    const select = $('#exerciseSelect');
+    select.empty();
+
+    data.forEach(ex => {
+      select.append(
+        `<option value="${ex.id}">${ex.nome}</option>`
+      );
+    });
+
+    select.selectpicker('refresh');
+  });
+
+
 
 
 
@@ -217,96 +273,9 @@ confirmCreateTraining.addEventListener('click', () => {
      TAGS DE EXERCÍCIOS (NOVA LÓGICA)
   ===================================================== */
 
-  const exerciseList = [
-    'Agachamento',
-    'Supino',
-    'Levantamento Terra',
-    'Puxada',
-    'Desenvolvimento',
-    'Rosca Direta',
-    'Rosca Alternada',
-    'Tríceps Pulley',
-    'Leg Press',
-    'Cadeira Extensora'
-  ];
 
-  const exerciseSearch = document.getElementById('exerciseSearch');
-  const exerciseOptions = document.getElementById('exerciseOptions');
-  const selectedExercisesContainer = document.getElementById('selectedExercises');
 
-  let selectedExercises = [];
-
-  function renderOptions(filter = '') {
-    exerciseOptions.innerHTML = '';
-
-    exerciseList
-      .filter(ex =>
-        ex.toLowerCase().includes(filter.toLowerCase()) &&
-        !selectedExercises.includes(ex)
-      )
-      .forEach(exercise => {
-        const btn = document.createElement('div');
-        btn.className = 'exercise-option';
-        btn.textContent = exercise;
-
-        btn.addEventListener('click', () => {
-          selectedExercises.push(exercise);
-          renderSelected();
-          renderOptions(exerciseSearch.value);
-        });
-
-        exerciseOptions.appendChild(btn);
-      });
-  }
-
-  function renderSelected() {
-    selectedExercisesContainer.innerHTML = '';
-
-    selectedExercises.forEach(exercise => {
-      const tag = document.createElement('div');
-      tag.className = 'exercise-tag';
-      tag.innerHTML = `
-        ${exercise}
-        <button type="button">&times;</button>
-      `;
-
-      tag.querySelector('button').addEventListener('click', () => {
-        selectedExercises = selectedExercises.filter(e => e !== exercise);
-        renderSelected();
-        renderOptions(exerciseSearch.value);
-      });
-
-      selectedExercisesContainer.appendChild(tag);
-    });
-  }
-
-  if (exerciseSearch) {
-    renderOptions();
-    exerciseSearch.addEventListener('input', () => {
-      renderOptions(exerciseSearch.value);
-    });
-  }
-
-  /* ===== CONFIRMAR TREINO ===== */
-  confirmExercise?.addEventListener('click', () => {
-    const data = {
-      aluno: selectStudent?.value,
-      treino: document.getElementById('trainingName')?.value,
-      exercicios: selectedExercises,
-      series: document.getElementById('sets')?.value,
-      repeticoes: document.getElementById('reps')?.value,
-      descanso: document.getElementById('rest')?.value,
-    };
-
-    console.log('Treino criado:', data);
-
-    exerciseModal.classList.remove('active');
-    createPlanModal.classList.remove('active');
-
-    selectedExercises = [];
-    renderSelected();
-    renderOptions();
-  });
+  
 
 });
 
@@ -323,63 +292,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-document.addEventListener('DOMContentLoaded', () => {
-  const selectAluno = document.getElementById('selectAluno');
-  const daysSection = document.getElementById('daysSection');
-  const daysGrid = document.getElementById('daysGrid');
-  const exerciseConfig = document.getElementById('exerciseConfig');
-
-  let selectedDay = null;
-
-  // AO SELECIONAR ALUNO
-  selectAluno.addEventListener('change', () => {
-    daysGrid.innerHTML = '';
-    exerciseConfig.style.display = 'none';
-    selectedDay = null;
-
-    if (!selectAluno.value) {
-      daysSection.style.display = 'none';
-      return;
-    }
-
-    const selectedOption = selectAluno.options[selectAluno.selectedIndex];
-    const diasDisponiveis = selectedOption.dataset.dias;
-
-    if (!diasDisponiveis) return;
-
-    const dias = diasDisponiveis.split(',');
-
-    daysSection.style.display = 'block';
-
-    dias.forEach(dia => {
-      const btn = document.createElement('button');
-      btn.className = 'day-btn available';
-      btn.textContent = dia.trim();
-
-      btn.addEventListener('click', () => {
-        document
-          .querySelectorAll('.day-btn')
-          .forEach(b => b.classList.remove('active'));
-
-        btn.classList.add('active');
-        selectedDay = dia.trim();
-
-        exerciseConfig.style.display = 'block';
-      });
-
-      daysGrid.appendChild(btn);
-    });
-  });
-});
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('saveTrainingManager')
-    ?.addEventListener('click', () => {
-      console.log('SALVANDO TREINO');
-    });
-});
 
 
 
@@ -412,43 +324,6 @@ const mockAlunos = [
 
 
 
-document.addEventListener('click', function (e) {
-  const card = e.target.closest('.training-card');
-  if (!card) return;
-
-  const modal = document.getElementById('trainingManagerModal');
-  if (!modal) return;
-
-  console.log('CARD CLICADO — MODAL ABERTO');
-  modal.classList.add('active');
-
-  if (typeof carregarMock === 'function') {
-    carregarMock();
-  }
-});
-
-function carregarMock() {
-  const selectAluno = document.getElementById('selectAluno');
-  if (!selectAluno) return;
-
-  // limpa antes (evita duplicar)
-  selectAluno.innerHTML = '<option value="">Selecione um aluno</option>';
-
-  mockAlunos.forEach(aluno => {
-    const option = document.createElement('option');
-    option.value = aluno.id;
-    option.textContent = aluno.nome;
-    option.dataset.dias = aluno.dias.join(',');
-
-    selectAluno.appendChild(option);
-  });
-}
-
-
-
-
-
-
 
 const selectAluno = document.getElementById('selectAluno');
 const daysGrid = document.getElementById('daysGrid');
@@ -464,15 +339,144 @@ const ALL_DAYS = [
   { label: 'Sábado', value: 'sabado' },
   { label: 'Domingo', value: 'domingo' }
 ];
+if(selectAluno) {
+  selectAluno.addEventListener('change', () => {
+    const option = selectAluno.selectedOptions[0];
+    if (!option || !option.dataset.dias) return;
 
-selectAluno.addEventListener('change', () => {
-  const option = selectAluno.selectedOptions[0];
-  if (!option || !option.dataset.dias) return;
+    // NORMALIZA OS DIAS VINDOS DO BACKEND
+    const diasDisponiveis = option.dataset.dias
+      .split(',')
+      .map(d => d.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
 
-  // NORMALIZA OS DIAS VINDOS DO BACKEND
-  const diasDisponiveis = option.dataset.dias
-    .split(',')
-    .map(d => d.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+    daysGrid.innerHTML = '';
+    daysSection.style.display = 'block';
+    exerciseConfig.style.display = 'none';
+
+    ALL_DAYS.forEach(day => {
+      const btn = document.createElement('button');
+      btn.textContent = day.label;
+      btn.classList.add('day-btn');
+
+      if (diasDisponiveis.includes(day.value)) {
+        btn.classList.add('available');
+
+        btn.addEventListener('click', () => {
+          btn.classList.toggle('active');
+          toggleInputs();
+        });
+      } else {
+        btn.disabled = true;
+        btn.style.opacity = '0.3';
+        btn.style.cursor = 'not-allowed';
+      }
+
+      daysGrid.appendChild(btn);
+    });
+  });
+}
+function toggleInputs() {
+  const ativo = document.querySelector('.day-btn.active');
+  exerciseConfig.style.display = ativo ? 'block' : 'none';
+}
+
+
+
+
+
+/* =====================================================
+   MODAL GERENCIAR TREINO (ABRIR / FECHAR)
+===================================================== */
+
+/* =====================================================
+   MODAL GERENCIAR TREINO (ABRIR / FECHAR) - CORRIGIDO
+===================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  const trainingManagerModal = document.getElementById('trainingManagerModal');
+  if (!trainingManagerModal) return;
+
+  // Delegação de Evento: Escuta cliques no container, mas só age se for num .training-card
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest('.training-card');
+    if (card) {
+      // Opcional: Pegar o nome do treino do card e colocar no título do modal
+      const trainingName = card.querySelector('.student-name').textContent;
+      document.getElementById('trainingManagerTitle').textContent = trainingName;
+      
+      trainingManagerModal.classList.add('active');
+    }
+  });
+
+  // Fechar Modal
+  const closeElements = [
+    trainingManagerModal.querySelector('.modal-close'),
+    document.getElementById('cancelTrainingManager'),
+    trainingManagerModal // Clique no overlay
+  ];
+
+  closeElements.forEach(el => {
+    el?.addEventListener('click', (e) => {
+      if (e.target === el || el.classList.contains('modal-close') || el.id === 'cancelTrainingManager') {
+        trainingManagerModal.classList.remove('active');
+      }
+    });
+  });
+});
+
+
+
+
+
+
+function renderTrainingStudents(alunos) {
+  const container = document.getElementById('trainingStudents');
+  container.innerHTML = '';
+
+  if (!alunos || alunos.length === 0) {
+    container.innerHTML = '<p class="empty-text">Nenhum aluno atribuído a este treino</p>';
+    return;
+  }
+
+  alunos.forEach(aluno => {
+    const div = document.createElement('div');
+    div.className = 'student-item';
+    div.textContent = aluno.nome;
+    container.appendChild(div);
+  });
+}
+
+
+const searchAluno = document.getElementById('searchAluno');
+const alunoResults = document.getElementById('alunoResults');
+
+searchAluno.addEventListener('input', () => {
+  const q = searchAluno.value.toLowerCase().trim();
+  alunoResults.innerHTML = '';
+
+  if (!q) return;
+
+  mockAlunos
+    .filter(a => a.nome.toLowerCase().includes(q))
+    .forEach(aluno => {
+      const div = document.createElement('div');
+      div.className = 'search-item';
+      div.textContent = aluno.nome;
+
+      div.addEventListener('click', () => {
+        searchAluno.value = aluno.nome;
+        alunoResults.innerHTML = '';
+        renderDays(aluno.dias);
+      });
+
+      alunoResults.appendChild(div);
+    });
+});
+
+
+
+function renderDays(diasDisponiveis) {
+  const daysGrid = document.getElementById('daysGrid');
+  const daysSection = document.getElementById('daysSection');
 
   daysGrid.innerHTML = '';
   daysSection.style.display = 'block';
@@ -481,26 +485,21 @@ selectAluno.addEventListener('change', () => {
   ALL_DAYS.forEach(day => {
     const btn = document.createElement('button');
     btn.textContent = day.label;
-    btn.classList.add('day-btn');
+    btn.className = 'day-btn';
 
-    if (diasDisponiveis.includes(day.value)) {
+    if (diasDisponiveis.map(d => d.toLowerCase()).includes(day.label.toLowerCase())) {
       btn.classList.add('available');
 
       btn.addEventListener('click', () => {
-        btn.classList.toggle('active');
-        toggleInputs();
+        document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        exerciseConfig.style.display = 'block';
       });
     } else {
       btn.disabled = true;
       btn.style.opacity = '0.3';
-      btn.style.cursor = 'not-allowed';
     }
 
     daysGrid.appendChild(btn);
   });
-});
-
-function toggleInputs() {
-  const ativo = document.querySelector('.day-btn.active');
-  exerciseConfig.style.display = ativo ? 'block' : 'none';
 }
