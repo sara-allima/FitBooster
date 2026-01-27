@@ -159,3 +159,27 @@ header h2{
   flex: 1;
   background: #ff4d4d;
 }
+
+.modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-card {
+  background: #1c2026;
+  padding: 12px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-card button {
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
