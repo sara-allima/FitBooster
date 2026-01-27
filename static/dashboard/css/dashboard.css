@@ -752,22 +752,9 @@
     color: var(--secundary-dark-text);
   }
 
-  .days-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
-    margin-top: 1rem;
-  }
+ 
 
-  .day-btn {
-    padding: 0.5rem;
-    border-radius: 8px;
-    border: 1px solid var(--primary-green);
-    background: transparent;
-    color: var(--primary-green);
-    cursor: pointer;
-    font-weight: 600;
-  }
+  
 
   .day-btn:hover {
     background: rgba(51, 255, 85, 0.15);
@@ -780,34 +767,9 @@
   }
 
 
-  .days-grid {
-    display:grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap:10px;
-    margin-top:12px;
-  }
 
-  .days-grid button {
-    background: transparent;
-    border: 1px solid var(--border-color);
-    padding: 10px 0;
-    border-radius: 10px;
-    color: var(--primary-white-bg-text);
-    cursor: pointer;
-    font-size: 15px;
-    transition: all 0.2s ease;
-  }
+ 
 
-  .days-grid button:hover {
-    border-color: var(--primary-green);
-  }
-
-  .days-grid button.active {
-    background: var(--primary-green);
-    color: var(--primary-dark-bg);
-    font-weight: 700;
-    border-color: var(--primary-green);
-  }
 
   /* ===== INPUTS E SELECTS DO MODAL ===== */
   .inputt {
@@ -1030,39 +992,13 @@
    DIAS DISPONÍVEIS DO ALUNO
 ================================ */
 
-.days-grid {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 8px;
-}
 
-.day-btn {
-  padding: 8px 14px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background: #f4f4f4;
-  cursor: pointer;
-  font-size: 14px;
-  transition: 0.2s;
-}
 
-.day-btn.available {
-  background: #e6f7ec;
-  border-color: #2ecc71;
-  color: #2ecc71;
-  font-weight: 600;
-}
 
-.day-btn.available:hover {
-  background: #2ecc71;
-  color: #fff;
-}
 
-.day-btn.active {
-  background: #2ecc71;
-  color: #fff;
-}
+
+
+
 
 
 /* ===== MODAL BASE (ÚNICA DEFINIÇÃO) ===== */
@@ -1082,30 +1018,11 @@
 
 
 
-.day-btn {
-  padding: 8px 14px;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  background: transparent;
-  color: var(--primary-white-bg-text);
-  cursor: pointer;
-  font-weight: 500;
-}
 
-.day-btn.available {
-  border-color: var(--primary-green);
-  color: var(--primary-green);
-}
 
-.day-btn.available:hover {
-  background: rgba(51, 255, 85, 0.15);
-}
 
-.day-btn.active {
-  background: var(--primary-green);
-  color: var(--primary-dark-bg);
-  font-weight: 700;
-}
+
+
 
 
 .search-results {
@@ -1126,11 +1043,51 @@
   color: #000;
 }
 
-.day-btn.available {
-  background: #2ecc71;
-  color: #000;
+
+/* ===============================
+   DIAS DISPONÍVEIS DO ALUNO
+================================ */
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 12px;
 }
 
+.day-btn {
+  padding: 10px 0;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--primary-white-bg-text);
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+/* Dia disponível */
+.day-btn.available {
+  border-color: var(--primary-green);
+  color: var(--primary-green);
+  font-weight: 600;
+}
+
+/* Hover apenas se disponível */
+.day-btn.available:hover {
+  background: rgba(51, 255, 85, 0.15);
+}
+
+/* Dia selecionado */
 .day-btn.active {
-  outline: 2px solid #fff;
+  background: var(--primary-green);
+  color: var(--primary-dark-bg);
+  font-weight: 700;
+  border-color: var(--primary-green);
+}
+
+/* Dia indisponível */
+.day-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }

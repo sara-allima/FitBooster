@@ -111,7 +111,6 @@ def redirecionar(request):
 # =========================
 # DASHBOARD TREINADOR
 # =========================
-
 @login_required
 @treinador_required
 def dashboard_alunos(request):
@@ -122,18 +121,17 @@ def dashboard_alunos(request):
         status='PENDENTE'
     ).select_related('aluno')
 
-    conexoes_aceitas = ConexaoAlunoTreinador.objects.filter(
-        treinador=treinador,
-        status='ACEITA'
-    ).select_related('aluno')
-
-    alunos = [c.aluno for c in conexoes_aceitas]
+    alunos = Aluno.objects.filter(
+        conexoes__treinador=treinador,
+        conexoes__status='ACEITA'
+    ).distinct()
 
     return render(request, 'home/pages/dashboardAlunos.html', {
         'treinador': treinador,
         'pedidos': pedidos,
         'alunos': alunos
     })
+
 
 
 @login_required
@@ -145,18 +143,17 @@ def dashboard_planos_treino(request):
         treinador=treinador
     ).prefetch_related('treinoexercicio_set')
 
-    conexoes_aceitas = ConexaoAlunoTreinador.objects.filter(
-        treinador=treinador,
-        status='ACEITA'
-    ).select_related('aluno')
-
-    alunos = [c.aluno for c in conexoes_aceitas]
+    alunos = Aluno.objects.filter(
+        conexoes__treinador=treinador,
+        conexoes__status='ACEITA'
+    ).distinct()
 
     return render(request, 'home/pages/dashboardPlanosTreino.html', {
         'treinador': treinador,
         'treinos': treinos,
         'alunos': alunos
     })
+
 
 
 
@@ -267,3 +264,26 @@ def criar_treino(request):
 def listar_exercicios(request):
     exercicios = Exercicio.objects.all().values('id', 'nome')
     return JsonResponse(list(exercicios), safe=False)
+
+
+
+
+
+def buscar_alunos(request):
+    alunos = Aluno.objects.all()
+
+    data = []
+    for aluno in alunos:
+        # Verifica se o campo tem dados, separa por vírgula e remove espaços em branco
+        if aluno.dias_disponiveis:
+            lista_dias = [dia.strip() for dia in aluno.dias_disponiveis.split(',')]
+        else:
+            lista_dias = []
+
+        data.append({
+            "id": aluno.id,
+            "nome": aluno.nome,
+            "dias_disponiveis": lista_dias  # Agora retorna os dados reais do banco
+        })
+
+    return JsonResponse(data, safe=False)

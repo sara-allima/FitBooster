@@ -1,59 +1,163 @@
 from django.contrib import admin
-from .models import *
+from .models import (
+    Treinador,
+    Aluno,
+    Exercicio,
+    Treino,
+    TreinoExercicio,
+    AlunoTreino,
+    ConexaoAlunoTreinador,
+    DiaTreinoAluno
+)
 
-# Register your models here.
+# ============================
+# INLINE MODELS
+# ============================
+
 class TreinoExercicioInline(admin.TabularInline):
     model = TreinoExercicio
     extra = 1
 
+
+class AlunoTreinoInline(admin.TabularInline):
+    model = AlunoTreino
+    extra = 1
+
+
+class DiaTreinoAlunoInline(admin.TabularInline):
+    model = DiaTreinoAluno
+    extra = 1
+
+
+# ============================
+# TREINO
+# ============================
+
+@admin.register(Treino)
 class TreinoAdmin(admin.ModelAdmin):
-    inlines = [TreinoExercicioInline]
+    inlines = [TreinoExercicioInline, AlunoTreinoInline]
+
     list_display = (
         'nome',
-        'treinador',
         'tipo',
+        'treinador',
         'data_criacao',
         'listar_alunos'
     )
-    list_filter = ('tipo', 'data_criacao')
-    search_fields = ('nome', 'treinador__nome')
+
+    list_filter = ('tipo', 'data_criacao', 'treinador')
+    search_fields = ('nome', 'descricao', 'treinador__nome')
 
     def listar_alunos(self, obj):
-        return ", ".join(
-            aluno.nome for aluno in obj.alunos.all()
-        )
+        return ", ".join(aluno.nome for aluno in obj.alunos.all())
 
     listar_alunos.short_description = 'Alunos'
 
-admin.site.register(Treino, TreinoAdmin)
 
+# ============================
+# ALUNO
+# ============================
+
+@admin.register(Aluno)
 class AlunoAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'email', 'objetivo', 'peso', 'altura', 'idade')
-    search_fields = ('nome', 'email')
-    list_filter = ('objetivo',)
+    inlines = [DiaTreinoAlunoInline]
 
-admin.site.register(Aluno, AlunoAdmin)
+    list_display = (
+        'nome',
+        'email',
+        'objetivo',
+        'peso',
+        'meta_peso',
+        'altura',
+        'idade'
+    )
 
+    list_filter = ('objetivo', 'genero')
+    search_fields = ('nome', 'email', 'user__username')
+
+    readonly_fields = ('user',)
+
+
+# ============================
+# TREINADOR
+# ============================
+
+@admin.register(Treinador)
 class TreinadorAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'cref', 'formacao', 'idade')
-    search_fields = ('nome', 'cref')
+    list_display = (
+        'nome',
+        'cref',
+        'email',
+        'formacao',
+        'idade'
+    )
 
-admin.site.register(Treinador, TreinadorAdmin)
+    search_fields = ('nome', 'cref', 'email')
+    readonly_fields = ('user',)
 
+
+# ============================
+# EXERCÍCIO
+# ============================
+
+@admin.register(Exercicio)
 class ExercicioAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'grupo_muscular')
-    search_fields = ('nome', 'grupo_muscular')
+    list_display = (
+        'nome',
+        'grupo_muscular',
+        'series',
+        'repeticoes',
+        'carga'
+    )
+
     list_filter = ('grupo_muscular',)
+    search_fields = ('nome', 'grupo_muscular')
 
-admin.site.register(Exercicio, ExercicioAdmin)
 
-class MedidasAlunoAdmin(admin.ModelAdmin):
-    list_display = ('aluno', 'data_registro', 'peso', 'altura')
-    list_filter = ('data_registro',)
-    search_fields = ('aluno__nome',)
+# ============================
+# TREINO x EXERCÍCIO
+# ============================
 
-admin.site.register(MedidasAluno, MedidasAlunoAdmin)
+@admin.register(TreinoExercicio)
+class TreinoExercicioAdmin(admin.ModelAdmin):
+    list_display = (
+        'treino',
+        'exercicio',
+        'series',
+        'repeticoes',
+        'carga'
+    )
 
+    search_fields = (
+        'treino__nome',
+        'exercicio__nome'
+    )
+
+
+# ============================
+# ALUNO x TREINO
+# ============================
+
+@admin.register(AlunoTreino)
+class AlunoTreinoAdmin(admin.ModelAdmin):
+    list_display = (
+        'aluno',
+        'treino',
+        'ativo'
+    )
+
+    list_filter = ('ativo',)
+    search_fields = (
+        'aluno__nome',
+        'treino__nome'
+    )
+
+
+# ============================
+# CONEXÃO ALUNO ↔ TREINADOR
+# ============================
+
+@admin.register(ConexaoAlunoTreinador)
 class ConexaoAlunoTreinadorAdmin(admin.ModelAdmin):
     list_display = (
         'aluno',
@@ -63,6 +167,7 @@ class ConexaoAlunoTreinadorAdmin(admin.ModelAdmin):
         'data_resposta',
         'data_encerramento'
     )
+
     list_filter = ('status',)
     search_fields = (
         'aluno__nome',
@@ -70,4 +175,17 @@ class ConexaoAlunoTreinadorAdmin(admin.ModelAdmin):
         'treinador__cref'
     )
 
-admin.site.register(ConexaoAlunoTreinador, ConexaoAlunoTreinadorAdmin)
+
+# ============================
+# DIAS DE TREINO DO ALUNO
+# ============================
+
+@admin.register(DiaTreinoAluno)
+class DiaTreinoAlunoAdmin(admin.ModelAdmin):
+    list_display = (
+        'aluno',
+        'dia'
+    )
+
+    list_filter = ('dia',)
+    search_fields = ('aluno__nome',)

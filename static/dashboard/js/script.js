@@ -32,58 +32,57 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 const confirmCreateTraining = document.getElementById('confirmCreateTraining');
-if (!confirmCreateTraining) return;
+  if (confirmCreateTraining) {
+    confirmCreateTraining.addEventListener('click', async () => {
+    const nome = document.getElementById('trainingName').value.trim();
+    const exerciciosSelecionados = $('#exerciseSelect').val(); // 👈 AQUI
 
+    // 👉 USA A LISTA REAL (tags)
+    if (!nome || !exerciciosSelecionados||exerciciosSelecionados.length === 0) {
+      alert('Preencha tudo');
+      return;
+    }
 
+    // monta exercícios a partir das tags
+    const exercicios = exerciciosSelecionados.map(id => ({
+      id: id,
+      series: 3,
+      repeticoes: 12,
+      carga: 0
+    }));
 
-confirmCreateTraining.addEventListener('click', async () => {
-  const nome = document.getElementById('trainingName').value.trim();
-  const exerciciosSelecionados = $('#exerciseSelect').val(); // 👈 AQUI
+    console.log('Enviando:', exercicios);
 
-  // 👉 USA A LISTA REAL (tags)
-  if (!nome || !exerciciosSelecionados||exerciciosSelecionados.length === 0) {
-    alert('Preencha tudo');
-    return;
-  }
+    const response = await fetch('/treino/criar/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')
+      },
+      body: JSON.stringify({
+        nome: nome,
+        tipo: 'Personalizado',
+        exercicios: exercicios
+      })
+    });
 
-  // monta exercícios a partir das tags
-   const exercicios = exerciciosSelecionados.map(id => ({
-    id: id,
-    series: 3,
-    repeticoes: 12,
-    carga: 0
-  }));
+    const data = await response.json();
 
-   console.log('Enviando:', exercicios);
+    if (data.success) {
+    
+      window.location.reload();
+      document.getElementById('createPlanModal').classList.remove('active');
 
-  const response = await fetch('/treino/criar/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': getCookie('csrftoken')
-    },
-    body: JSON.stringify({
-      nome: nome,
-      tipo: 'Personalizado',
-      exercicios: exercicios
-    })
+      $('#exerciseSelect').selectpicker('deselectAll');
+  document.getElementById('trainingName').value = '';
+
+      document.getElementById('trainingName').value = '';
+    } else {
+      alert(data.error || 'Erro ao criar treino');
+    }
   });
 
-  const data = await response.json();
-
-  if (data.success) {
-   
-    window.location.reload();
-    document.getElementById('createPlanModal').classList.remove('active');
-
-    $('#exerciseSelect').selectpicker('deselectAll');
-document.getElementById('trainingName').value = '';
-
-    document.getElementById('trainingName').value = '';
-  } else {
-    alert(data.error || 'Erro ao criar treino');
-  }
-});
+}
 
 
 
@@ -230,7 +229,6 @@ fetch('/exercicios/')
   const closeExerciseModal = document.getElementById('closeExerciseModal');
   const confirmExercise = document.getElementById('confirmExercise');
 
-  const daysMock = ['Segunda', 'Quarta', 'Sexta'];
 
   if (btnCreatePlan.length) {
     btnCreatePlan.forEach(btn => {
@@ -248,22 +246,7 @@ fetch('/exercicios/')
     createPlanModal.classList.remove('active');
   });
 
-  selectStudent?.addEventListener('change', () => {
-    availableDays.innerHTML = '';
-    if (!selectStudent.value) return;
-
-    daysMock.forEach(day => {
-      const btn = document.createElement('button');
-      btn.className = 'day-btn';
-      btn.textContent = day;
-
-      btn.addEventListener('click', () => {
-        exerciseModal.classList.add('active');
-      });
-
-      availableDays.appendChild(btn);
-    });
-  });
+  
 
   closeExerciseModal?.addEventListener('click', () => {
     exerciseModal.classList.remove('active');
@@ -277,150 +260,6 @@ fetch('/exercicios/')
 
   
 
-});
-
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-  if (window.jQuery && $('#exerciseSelect').length) {
-    $('#exerciseSelect').selectpicker();
-  }
-});
-
-
-
-
-
-
-
-
-  // ===============================
-// MOCK DE ALUNOS (SIMULA BACKEND)
-// ===============================
-const mockAlunos = [
-  {
-    id: 1,
-    nome: 'Ana Nunes',
-    dias: ['Segunda', 'Quarta', 'Sexta'],
-    avatar: 'A'
-  },
-  {
-    id: 2,
-    nome: 'João Silva',
-    dias: ['Terça', 'Quinta'],
-    avatar: 'J'
-  },
-  {
-    id: 3,
-    nome: 'Carlos Mendes',
-    dias: ['Segunda', 'Terça', 'Quinta'],
-    avatar: 'C'
-  }
-];
-
-
-
-
-
-const selectAluno = document.getElementById('selectAluno');
-const daysGrid = document.getElementById('daysGrid');
-const daysSection = document.getElementById('daysSection');
-const exerciseConfig = document.getElementById('exerciseConfig');
-
-const ALL_DAYS = [
-  { label: 'Segunda', value: 'segunda' },
-  { label: 'Terça', value: 'terca' },
-  { label: 'Quarta', value: 'quarta' },
-  { label: 'Quinta', value: 'quinta' },
-  { label: 'Sexta', value: 'sexta' },
-  { label: 'Sábado', value: 'sabado' },
-  { label: 'Domingo', value: 'domingo' }
-];
-if(selectAluno) {
-  selectAluno.addEventListener('change', () => {
-    const option = selectAluno.selectedOptions[0];
-    if (!option || !option.dataset.dias) return;
-
-    // NORMALIZA OS DIAS VINDOS DO BACKEND
-    const diasDisponiveis = option.dataset.dias
-      .split(',')
-      .map(d => d.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
-
-    daysGrid.innerHTML = '';
-    daysSection.style.display = 'block';
-    exerciseConfig.style.display = 'none';
-
-    ALL_DAYS.forEach(day => {
-      const btn = document.createElement('button');
-      btn.textContent = day.label;
-      btn.classList.add('day-btn');
-
-      if (diasDisponiveis.includes(day.value)) {
-        btn.classList.add('available');
-
-        btn.addEventListener('click', () => {
-          btn.classList.toggle('active');
-          toggleInputs();
-        });
-      } else {
-        btn.disabled = true;
-        btn.style.opacity = '0.3';
-        btn.style.cursor = 'not-allowed';
-      }
-
-      daysGrid.appendChild(btn);
-    });
-  });
-}
-function toggleInputs() {
-  const ativo = document.querySelector('.day-btn.active');
-  exerciseConfig.style.display = ativo ? 'block' : 'none';
-}
-
-
-
-
-
-/* =====================================================
-   MODAL GERENCIAR TREINO (ABRIR / FECHAR)
-===================================================== */
-
-/* =====================================================
-   MODAL GERENCIAR TREINO (ABRIR / FECHAR) - CORRIGIDO
-===================================================== */
-document.addEventListener('DOMContentLoaded', () => {
-  const trainingManagerModal = document.getElementById('trainingManagerModal');
-  if (!trainingManagerModal) return;
-
-  // Delegação de Evento: Escuta cliques no container, mas só age se for num .training-card
-  document.addEventListener('click', (e) => {
-    const card = e.target.closest('.training-card');
-    if (card) {
-      // Opcional: Pegar o nome do treino do card e colocar no título do modal
-      const trainingName = card.querySelector('.student-name').textContent;
-      document.getElementById('trainingManagerTitle').textContent = trainingName;
-      
-      trainingManagerModal.classList.add('active');
-    }
-  });
-
-  // Fechar Modal
-  const closeElements = [
-    trainingManagerModal.querySelector('.modal-close'),
-    document.getElementById('cancelTrainingManager'),
-    trainingManagerModal // Clique no overlay
-  ];
-
-  closeElements.forEach(el => {
-    el?.addEventListener('click', (e) => {
-      if (e.target === el || el.classList.contains('modal-close') || el.id === 'cancelTrainingManager') {
-        trainingManagerModal.classList.remove('active');
-      }
-    });
-  });
 });
 
 
@@ -446,60 +285,143 @@ function renderTrainingStudents(alunos) {
 }
 
 
-const searchAluno = document.getElementById('searchAluno');
-const alunoResults = document.getElementById('alunoResults');
 
-searchAluno.addEventListener('input', () => {
-  const q = searchAluno.value.toLowerCase().trim();
-  alunoResults.innerHTML = '';
+document.addEventListener('DOMContentLoaded', () => {
 
-  if (!q) return;
+  /* ===============================
+     MODAL GERENCIAR TREINO
+  =============================== */
+  const trainingManagerModal = document.getElementById('trainingManagerModal');
+  const searchAluno = document.getElementById('searchAluno');
+  const alunoResults = document.getElementById('alunoResults');
+  const daysGrid = document.getElementById('daysGrid');
+  const daysSection = document.getElementById('daysSection');
+  const exerciseConfig = document.getElementById('exerciseConfig');
+  let alunoSelecionado = null;
+  let diasSelecionados = [];
 
-  mockAlunos
-    .filter(a => a.nome.toLowerCase().includes(q))
-    .forEach(aluno => {
-      const div = document.createElement('div');
-      div.className = 'search-item';
-      div.textContent = aluno.nome;
+function resetAlunoSelecionado() {
+  alunoSelecionado = null;
+  diasSelecionados = [];
 
-      div.addEventListener('click', () => {
-        searchAluno.value = aluno.nome;
-        alunoResults.innerHTML = '';
-        renderDays(aluno.dias);
-      });
+  daysGrid.innerHTML = '';
+  daysSection.style.display = 'none';
+  exerciseConfig.style.display = 'none';
+}
 
-      alunoResults.appendChild(div);
+  if (!trainingManagerModal) return;
+
+  /* ABRIR MODAL PELO CARD */
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest('.training-card');
+    if (!card) return;
+
+    const title = card.querySelector('.student-name')?.textContent || 'Treino';
+    document.getElementById('trainingManagerTitle').textContent = title;
+
+    trainingManagerModal.classList.add('active');
+  });
+
+  /* FECHAR MODAL */
+  trainingManagerModal.addEventListener('click', (e) => {
+    if (
+      e.target === trainingManagerModal ||
+      e.target.id === 'cancelTrainingManager' ||
+      e.target.id === 'closeTrainingManager'
+    ) {
+      trainingManagerModal.classList.remove('active');
+    }
+  });
+
+  /* ===============================
+     BUSCA DE ALUNOS (AGORA FUNCIONA)
+  =============================== */
+  if (searchAluno) {
+    searchAluno.addEventListener('input', async () => {
+      resetAlunoSelecionado();
+
+      const q = searchAluno.value.trim().toLowerCase();
+      alunoResults.innerHTML = '';
+
+      if (q.length < 1) return;
+
+      const res = await fetch('/alunos/buscar/');
+      const alunos = await res.json();
+
+      alunos
+        .filter(a => a.nome.toLowerCase().includes(q))
+        .forEach(aluno => {
+          const div = document.createElement('div');
+          div.className = 'search-item';
+          div.textContent = aluno.nome;
+
+         div.addEventListener('click', () => {
+           resetAlunoSelecionado();
+
+            alunoSelecionado = aluno;
+
+            // RESET TOTAL
+            diasSelecionados = [];
+            daysGrid.innerHTML = '';
+            exerciseConfig.style.display = 'none';
+
+            searchAluno.value = aluno.nome;
+            alunoResults.innerHTML = '';
+
+            renderDays(aluno.dias_disponiveis || []);
+          });
+
+
+
+
+          alunoResults.appendChild(div);
+        });
     });
+  }
+
+  /* ===============================
+     RENDERIZA DIAS
+  =============================== */
+  function renderDays(diasDisponiveis) {
+    daysGrid.innerHTML = '';
+    daysSection.style.display = 'block';
+    exerciseConfig.style.display = 'none';
+
+    
+
+    const ALL_DAYS = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
+
+    ALL_DAYS.forEach(day => {
+      const btn = document.createElement('button');
+      btn.textContent = day;
+      btn.className = 'day-btn';
+
+      if (diasDisponiveis.includes(day)) {
+        btn.classList.add('available');
+
+        btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+
+        const dia = day;
+
+        if (diasSelecionados.includes(dia)) {
+          diasSelecionados = diasSelecionados.filter(d => d !== dia);
+        } else {
+          diasSelecionados.push(dia);
+        }
+
+        exerciseConfig.style.display = diasSelecionados.length ? 'block' : 'none';
+      });
+      } else {
+        btn.disabled = true;
+        btn.style.opacity = '0.3';
+      }
+
+      daysGrid.appendChild(btn);
+    });
+  }
+
 });
 
 
 
-function renderDays(diasDisponiveis) {
-  const daysGrid = document.getElementById('daysGrid');
-  const daysSection = document.getElementById('daysSection');
-
-  daysGrid.innerHTML = '';
-  daysSection.style.display = 'block';
-  exerciseConfig.style.display = 'none';
-
-  ALL_DAYS.forEach(day => {
-    const btn = document.createElement('button');
-    btn.textContent = day.label;
-    btn.className = 'day-btn';
-
-    if (diasDisponiveis.map(d => d.toLowerCase()).includes(day.label.toLowerCase())) {
-      btn.classList.add('available');
-
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        exerciseConfig.style.display = 'block';
-      });
-    } else {
-      btn.disabled = true;
-      btn.style.opacity = '0.3';
-    }
-
-    daysGrid.appendChild(btn);
-  });
-}
