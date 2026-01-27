@@ -256,15 +256,14 @@ def atualizar_nome(request):
 def treinadores(request):
     aluno = request.user.aluno
 
-    conexoes = ConexaoAlunoTreinador.objects.filter(aluno=aluno)
-
-    treinadores = Treinador.objects.all()
+    conexoes_aceitas = ConexaoAlunoTreinador.objects.filter(
+        aluno=aluno,
+        status='ACEITA'
+    ).select_related('treinador')
 
     return render(request, 'core/treinadores.html', {
-        'treinadores': treinadores,
-        'conexoes': conexoes,
+        'conexoes': conexoes_aceitas,
     })
-
 
 
 
@@ -282,6 +281,29 @@ def solicitar_treinador(request, cref):
 
     return redirect('treinadores')
 
+@login_required(login_url='mobile-login')
+@aluno_required
+def treinadores_disponiveis(request):
+    aluno = request.user.aluno
+
+    # treinadores que já têm qualquer conexão com o aluno
+    treinadores_com_conexao = ConexaoAlunoTreinador.objects.filter(
+        aluno=aluno
+    ).values_list('treinador_id', flat=True)
+
+    # somente treinadores livres
+    treinadores = Treinador.objects.exclude(
+        cref__in=treinadores_com_conexao
+    )
+
+    data = []
+    for t in treinadores:
+        data.append({
+            'nome': t.nome,
+            'cref': t.cref
+        })
+
+    return JsonResponse(data, safe=False)
 
 
 @login_required(login_url='mobile-login')

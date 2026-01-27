@@ -31,6 +31,11 @@ urlpatterns = [
     path('perfil/nome/', views.atualizar_nome, name='atualizar-nome'),
     path('corpo/salvar-peso/', views.salvar_peso, name='salvar-peso'),
     path('corpo/salvar-medidas/', views.salvar_medidas, name='salvar-medidas'),
+    path(
+        'treinadores/disponiveis/',
+        views.treinadores_disponiveis,
+        name='treinadores-disponiveis'
+    ),
 
     ]
 

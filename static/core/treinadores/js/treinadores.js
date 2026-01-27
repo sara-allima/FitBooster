@@ -2,9 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const openPopup = document.getElementById("openPopup");
   const closePopup = document.getElementById("closePopup");
   const popupOverlay = document.getElementById("popupOverlay");
-  const addTrainer = document.getElementById("addTrainer");
   const trainerList = document.getElementById("trainerList");
-  const crefInput = document.getElementById("crefInput");
   const emptyMessage = document.getElementById("emptyMessage");
 
   const deleteOverlay = document.getElementById("deleteOverlay");
@@ -13,10 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let conexaoIdParaEncerrar = null;
 
-  // 🔹 URLs vindas do Django
-  const urlListar = trainerList.dataset.urlListar;
-  const urlSolicitar = "/conexoes/solicitar/";
-  const urlEncerrar = "/conexoes/encerrar/";
+  // URLs
+  const urlEncerrar = "/mobile/conexoes/encerrar/";
+  const urlListar = "/mobile/conexoes/";
+  const urlTreinadoresDisponiveis = "/mobile/treinadores/disponiveis/";
 
   function getCSRFToken() {
     return document.cookie
@@ -30,56 +28,92 @@ document.addEventListener("DOMContentLoaded", () => {
       trainerList.children.length === 0 ? "block" : "none";
   }
 
-  // 🔹 Carregar conexões reais
+  function abrirConfirmacao(conexaoId) {
+    conexaoIdParaEncerrar = conexaoId;
+    deleteOverlay.style.display = "flex";
+  }
+
+  function carregarTreinadoresModal() {
+    fetch(urlTreinadoresDisponiveis)
+      .then(res => res.json())
+      .then(data => {
+        const lista = document.getElementById("listaTreinadoresModal");
+        lista.innerHTML = "";
+
+        if (data.length === 0) {
+          lista.innerHTML =
+            "<p style='color:#9ca3af'>Nenhum treinador disponível</p>";
+          return;
+        }
+
+        data.forEach(t => {
+          const div = document.createElement("div");
+          div.className = "modal-card";
+
+          div.innerHTML = `
+            <div>
+              <strong>${t.nome}</strong><br>
+              <small>CREF: ${t.cref}</small>
+            </div>
+            <button>Adicionar</button>
+          `;
+
+          div.querySelector("button").onclick = () => {
+            fetch(`/mobile/treinadores/solicitar/${t.cref}/`, {
+              method: "POST",
+              headers: {
+                "X-CSRFToken": getCSRFToken()
+              }
+            }).then(() => {
+              carregarTreinadoresModal();
+              carregarConexoes();
+            });
+          };
+
+          lista.appendChild(div);
+        });
+      });
+  }
+
   function carregarConexoes() {
     fetch(urlListar)
       .then(res => res.json())
       .then(data => {
         trainerList.innerHTML = "";
 
-        data.forEach(conexao => {
-          const card = document.createElement("div");
-          card.className = "trainer-card";
-          card.innerHTML = `
-            <span>${conexao.nome} (${conexao.status})</span>
-            <button class="delete-btn">✕</button>
-          `;
+        data
+          .filter(c => c.status === "ACEITA")
+          .forEach(conexao => {
+            const card = document.createElement("div");
+            card.className = "trainer-card";
 
-          card.querySelector(".delete-btn").onclick = () => {
-            conexaoIdParaEncerrar = conexao.id;
-            deleteOverlay.style.display = "flex";
-          };
+            card.innerHTML = `
+              <div>
+                <strong>${conexao.nome}</strong><br>
+                <small>CREF: ${conexao.cref}</small><br>
+                <small>Status: Aceito</small>
+              </div>
+              <button class="delete-btn">✕</button>
+            `;
 
-          trainerList.appendChild(card);
-        });
+            card.querySelector(".delete-btn").onclick = () => {
+              abrirConfirmacao(conexao.id);
+            };
+
+            trainerList.appendChild(card);
+          });
 
         checkEmpty();
       });
   }
 
-  carregarConexoes();
+  openPopup.onclick = () => {
+    popupOverlay.style.display = "flex";
+    carregarTreinadoresModal();
+  };
 
-  openPopup.onclick = () => popupOverlay.style.display = "flex";
-  closePopup.onclick = () => popupOverlay.style.display = "none";
-
-  addTrainer.onclick = () => {
-    const cref = crefInput.value.trim();
-    if (!cref) return;
-
-    fetch(urlSolicitar, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": getCSRFToken()
-      },
-      body: JSON.stringify({ cref })
-    })
-      .then(res => res.json())
-      .then(() => {
-        crefInput.value = "";
-        popupOverlay.style.display = "none";
-        carregarConexoes();
-      });
+  closePopup.onclick = () => {
+    popupOverlay.style.display = "none";
   };
 
   cancelDelete.onclick = () => {
@@ -95,11 +129,12 @@ document.addEventListener("DOMContentLoaded", () => {
         "X-CSRFToken": getCSRFToken()
       },
       body: JSON.stringify({ id: conexaoIdParaEncerrar })
-    })
-      .then(() => {
-        deleteOverlay.style.display = "none";
-        conexaoIdParaEncerrar = null;
-        carregarConexoes();
-      });
+    }).then(() => {
+      deleteOverlay.style.display = "none";
+      conexaoIdParaEncerrar = null;
+      carregarConexoes();
+    });
   };
+
+  carregarConexoes();
 });

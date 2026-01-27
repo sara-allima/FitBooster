@@ -22,33 +22,29 @@
     você não tem um treinador, adicione o seu para receber seu plano de treino
   </p>
 
-<section class="trainer-list">
+<section class="trainer-list" id="trainerList">
 
-  {% for treinador in treinadores %}
-    <div class="trainer-card">
-      <div>
-        <strong>{{ treinador.nome }}</strong><br>
-        <small>CREF: {{ treinador.cref }}</small><br>
+  {% if conexoes %}
+    {% for conexao in conexoes %}
+      <div class="trainer-card">
+        <div>
+          <strong>{{ conexao.treinador.nome }}</strong><br>
+          <small>CREF: {{ conexao.treinador.cref }}</small><br>
+          <small>Status: Aceito</small>
+        </div>
 
-        {% for conexao in conexoes %}
-          {% if conexao.treinador.cref == treinador.cref %}
-            <small>Status: {{ conexao.status }}</small>
-          {% endif %}
-        {% empty %}
-          <small>Disponível</small>
-        {% endfor %}
+        <button
+          class="delete-btn"
+          onclick="abrirConfirmacao({{ conexao.id }})"
+        >
+          ✕
+        </button>
       </div>
-
-      {% if treinador.cref not in conexoes.values %}
-        <form method="post" action="{% url 'solicitar-treinador' treinador.cref %}">
-          {% csrf_token %}
-          <button class="add-btn" style="margin-top:0">Adicionar</button>
-        </form>
-      {% endif %}
-    </div>
-  {% endfor %}
+    {% endfor %}
+  {% endif %}
 
 </section>
+
 
 
   <button class="add-btn" id="openPopup">+ Adicionar treinador</button>
@@ -60,10 +56,9 @@
     <button class="close-btn" id="closePopup">✕</button>
     <h3>Adicionar treinador</h3>
 
-    <input type="text" id="crefInput" placeholder="Digite o CREF do treinador">
-
-    <button class="confirm-btn" id="addTrainer">Adicionar</button>
+    <div id="listaTreinadoresModal" class="modal-list"></div>
   </div>
+
 </div>
 
 <!-- Popup confirmar exclusão -->
