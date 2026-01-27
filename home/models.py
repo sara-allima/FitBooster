@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 class Treinador(models.Model):
@@ -176,6 +176,17 @@ class ConexaoAlunoTreinador(models.Model):
     class Meta:
         unique_together = ('aluno', 'treinador')
     
+
+class ExercicioConcluido(models.Model):
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
+    treino_exercicio = models.ForeignKey(TreinoExercicio, on_delete=models.CASCADE)
+    data_conclusao = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        unique_together = ('aluno', 'treino_exercicio')
+
+    def __str__(self):
+        return f"{self.aluno} - {self.treino_exercicio}"
     
 class DiaTreinoAluno(models.Model):
     DIAS_SEMANA = [
