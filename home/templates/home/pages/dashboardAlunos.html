@@ -23,6 +23,7 @@
 
 <!-- MODAL RELATÓRIO DO ALUNO -->
 
+
 <div class="modal-overlay" id="reportModal">
     <div class="modal-card">
         <button class="modal-close" id="closeModal">&times;</button>
@@ -31,85 +32,35 @@
         <p class="modal-subtitle" id="modalStudentName"></p>
 
         <div class="modal-grid">
+            <div class="modal-item"><span>Peso Atual</span><strong id="rep-peso">--</strong></div>
+            <div class="modal-item"><span>Meta/Objetivo</span><strong id="rep-objetivo">--</strong></div>
 
-            <div class="modal-item">
-                <span>Peso Atual</span>
-                <strong id="peso"></strong>
-            </div>
+            <div class="modal-item"><span>Ombro</span><strong id="rep-ombros">--</strong></div>
+            <div class="modal-item"><span>Peito</span><strong id="rep-peito">--</strong></div>
 
-            <div class="modal-item">
-                <span>Meta</span>
-                <strong id="objetivo"></strong>
-            </div>
+            <div class="modal-item"><span>Antebraço (E)</span><strong id="rep-antebraco-e">--</strong></div>
+            <div class="modal-item"><span>Antebraço (D)</span><strong id="rep-antebraco-d">--</strong></div>
 
-            <div class="modal-item">
-                <span>Ombro</span>
-                <strong id="ombro"></strong>
-            </div>
+            <div class="modal-item"><span>Braço (E)</span><strong id="rep-braco-e">--</strong></div>
+            <div class="modal-item"><span>Braço (D)</span><strong id="rep-braco-d">--</strong></div>
 
-            <div class="modal-item">
-                <span>Peito</span>
-                <strong id="peito"></strong>
-            </div>
+            <div class="modal-item"><span>Cintura</span><strong id="rep-cintura">--</strong></div>
+            <div class="modal-item"><span>Quadril</span><strong id="rep-quadril">--</strong></div>
 
-            <div class="modal-item">
-                <span>Antebraço (E)</span>
-                <strong id="antebraco_e"></strong>
-            </div>
+            <div class="modal-item"><span>Pernas (E)</span><strong id="rep-perna-e">--</strong></div>
+            <div class="modal-item"><span>Pernas (D)</span><strong id="rep-perna-d">--</strong></div>
 
-            <div class="modal-item">
-                <span>Antebraço (D)</span>
-                <strong id="antebraco_d"></strong>
-            </div>
-
-            <div class="modal-item">
-                <span>Braço (E)</span>
-                <strong id="braco_e"></strong>
-            </div>
-
-            <div class="modal-item">
-                <span>Braço (D)</span>
-                <strong id="braco_d"></strong>
-            </div>
-
-            <div class="modal-item">
-                <span>Cintura</span>
-                <strong id="cintura"></strong>
-            </div>
-
-            <div class="modal-item">
-                <span>Quadril</span>
-                <strong id="quadril"></strong>
-            </div>
-
-            <div class="modal-item">
-                <span>Pernas (E)</span>
-                <strong id="perna_e"></strong>
-            </div>
-
-            <div class="modal-item">
-                <span>Pernas (D)</span>
-                <strong id="perna_d"></strong>
-            </div>
-
-            <div class="modal-item">
-                <span>Panturrilha (E)</span>
-                <strong id="panturrilha_e"></strong>
-            </div>
-
-            <div class="modal-item">
-                <span>Panturrilha (D)</span>
-                <strong id="panturrilha_d"></strong>
-            </div>
-
+            <div class="modal-item"><span>Panturrilha (E)</span><strong id="rep-panturrilha-e">--</strong></div>
+            <div class="modal-item"><span>Panturrilha (D)</span><strong id="rep-panturrilha-d">--</strong></div>
         </div>
+        
         <div class="modal-footer">
             <button class="btn-disconnect" id="openDisconnectModal">
                 Desconectar aluno
             </button>
         </div>
     </div>
-
+</div>
     </div>
     <div class="modal-overlay" id="disconnectModal">
     <div class="modal-card small">
