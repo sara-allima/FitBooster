@@ -366,35 +366,47 @@ def solicitar_treinador(request, cref):
 
     conexao, criada = ConexaoAlunoTreinador.objects.get_or_create(
         aluno=aluno,
-        treinador=treinador,
-        defaults={'status': 'PENDENTE'}
+        treinador=treinador
     )
 
+    conexao.status = 'PENDENTE'
+    conexao.data_solicitacao = timezone.now()
+    conexao.data_resposta = None
+    conexao.data_encerramento = None
+    conexao.save()
+
     return redirect('treinadores')
+
 
 @login_required(login_url='mobile-login')
 @aluno_required
 def treinadores_disponiveis(request):
     aluno = request.user.aluno
 
-    # treinadores que já têm qualquer conexão com o aluno
-    treinadores_com_conexao = ConexaoAlunoTreinador.objects.filter(
-        aluno=aluno
+    # treinadores que NÃO podem aparecer (pendentes ou aceitos)
+    treinadores_bloqueados = ConexaoAlunoTreinador.objects.filter(
+        aluno=aluno,
+        status__in=['PENDENTE', 'ACEITA']
     ).values_list('treinador_id', flat=True)
 
-    # somente treinadores livres
+    # pode aparecer:
+    # - nunca teve conexão
+    # - RECUSADA
+    # - ENCERRADA
     treinadores = Treinador.objects.exclude(
-        cref__in=treinadores_com_conexao
+        cref__in=treinadores_bloqueados
     )
 
-    data = []
-    for t in treinadores:
-        data.append({
+    data = [
+        {
             'nome': t.nome,
             'cref': t.cref
-        })
+        }
+        for t in treinadores
+    ]
 
     return JsonResponse(data, safe=False)
+
 
 
 @login_required(login_url='mobile-login')
