@@ -153,7 +153,11 @@ const confirmCreateTraining = document.getElementById('confirmCreateTraining');
     const nome = document.getElementById('trainingName').value.trim();
     const exerciciosSelecionados = $('#exerciseSelect').val(); // 👈 AQUI
 
-   
+    // 👉 USA A LISTA REAL (tags)
+    if (!nome || !exerciciosSelecionados||exerciciosSelecionados.length === 0) {
+      alert('Preencha tudo');
+      return;
+    }
 
     // monta exercícios a partir das tags
     const exercicios = exerciciosSelecionados.map(id => ({
@@ -923,7 +927,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     loadTrainingStudents(treinoId);
                     searchInput.value = '';
                     daysSection.style.display = 'none';
-                    
+                    alert("Aluno adicionado!");
                 }
             } catch (e) { alert("Erro ao salvar."); }
         });
@@ -980,7 +984,7 @@ async function handleRemoveStudent(treinoId, alunoId, element) {
                 document.getElementById('trainingStudents').innerHTML = '<p class="empty-text">Nenhum aluno vinculado.</p>';
             }
         }
-    } 
+    } catch (error) { alert("Erro ao remover."); }
 }
 
 // Abre/Fecha o popup de opções
