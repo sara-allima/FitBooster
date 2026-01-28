@@ -11,7 +11,7 @@ Fornecer uma ferramenta que auxilie academias, treinadores e alunos, no:
 - Experiência personalizável e segura.
 ## 🧭 Links Importantes
 - [Protótipo do Figma](https://exemplo.com/),
-- [Documento de Requisitos](https://docs.google.com/document/d/1LONLUnLhSKmC280aA7wc2FHPHVv5iDJ9IgAXCyyiRlE/edit?usp=sharing)
+- [Projeto Escrito](https://docs.google.com/document/d/1RMctxMBZyPmh2LzuKFWsv_N1qlQ41qnQ6qrI3ER9oqM/edit?usp=sharing)
 ## 🧑‍💻 Autores
 - [Everton Gean](https://github.com/Evertongean)
 - [Héctor dos Santos](https://github.com/Hectorsaint1)
