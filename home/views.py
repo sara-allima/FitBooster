@@ -488,3 +488,33 @@ def atualizar_perfil_treinador(request):
         return redirect(request.META.get('HTTP_REFERER', 'dashboard-alunos'))
     
     return JsonResponse({'error': 'Método inválido'}, status=400)
+
+
+# home/views.py
+from django.http import JsonResponse
+
+@login_required
+@treinador_required
+def detalhes_aluno(request, aluno_id):
+    # Busca o aluno garantindo que ele pertence a este treinador
+    aluno = get_object_or_404(Aluno, id=aluno_id, conexoes__treinador__user=request.user)
+
+    # Prepara os dados para o Javascript (trate os None para não quebrar o JS)
+    data = {
+        'nome': aluno.nome,
+        'objetivo': aluno.objetivo,
+        'peso': str(aluno.peso),
+        'ombros': str(aluno.ombros or '--'),
+        'peito': str(aluno.peito or '--'),
+        'antebraco_e': str(aluno.antebraco_esquerdo or '--'),
+        'antebraco_d': str(aluno.antebraco_direito or '--'),
+        'braco_e': str(aluno.braco_esquerdo or '--'),
+        'braco_d': str(aluno.braco_direito or '--'),
+        'cintura': str(aluno.cintura or '--'),
+        'quadril': str(aluno.quadril or '--'),
+        'pernas_e': str(aluno.perna_esquerda or '--'),
+        'pernas_d': str(aluno.perna_direita or '--'),
+        'panturrilha_e': str(aluno.panturrilha_esquerda or '--'),
+        'panturrilha_d': str(aluno.panturrilha_direita or '--'),
+    }
+    return JsonResponse(data)
