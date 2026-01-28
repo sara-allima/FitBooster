@@ -122,8 +122,23 @@ main { padding: 16px; padding-top: 0; }
 .mais { height:20px; width:20px; cursor:pointer; }
 
 /* Treinador */
-.trainer-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:10px; background-color:var(--card); padding:15px; border-radius:12px; }
-.trainer-btn { background:var(--accent); border:none; border-radius:12px; padding:14px; font-weight:600; color:#000; cursor:pointer; }
+.trainer-grid {
+   display:grid;
+   
+   gap:12px; 
+   margin-top:10px; 
+   background-color:var(--card);
+   padding:15px; border-radius:12px; 
+  }
+.trainer-btn { 
+  background:var(--accent); 
+  border:none;
+  border-radius:12px;
+  padding:14px; 
+  font-weight:600; 
+  color:#000;
+  cursor:pointer;
+ }
 
 /* Mais opções */
 .more-options .option {
@@ -281,3 +296,85 @@ main { padding: 16px; padding-top: 0; }
 
 @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
 @keyframes popupOpen { from {opacity:0;transform:scale(0.9);} to {opacity:1;transform:scale(1);} }
+/* Estilo dos Novos Cards de Treino */
+.workout-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.workout-card {
+  background: var(--card);
+  border-radius: 15px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  transition: transform 0.2s, background 0.2s;
+  border-left: 4px solid var(--accent); /* Barrinha lateral verde */
+}
+
+.workout-card:hover {
+  background: #2f343e;
+  transform: translateX(5px);
+}
+
+.workout-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.workout-letter {
+  background: var(--accent);
+  color: #000;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.workout-info h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.workout-info p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.workout-meta {
+  text-align: right;
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.arrow-icon {
+    width: 12px;
+    margin-left: 8px;
+    filter: invert(1); /* Se o ícone for preto, vira branco */
+}
+.view-all-link {
+    display: block;
+    text-align: center;
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.view-all-link:hover {
+    text-decoration: underline;
+}

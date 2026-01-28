@@ -79,7 +79,22 @@ def form(request):
 @login_required(login_url='mobile-login')
 @aluno_required
 def home(request):
-    return render(request, 'core/home.html')
+    aluno = request.user.aluno
+    
+    # Busca os 3 primeiros treinos ativos vinculados ao aluno
+    aluno_treinos = (
+        AlunoTreino.objects
+        .filter(aluno=aluno, ativo=True)
+        .select_related('treino')[:3]
+    )
+    
+    # Extrai apenas os objetos de Treino da tabela intermediária
+    treinos = [at.treino for at in aluno_treinos]
+    
+    context = {
+        'treinos': treinos,
+    }
+    return render(request, 'core/home.html', context)
 
 
 @login_required(login_url='mobile-login')
