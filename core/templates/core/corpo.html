@@ -23,8 +23,10 @@
     </div>
 
     <!-- PESO E DATA -->
-    <h2 class="peso">75,5 kg</h2>
-    <p class="data">2 de Outubro de 2025</p>
+    <h2 class="peso">{{ aluno.peso }} kg</h2>
+    <p class="data">{{ aluno.user.date_joined|date:"d \d\e F \d\e Y" }}</p>
+
+
 </div>
 
 <div class="container">
@@ -43,7 +45,7 @@
                     <img src="{% static 'core/img/ponto verde.png' %}" class="ponto"> 
                     <p>Atual</p>
                 </div>
-                <div class="pesoatual">75,5 kg</div>
+                <div class="pesoatual">{{ aluno.peso }} kg</div>
             </div>
 
             <div class="vertical">
@@ -51,12 +53,24 @@
                     <img src="{% static 'core/img/ponto azul.png' %}" class="ponto"> 
                     <p>Meta</p>
                 </div>
-                <div class="metaatual">60,5 kg</div>
+                <div class="metaatual">
+                    {% if aluno.meta_peso %}
+                        {{ aluno.meta_peso }} kg
+                    {% else %}
+                        --
+                    {% endif %}
+                </div>
             </div>
 
             <div class="vertical">
                 <p>Diferença</p>
-                <div class="diferencaatual">-15,0 kg</div>
+                <div class="diferencaatual">
+                    {% if diferenca %}
+                        {{ diferenca }} kg
+                    {% else %}
+                        --
+                    {% endif %}
+                </div>
             </div>  
         </div>
 
@@ -70,18 +84,66 @@
 
     <!-- MEDIDAS -->
     <div class="box hidden" id="boxMedidas">
-        <div class="medida"><span>Ombros</span><span>-- cm</span></div>
-        <div class="medida"><span>Peito</span><span>-- cm</span></div>
-        <div class="medida"><span>Antebraço (E)</span><span>-- cm</span></div>
-        <div class="medida"><span>Antebraço (D)</span><span>-- cm</span></div>
-        <div class="medida"><span>Braço (E)</span><span>-- cm</span></div>
-        <div class="medida"><span>Braço (D)</span><span>-- cm</span></div>
-        <div class="medida"><span>Cintura</span><span>-- cm</span></div>
-        <div class="medida"><span>Quadril</span><span>-- cm</span></div>
-        <div class="medida"><span>Pernas (E)</span><span>-- cm</span></div>
-        <div class="medida"><span>Pernas (D)</span><span>-- cm</span></div>
-        <div class="medida"><span>Panturrilha (E)</span><span>-- cm</span></div>
-        <div class="medida"><span>Panturrilha (D)</span><span>-- cm</span></div>
+        <div class="medida">
+            <span>Ombros</span>
+            <span>{{ aluno.ombros|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Peito</span>
+            <span>{{ aluno.peito|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Antebraço (E)</span>
+            <span>{{ aluno.antebraco_esquerdo|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Antebraço (D)</span>
+            <span>{{ aluno.antebraco_direito|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Braço (E)</span>
+            <span>{{ aluno.braco_esquerdo|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Braço (D)</span>
+            <span>{{ aluno.braco_direito|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Cintura</span>
+            <span>{{ aluno.cintura|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Quadril</span>
+            <span>{{ aluno.quadril|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Pernas (E)</span>
+            <span>{{ aluno.perna_esquerda|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Pernas (D)</span>
+            <span>{{ aluno.perna_direita|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Panturrilha (E)</span>
+            <span>{{ aluno.panturrilha_esquerda|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Panturrilha (D)</span>
+            <span>{{ aluno.panturrilha_direita|default:"--" }} cm</span>
+        </div>
+
     </div>
 
     <!-- BOTÃO MEDIDAS -->

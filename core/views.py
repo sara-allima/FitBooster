@@ -7,11 +7,12 @@ from home.models import Aluno
 from django.http import HttpResponse
 from decimal import Decimal, InvalidOperation
 from home.decorators import aluno_required
-from home.models import Treinador, ConexaoAlunoTreinador
+from home.models import Treinador, ConexaoAlunoTreinador, Treino, AlunoTreino, TreinoExercicio, ExercicioConcluido
 from django.http import JsonResponse
 from django.utils import timezone
 import json
 from django.shortcuts import get_object_or_404
+
 
 
 def index(request):
@@ -125,10 +126,23 @@ def clicar(request):
     return render(request, 'core/clicartreino.html')
 
 
+
 @login_required(login_url='mobile-login')
 @aluno_required
 def corpo(request):
-    return render(request, 'core/corpo.html')
+    aluno = request.user.aluno
+
+    diferenca = None
+    if aluno.meta_peso:
+        diferenca = aluno.meta_peso - aluno.peso
+
+    context = {
+        'aluno': aluno,
+        'diferenca': diferenca
+    }
+
+    return render(request, 'core/corpo.html', context)
+
 
 
 @login_required(login_url='mobile-login')
@@ -140,7 +154,43 @@ def escolher(request):
 @login_required(login_url='mobile-login')
 @aluno_required
 def reg(request):
-    return render(request, 'core/reg.html')
+    aluno = request.user.aluno
+
+    if request.method == "POST":
+
+        try:
+            peso = request.POST.get("peso_atual")
+            meta = request.POST.get("meta_peso")
+
+            if peso:
+                aluno.peso = Decimal(peso.replace(",", "."))
+
+            if meta:
+                aluno.meta_peso = Decimal(meta.replace(",", "."))
+
+        except InvalidOperation:
+            pass  # evita quebrar a página se vier algo inválido
+
+        # MEDIDAS
+        aluno.ombros = request.POST.get("ombros") or aluno.ombros
+        aluno.peito = request.POST.get("peito") or aluno.peito
+        aluno.antebraco_esquerdo = request.POST.get("antebraco_e") or aluno.antebraco_esquerdo
+        aluno.antebraco_direito = request.POST.get("antebraco_d") or aluno.antebraco_direito
+        aluno.braco_esquerdo = request.POST.get("braco_e") or aluno.braco_esquerdo
+        aluno.braco_direito = request.POST.get("braco_d") or aluno.braco_direito
+        aluno.cintura = request.POST.get("cintura") or aluno.cintura
+        aluno.quadril = request.POST.get("quadril") or aluno.quadril
+        aluno.perna_esquerda = request.POST.get("perna_e") or aluno.perna_esquerda
+        aluno.perna_direita = request.POST.get("perna_d") or aluno.perna_direita
+        aluno.panturrilha_esquerda = request.POST.get("panturrilha_e") or aluno.panturrilha_esquerda
+        aluno.panturrilha_direita = request.POST.get("panturrilha_d") or aluno.panturrilha_direita
+
+        aluno.save()
+        return redirect("corpo")
+
+    return render(request, 'core/reg.html', {
+        "aluno": aluno
+    })
 
 
 @login_required(login_url='mobile-login')
@@ -161,8 +211,99 @@ def list(request):
 @login_required(login_url='mobile-login')
 @aluno_required
 def treino(request):
-    return render(request, 'core/treino.html')
+    aluno = request.user.aluno
 
+    # pega os vínculos ativos do aluno com treinos
+    aluno_treinos = (
+        AlunoTreino.objects
+        .filter(aluno=aluno, ativo=True)
+        .select_related('treino')
+    )
+
+    treinos_formatados = []
+
+    for at in aluno_treinos:
+        treino = at.treino
+
+        qtd_exercicios = TreinoExercicio.objects.filter(
+            treino=treino
+        ).count()
+
+        treinos_formatados.append({
+            'id': treino.id,
+            'nome': treino.nome,
+            'descricao': treino.descricao,
+            'data': treino.data_criacao,
+            'qtd_exercicios': qtd_exercicios,
+        })
+
+    context = {
+        'aluno': aluno,
+        'treinos': treinos_formatados,
+        'total_treinos': len(treinos_formatados),
+    }
+
+    return render(request, 'core/treino.html', context)
+
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def detalhe_treino(request, treino_id):
+    aluno = request.user.aluno
+
+    # garante que o treino pertence ao aluno
+    treino = get_object_or_404(
+        Treino,
+        id=treino_id,
+        alunos=aluno
+    )
+
+    exercicios = (
+        TreinoExercicio.objects
+        .filter(treino=treino)
+        .select_related('exercicio')
+    )
+
+    context = {
+        'treino': treino,
+        'exercicios': exercicios
+    }
+
+    return render(request, 'core/detalhe_treino.html', context)
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def exercicio_detalhe(request, id):
+    item = get_object_or_404(TreinoExercicio, id=id)
+
+    concluido = False
+    if request.user.is_authenticated:
+        concluido = ExercicioConcluido.objects.filter(
+            aluno=request.user.aluno,
+            treino_exercicio=item
+        ).exists()
+
+    return render(
+        request,
+        'core/exercicio_detalhe.html',
+        {
+            'item': item,
+            'concluido': concluido
+        }
+    )
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def concluir_exercicio(request, id):
+    item = get_object_or_404(TreinoExercicio, id=id)
+    aluno = request.user.aluno
+
+    ExercicioConcluido.objects.get_or_create(
+        aluno=aluno,
+        treino_exercicio=item
+    )
+
+    return redirect('exercicio_detalhe', id=id)
 
 @login_required(login_url='mobile-login')
 @aluno_required
@@ -206,15 +347,14 @@ def atualizar_nome(request):
 def treinadores(request):
     aluno = request.user.aluno
 
-    conexoes = ConexaoAlunoTreinador.objects.filter(aluno=aluno)
-
-    treinadores = Treinador.objects.all()
+    conexoes_aceitas = ConexaoAlunoTreinador.objects.filter(
+        aluno=aluno,
+        status='ACEITA'
+    ).select_related('treinador')
 
     return render(request, 'core/treinadores.html', {
-        'treinadores': treinadores,
-        'conexoes': conexoes,
+        'conexoes': conexoes_aceitas,
     })
-
 
 
 
@@ -232,6 +372,29 @@ def solicitar_treinador(request, cref):
 
     return redirect('treinadores')
 
+@login_required(login_url='mobile-login')
+@aluno_required
+def treinadores_disponiveis(request):
+    aluno = request.user.aluno
+
+    # treinadores que já têm qualquer conexão com o aluno
+    treinadores_com_conexao = ConexaoAlunoTreinador.objects.filter(
+        aluno=aluno
+    ).values_list('treinador_id', flat=True)
+
+    # somente treinadores livres
+    treinadores = Treinador.objects.exclude(
+        cref__in=treinadores_com_conexao
+    )
+
+    data = []
+    for t in treinadores:
+        data.append({
+            'nome': t.nome,
+            'cref': t.cref
+        })
+
+    return JsonResponse(data, safe=False)
 
 
 @login_required(login_url='mobile-login')
@@ -255,7 +418,8 @@ def listar_conexoes(request):
 
     return JsonResponse(data, safe=False)
 
-@login_required
+@login_required(login_url='mobile-login')
+@aluno_required
 def encerrar_conexao(request):
     if request.method != 'POST':
         return JsonResponse({'erro': 'Método inválido'}, status=400)
@@ -279,3 +443,68 @@ def encerrar_conexao(request):
     conexao.save()
 
     return JsonResponse({'sucesso': True})
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def corpo_dados(request):
+    aluno = request.user.aluno
+
+    data = {
+        "peso": aluno.peso,
+        "meta": aluno.meta_peso,
+        "diferenca": (
+            aluno.meta_peso - aluno.peso
+            if aluno.meta_peso else None
+        ),
+        "medidas": {
+            "ombros": aluno.ombros,
+            "peito": aluno.peito,
+            "antebraco_e": aluno.antebraco_esquerdo,
+            "antebraco_d": aluno.antebraco_direito,
+            "braco_e": aluno.braco_esquerdo,
+            "braco_d": aluno.braco_direito,
+            "cintura": aluno.cintura,
+            "quadril": aluno.quadril,
+            "perna_e": aluno.perna_esquerda,
+            "perna_d": aluno.perna_direita,
+            "pant_e": aluno.panturrilha_esquerda,
+            "pant_d": aluno.panturrilha_direita,
+        }
+    }
+
+    return JsonResponse(data)
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def salvar_peso(request):
+    data = json.loads(request.body)
+    aluno = request.user.aluno
+
+    aluno.peso = Decimal(data["peso"])
+    aluno.meta_peso = Decimal(data["meta"])
+    aluno.save()
+
+    return JsonResponse({"sucesso": True})
+
+@login_required(login_url='mobile-login')
+@aluno_required
+def salvar_medidas(request):
+    data = json.loads(request.body)
+    aluno = request.user.aluno
+
+    aluno.ombros = data["ombros"]
+    aluno.peito = data["peito"]
+    aluno.antebraco_esquerdo = data["antebraco_e"]
+    aluno.antebraco_direito = data["antebraco_d"]
+    aluno.braco_esquerdo = data["braco_e"]
+    aluno.braco_direito = data["braco_d"]
+    aluno.cintura = data["cintura"]
+    aluno.quadril = data["quadril"]
+    aluno.perna_esquerda = data["perna_e"]
+    aluno.perna_direita = data["perna_d"]
+    aluno.panturrilha_esquerda = data["pant_e"]
+    aluno.panturrilha_direita = data["pant_d"]
+
+    aluno.save()
+
+    return JsonResponse({"sucesso": True})

@@ -21,7 +21,8 @@
         </div>
         <div class="title">Alterar Registro</div>
       </div>
-
+    <form method="POST">
+      {% csrf_token %}
       <!-- ACCORDION -->
       <div class="accordion">
 
@@ -34,8 +35,8 @@
         </div>
 
         <div class="acc-body" id="body-peso">
-          <input class="input measure" placeholder="Peso (Kg)" type="number">
-          <input class="input measure" placeholder="Meta (Kg)" type="number">
+          <input class="input measure" name="peso_atual" placeholder="Peso (Kg)" type="number" step="0.1">
+          <input class="input measure" name="meta_peso" placeholder="Meta (Kg)" type="number" step="0.1">
         </div>
 
         <!-- MEDIDAS -->
@@ -48,18 +49,18 @@
 
         <div class="acc-body acc-body-medidas" id="body-medidas">
           <div class="measures-grid">
-            <input class="input measure" placeholder="Ombros (cm)" type="number">
-            <input class="input measure" placeholder="Peito (cm)" type="number">
-            <input class="input measure" placeholder="Antebraço (E)" type="number">
-            <input class="input measure" placeholder="Antebraço (D)" type="number">
-            <input class="input measure" placeholder="Braço (E)" type="number">
-            <input class="input measure" placeholder="Braço (D)" type="number">
-            <input class="input measure" placeholder="Cintura (cm)" type="number">
-            <input class="input measure" placeholder="Quadril (cm)" type="number">
-            <input class="input measure" placeholder="Perna (E)" type="number">
-            <input class="input measure" placeholder="Perna (D)" type="number">
-            <input class="input measure" placeholder="Panturrilha (E)" type="number">
-            <input class="input measure" placeholder="Panturrilha (D)" type="number">
+            <input class="input measure" name="ombros" placeholder="Ombros (cm)" type="number">
+            <input class="input measure" name="peito" placeholder="Peito (cm)" type="number">
+            <input class="input measure" name="antebraco_e" placeholder="Antebraço (E)" type="number">
+            <input class="input measure" name="antebraco_d" placeholder="Antebraço (D)" type="number">
+            <input class="input measure" name="braco_e" placeholder="Braço (E)" type="number">
+            <input class="input measure" name="braco_d" placeholder="Braço (D)" type="number">
+            <input class="input measure" name="cintura" placeholder="Cintura (cm)" type="number">
+            <input class="input measure" name="quadril" placeholder="Quadril (cm)" type="number">
+            <input class="input measure" name="perna_e" placeholder="Perna (E)" type="number">
+            <input class="input measure" name="perna_d" placeholder="Perna (D)" type="number">
+            <input class="input measure" name="panturrilha_e" placeholder="Panturrilha (E)" type="number">
+            <input class="input measure" name="panturrilha_d" placeholder="Panturrilha (D)" type="number">
           </div>
         </div>
 
@@ -67,9 +68,9 @@
 
       <!-- BOTÃO SALVAR -->
       <div class="save-wrap">
-        <button id="saveBtn" class="save-btn">Salvar</button>
+        <button type="submit" id="saveBtn" class="save-btn">Salvar</button>
       </div>
-
+    </form>
     </div>
   </div>
 

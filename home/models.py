@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 class Treinador(models.Model):
@@ -31,8 +31,28 @@ class Aluno(models.Model):
     email = models.EmailField(unique=True)
     objetivo = models.CharField(max_length=100)
     peso = models.DecimalField(max_digits=5, decimal_places=2)
+    meta_peso = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     altura = models.DecimalField(max_digits=4, decimal_places=2)
     idade = models.IntegerField()
+    
+     # MEDIDAS (ESTADO ATUAL)
+    ombros = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    peito = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+
+    antebraco_esquerdo = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    antebraco_direito = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+
+    braco_esquerdo = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    braco_direito = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+
+    cintura = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    quadril = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+
+    perna_esquerda = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    perna_direita = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+
+    panturrilha_esquerda = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    panturrilha_direita = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
 
     # 👇 NOVO CAMPO
     dias_disponiveis = models.CharField(
@@ -126,36 +146,6 @@ class AlunoTreino(models.Model):
     def __str__(self):
         return f'{self.aluno} - {self.treino}'
 
-class MedidasAluno(models.Model):
-    aluno = models.ForeignKey(
-        Aluno,
-        on_delete=models.CASCADE,
-        related_name='medidas'
-    )
-    objetivo = models.CharField(max_length=100)
-    peso = models.DecimalField(max_digits=5, decimal_places=2)
-    altura = models.DecimalField(max_digits=4, decimal_places=2)
-    data_registro = models.DateField(auto_now_add=True)
-
-    peito = models.DecimalField(max_digits=5, decimal_places=2)
-    braco_esquerdo = models.DecimalField(max_digits=5, decimal_places=2)
-    braco_direito = models.DecimalField(max_digits=5, decimal_places=2)
-    cintura = models.DecimalField(max_digits=5, decimal_places=2)
-    quadril = models.DecimalField(max_digits=5, decimal_places=2)
-    perna_esquerda = models.DecimalField(max_digits=5, decimal_places=2)
-    perna_direita = models.DecimalField(max_digits=5, decimal_places=2)
-    panturrilha_esquerda = models.DecimalField(max_digits=5, decimal_places=2)
-    panturrilha_direita = models.DecimalField(max_digits=5, decimal_places=2)
-
-    class Meta:
-        verbose_name = "Medidas do Aluno"
-        verbose_name_plural = "Medidas dos Alunos"
-        ordering = ['-data_registro']
-
-    def __str__(self):
-        return f'Medidas de {self.aluno.nome} - {self.data_registro}'
-
-
 class ConexaoAlunoTreinador(models.Model):
     STATUS_CHOICES = [
         ('PENDENTE', 'Pendente'),
@@ -186,6 +176,17 @@ class ConexaoAlunoTreinador(models.Model):
     class Meta:
         unique_together = ('aluno', 'treinador')
     
+
+class ExercicioConcluido(models.Model):
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
+    treino_exercicio = models.ForeignKey(TreinoExercicio, on_delete=models.CASCADE)
+    data_conclusao = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        unique_together = ('aluno', 'treino_exercicio')
+
+    def __str__(self):
+        return f"{self.aluno} - {self.treino_exercicio}"
     
 class DiaTreinoAluno(models.Model):
     DIAS_SEMANA = [
