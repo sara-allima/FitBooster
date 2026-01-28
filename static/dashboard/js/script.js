@@ -903,3 +903,50 @@ async function handleRemoveStudent(treinoId, alunoId, element) {
     } catch (error) { alert("Erro ao remover."); }
 }
 
+// Abre/Fecha o popup de opções
+function toggleOptionsMenu(event, trainingId) {
+    event.stopPropagation(); // Impede de abrir o modal de gerenciar ao clicar nos pontos
+    
+    // Fecha outros popups abertos
+    document.querySelectorAll('.training-options-popup').forEach(p => {
+        if(p.id !== `popup-${trainingId}`) p.classList.remove('show');
+    });
+
+    const popup = document.getElementById(`popup-${trainingId}`);
+    popup.classList.toggle('show');
+}
+
+// Fecha o popup se clicar fora dele
+document.addEventListener('click', () => {
+    document.querySelectorAll('.training-options-popup').forEach(p => p.classList.remove('show'));
+});
+
+// Deleta o treino do banco de dados
+async function deleteTraining(trainingId) {
+    if (!confirm("Tem certeza que deseja excluir este treino permanentemente? Ele sumirá para todos os alunos.")) return;
+
+    try {
+        const response = await fetch(`/treino/deletar/${trainingId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            // Remove o card da tela com animação
+            const card = document.querySelector(`.training-card[data-id="${trainingId}"]`);
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.9)';
+            setTimeout(() => card.remove(), 300);
+        } else {
+            alert("Erro: " + data.error);
+        }
+    } catch (error) {
+        console.error("Erro ao deletar:", error);
+        alert("Ocorreu um erro ao tentar excluir o treino.");
+    }
+}

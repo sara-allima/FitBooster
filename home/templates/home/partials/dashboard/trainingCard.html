@@ -1,12 +1,21 @@
+{% load static %}
 <div class="display-trainings">
   {% for treino in treinos %}
     <div class="training-card" data-id="{{ treino.id }}">
       <div class="name-type">
         <p class="student-name">{{ treino.nome }}</p>
-        <div class="badge active">{{ treino.tipo }}</div>
+        <div class="options-wrapper">
+          <img class="point" src="{% static 'dashboard/images/3_pontinhos.png' %}" onclick="toggleOptionsMenu(event, {{ treino.id }})">
+          
+          <div id="popup-{{ treino.id }}" class="training-options-popup">
+            <button class="delete-btn" onclick="deleteTraining({{ treino.id }})">
+              <i class="fa-solid fa-trash"></i> Excluir treino
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div class="exercice-students">
+      <div class="exercice-students" onclick="openManagerModal({{ treino.id }}, '{{ treino.nome }}')">
         <p>{{ treino.treinoexercicio_set.count }} exercícios</p>
         <p>Criado por você</p>
       </div>
