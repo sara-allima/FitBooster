@@ -44,13 +44,26 @@
 
     <main>
       <section class="trainer">
-        <h3>Treinador</h3>
-        <p class="subtitle">Faça os treinos para cumprir a meta semanal</p>
-        <div class="trainer-grid">
-          <button class="trainer-btn"> <a href={% url 'treino'%}> Semana 1 </a></button>
-          <button class="trainer-btn">Semana 2</button>
-          <button class="trainer-btn">Semana 3</button>
-          <button class="trainer-btn">Semana 4</button>
+        <h3>Plano de Treino</h3>
+        <p class="subtitle">Siga a sequência sugerida pelo seu treinador</p>
+        
+        <div class="workout-list">
+          {% for treino in treinos %}
+            <a href="{% url 'detalhe-treino' treino.id %}" class="workout-card">
+              <div class="workout-info">
+                <span class="workout-letter">{{ treino.nome|first|upper }}</span>
+                <div>
+                  <h4>{{ treino.nome }}</h4>
+                  <p>{{ treino.tipo }}</p> </div>
+              </div>
+            </a>
+          {% empty %}
+            <p class="subtitle">Você ainda não possui treinos atribuídos.</p>
+          {% endfor %}
+
+          {% if treinos %}
+            <a href="{% url 'treino' %}" class="view-all-link">Ver todos</a>
+          {% endif %}
         </div>
       </section>
 
