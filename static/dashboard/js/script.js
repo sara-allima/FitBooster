@@ -1,3 +1,113 @@
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+/* No topo do seu DOMContentLoaded ou escopo global do arquivo, 
+   adicione esta variável para rastrear qual aluno está aberto no modal */
+let alunoIdAtivo = null;
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  // ... (mantenha seu código de barra de progresso e filtro)
+
+  /* ===== MODAL RELATÓRIO ===== (ATUALIZADO) */
+  const reportModal = document.getElementById('reportModal');
+  const closeReportBtn = document.getElementById('closeModal');
+  const modalStudentName = document.getElementById('modalStudentName');
+
+  if (reportModal && closeReportBtn && modalStudentName) {
+    document.querySelectorAll('.student-item').forEach(card => {
+      const reportBtn = card.querySelectorAll('.action-btn')[1]; // Segundo botão é o de Relatório
+
+      if (!reportBtn) return;
+
+      reportBtn.addEventListener('click', () => {
+        // CAPTURA O ID DO ALUNO DO CARD (Certifique-se que o HTML tem data-id="{{ aluno.id }}")
+        alunoIdAtivo = card.dataset.id; 
+        
+        modalStudentName.textContent = card.dataset.name || '';
+        reportModal.classList.add('active');
+      });
+    });
+    // ... (mantenha os eventos de fechar o reportModal)
+  }
+
+  /* ===== MODAL DESCONECTAR ALUNO ===== (ATUALIZADO) */
+  const disconnectModal = document.getElementById('disconnectModal');
+  const confirmDisconnect = document.getElementById('confirmDisconnect');
+  // ... (mantenha as outras variáveis de fechar)
+
+/* ===== MODAL DESCONECTAR ALUNO ===== */
+  if (confirmDisconnect) {
+    confirmDisconnect.addEventListener('click', async () => {
+      if (!alunoIdAtivo) return;
+
+      try {
+        const response = await fetch('/aluno/desconectar/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+          },
+          body: JSON.stringify({ aluno_id: alunoIdAtivo })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          // 1. Fecha os modais primeiro
+          disconnectModal.classList.remove('active');
+          if (reportModal) reportModal.classList.remove('active');
+
+          // 2. Encontra o card do aluno na lista e adiciona a animação
+          const cardParaRemover = document.querySelector(`.student-item[data-id="${alunoIdAtivo}"]`);
+          
+          if (cardParaRemover) {
+            cardParaRemover.classList.add('removing');
+            
+            // 3. Remove o elemento do HTML após o fim da animação (500ms)
+            setTimeout(() => {
+              cardParaRemover.remove();
+              
+              // Opcional: Se não sobrar nenhum aluno, mostra mensagem de lista vazia
+              const lista = document.querySelector('.student-list');
+              if (lista && lista.querySelectorAll('.student-item').length === 0) {
+                lista.innerHTML = '<p class="empty-text" style="color: white; padding: 20px;">Você ainda não possui alunos vinculados.</p>';
+              }
+            }, 500);
+          }
+          
+          alunoIdAtivo = null; // Limpa o ID
+        } else {
+          alert(data.error || 'Erro ao desconectar aluno');
+        }
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro na comunicação com o servidor.');
+      }
+    });
+  }
+
+  // ... (resto do seu código de criar plano, gerenciar treino, etc)
+});
+
+
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
   
 
@@ -608,212 +718,188 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+/* ========================================================
+   LÓGICA DO MODAL "GERENCIAR TREINO" (ATRIBUIR E LISTAR)
+======================================================== */
 document.addEventListener('DOMContentLoaded', () => {
+    const managerModal = document.getElementById('trainingManagerModal');
+    const searchInput = document.getElementById('searchAluno');
+    const resultsDiv = document.getElementById('alunoResults');
+    const daysSection = document.getElementById('daysSection');
+    const daysGrid = document.getElementById('daysGrid');
+    const trainingIdInput = document.getElementById('currentTrainingId');
+    const studentNameDisplay = document.getElementById('selectedStudentName');
+    
+    let selectedStudentId = null;
+    let selectedDays = [];
 
-  /* ========================================================
-     MODAL GERENCIAR TREINO (ATRIBUIR ALUNO)
-  ======================================================== */
-  const managerModal = document.getElementById('trainingManagerModal');
-  const searchInput = document.getElementById('searchAluno');
-  const resultsDiv = document.getElementById('alunoResults');
-  const daysSection = document.getElementById('daysSection');
-  const daysGrid = document.getElementById('daysGrid');
-  const trainingIdInput = document.getElementById('currentTrainingId');
-  const studentNameDisplay = document.getElementById('selectedStudentName');
-  
-  let selectedStudentId = null;
-  let selectedDays = [];
+    // 1. ABRIR O MODAL AO CLICAR NO CARD
+    document.querySelectorAll('.training-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            if(e.target.closest('button')) return;
 
-  // ABRIR O MODAL
-  document.querySelectorAll('.training-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-        // Evita abrir se clicar em botões específicos dentro do card, se houver
-        if(e.target.closest('button')) return;
-
-        const treinoId = card.dataset.id; // Certifique-se que seu HTML do card tem data-id="{{ treino.id }}"
-        const treinoNome = card.querySelector('.student-name')?.textContent || 'Treino';
-        
-        document.getElementById('trainingManagerTitle').textContent = treinoNome;
-        if(trainingIdInput) trainingIdInput.value = treinoId;
-
-        // Resetar campos
-        if(searchInput) searchInput.value = '';
-        if(resultsDiv) resultsDiv.innerHTML = '';
-        if(daysSection) daysSection.style.display = 'none';
-        selectedStudentId = null;
-        selectedDays = [];
-
-        // Carregar lista de alunos já vinculados (Implementar fetch se tiver endpoint)
-        // loadTrainingStudents(treinoId);
-
-        managerModal.classList.add('active');
-    });
-  });
-
-  // FECHAR MODAL
-  const closeManagerBtns = [
-      document.getElementById('closeTrainingManager'),
-      document.getElementById('cancelTrainingManager')
-  ];
-  closeManagerBtns.forEach(btn => {
-      if(btn) btn.addEventListener('click', () => managerModal.classList.remove('active'));
-  });
-
-
-  // BUSCAR ALUNO (Autocomplete)
-  if (searchInput) {
-    searchInput.addEventListener('input', async () => {
-      const query = searchInput.value.trim().toLowerCase();
-      resultsDiv.innerHTML = '';
-      
-      // Oculta seção de dias se mudar a busca
-      daysSection.style.display = 'none';
-      selectedStudentId = null;
-
-      if (query.length < 1) return;
-
-      try {
-        const res = await fetch('/alunos/buscar/'); // Seu endpoint existente
-        const alunos = await res.json();
-
-        // Filtra no front (ou no back se preferir)
-        const filtrados = alunos.filter(a => a.nome.toLowerCase().includes(query));
-
-        filtrados.forEach(aluno => {
-          const div = document.createElement('div');
-          div.className = 'search-item'; // Usar estilo existente ou criar
-          div.textContent = aluno.nome;
-          div.style.padding = '10px';
-          div.style.cursor = 'pointer';
-          div.style.borderBottom = '1px solid #333';
-          div.style.backgroundColor = '#222';
-
-          div.addEventListener('mouseenter', () => div.style.backgroundColor = '#333');
-          div.addEventListener('mouseleave', () => div.style.backgroundColor = '#222');
-
-          // CLIQUE NO ALUNO
-          div.addEventListener('click', () => {
-            searchInput.value = aluno.nome;
-            resultsDiv.innerHTML = ''; // Limpa lista
-            selectedStudentId = aluno.id;
+            const treinoId = card.dataset.id;
+            const treinoNome = card.querySelector('.student-name')?.textContent || 'Treino';
             
-            if(studentNameDisplay) studentNameDisplay.textContent = aluno.nome;
+            // Preenche o título e o campo oculto
+            document.getElementById('trainingManagerTitle').textContent = treinoNome;
+            if(trainingIdInput) trainingIdInput.value = treinoId;
 
-            // Renderiza os dias
-            renderDays(aluno.dias_disponiveis || []);
-          });
+            // Limpa seleções anteriores de "Novo Aluno"
+            if(searchInput) searchInput.value = '';
+            if(resultsDiv) resultsDiv.innerHTML = '';
+            if(daysSection) daysSection.style.display = 'none';
+            selectedStudentId = null;
+            selectedDays = [];
 
-          resultsDiv.appendChild(div);
+            // --- AQUI ESTAVA O SEU ERRO: AGORA CHAMAMOS A FUNÇÃO ---
+            loadTrainingStudents(treinoId); 
+
+            managerModal.classList.add('active');
+        });
+    });
+
+    // 2. BUSCAR ALUNO (Autocomplete)
+    if (searchInput) {
+        searchInput.addEventListener('input', async () => {
+            const query = searchInput.value.trim().toLowerCase();
+            resultsDiv.innerHTML = '';
+            daysSection.style.display = 'none';
+            selectedStudentId = null;
+
+            if (query.length < 1) return;
+
+            try {
+                const res = await fetch('/alunos/buscar/');
+                const alunos = await res.json();
+                const filtrados = alunos.filter(a => a.nome.toLowerCase().includes(query));
+
+                filtrados.forEach(aluno => {
+                    const div = document.createElement('div');
+                    div.className = 'search-item';
+                    div.textContent = aluno.nome;
+                    div.addEventListener('click', () => {
+                        searchInput.value = aluno.nome;
+                        resultsDiv.innerHTML = '';
+                        selectedStudentId = aluno.id;
+                        if(studentNameDisplay) studentNameDisplay.textContent = aluno.nome;
+                        renderDaysForAssignment(aluno.dias_disponiveis || []);
+                    });
+                    resultsDiv.appendChild(div);
+                });
+            } catch (err) { console.error("Erro ao buscar alunos:", err); }
+        });
+    }
+
+    // 3. RENDERIZAR DIAS PARA ATRIBUIÇÃO
+    function renderDaysForAssignment(diasDisponiveis) {
+        daysGrid.innerHTML = '';
+        daysSection.style.display = 'block';
+        selectedDays = [];
+        const DIAS_SEMANA = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+
+        DIAS_SEMANA.forEach(dia => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.textContent = dia;
+            btn.className = 'day-btn';
+
+            if (diasDisponiveis.includes(dia)) {
+                btn.classList.add('available');
+                btn.addEventListener('click', () => {
+                    btn.classList.toggle('active');
+                    if (selectedDays.includes(dia)) {
+                        selectedDays = selectedDays.filter(d => d !== dia);
+                    } else {
+                        selectedDays.push(dia);
+                    }
+                });
+            } else {
+                btn.disabled = true;
+                btn.style.opacity = '0.3';
+            }
+            daysGrid.appendChild(btn);
+        });
+    }
+
+    // 4. SALVAR ATRIBUIÇÃO
+    const btnSaveManager = document.getElementById('saveTrainingManager');
+    if (btnSaveManager) {
+        btnSaveManager.addEventListener('click', async () => {
+            const treinoId = trainingIdInput.value;
+            if (!selectedStudentId || selectedDays.length === 0) {
+                alert("Selecione um aluno e pelo menos um dia.");
+                return;
+            }
+
+            try {
+                const response = await fetch('/treino/atribuir/', { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCookie('csrftoken') },
+                    body: JSON.stringify({ treino_id: treinoId, aluno_id: selectedStudentId, dias: selectedDays })
+                });
+                if ((await response.json()).success) {
+                    // Em vez de recarregar a página toda, só atualiza a lista de alunos no modal
+                    loadTrainingStudents(treinoId);
+                    searchInput.value = '';
+                    daysSection.style.display = 'none';
+                    alert("Aluno adicionado!");
+                }
+            } catch (e) { alert("Erro ao salvar."); }
+        });
+    }
+});
+
+/* ========================================================
+   FUNÇÕES GLOBAIS DE CARREGAMENTO E REMOÇÃO
+======================================================== */
+async function loadTrainingStudents(treinoId) {
+    const container = document.getElementById('trainingStudents');
+    if(!container) return;
+    
+    container.innerHTML = '<p class="empty-text">Carregando...</p>';
+
+    try {
+        const response = await fetch(`/treino/alunos/${treinoId}/`);
+        const alunos = await response.json();
+
+        container.innerHTML = ''; 
+
+        if (alunos.length === 0) {
+            container.innerHTML = '<p class="empty-text">Nenhum aluno vinculado.</p>';
+            return;
+        }
+
+        alunos.forEach(aluno => {
+            const box = document.createElement('div');
+            box.className = 'student-assigned-box';
+            box.innerHTML = `
+                <span>${aluno.nome}</span>
+                <button class="remove-student-btn" title="Remover aluno" onclick="handleRemoveStudent(${treinoId}, ${aluno.id}, this.parentElement)">&times;</button>
+            `;
+            container.appendChild(box);
+        });
+    } catch (error) {
+        container.innerHTML = '<p class="empty-text">Erro ao carregar.</p>';
+    }
+}
+
+async function handleRemoveStudent(treinoId, alunoId, element) {
+    if(!confirm("Deseja remover este aluno do treino?")) return;
+
+    try {
+        const response = await fetch('/treino/remover-aluno/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCookie('csrftoken') },
+            body: JSON.stringify({ treino_id: treinoId, aluno_id: alunoId })
         });
 
-      } catch (err) {
-        console.error("Erro ao buscar alunos:", err);
-      }
-    });
-  }
-
-  // RENDERIZAR DIAS
-  function renderDays(diasDisponiveisDoAluno) {
-    daysGrid.innerHTML = '';
-    daysSection.style.display = 'block';
-    selectedDays = []; // Reseta seleção anterior
-
-    const DIAS_SEMANA = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
-
-    DIAS_SEMANA.forEach(dia => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.textContent = dia;
-        btn.className = 'day-btn';
-
-        // Verifica se o aluno tem esse dia disponível
-        // Assume que o back retorna array de strings ex: ["Segunda", "Sexta"]
-        if (diasDisponiveisDoAluno.includes(dia)) {
-            btn.classList.add('available');
-            
-            // Evento de clique para selecionar/deselecionar
-            btn.addEventListener('click', () => {
-                btn.classList.toggle('active');
-                
-                if (selectedDays.includes(dia)) {
-                    selectedDays = selectedDays.filter(d => d !== dia);
-                } else {
-                    selectedDays.push(dia);
-                }
-                console.log("Dias selecionados:", selectedDays);
-            });
-        } else {
-            // Dia indisponível
-            btn.disabled = true;
-            btn.title = "O aluno não marcou este dia como disponível";
+        if ((await response.json()).success) {
+            element.remove();
+            if (document.getElementById('trainingStudents').children.length === 0) {
+                document.getElementById('trainingStudents').innerHTML = '<p class="empty-text">Nenhum aluno vinculado.</p>';
+            }
         }
+    } catch (error) { alert("Erro ao remover."); }
+}
 
-        daysGrid.appendChild(btn);
-    });
-  }
-
-  // BOTÃO SALVAR
-  const btnSaveManager = document.getElementById('saveTrainingManager');
-  if (btnSaveManager) {
-      btnSaveManager.addEventListener('click', async () => {
-          if (!trainingIdInput.value) {
-              alert("Erro: Treino não identificado.");
-              return;
-          }
-          if (!selectedStudentId) {
-              alert("Selecione um aluno primeiro.");
-              return;
-          }
-          if (selectedDays.length === 0) {
-              alert("Selecione pelo menos um dia para o treino.");
-              return;
-          }
-
-          const payload = {
-              treino_id: trainingIdInput.value,
-              aluno_id: selectedStudentId,
-              dias: selectedDays
-          };
-
-          try {
-              // Ajuste a URL para a sua rota de atribuição
-              const response = await fetch('/treino/atribuir/', { 
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json',
-                      'X-CSRFToken': getCookie('csrftoken')
-                  },
-                  body: JSON.stringify(payload)
-              });
-
-              const data = await response.json();
-              if (data.success) {
-                  alert("Aluno atribuído com sucesso!");
-                  managerModal.classList.remove('active');
-                  window.location.reload();
-              } else {
-                  alert("Erro: " + (data.error || "Erro desconhecido"));
-              }
-
-          } catch (e) {
-              console.error(e);
-              alert("Erro na requisição.");
-          }
-      });
-  }
-
-  function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith(name + '=')) {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
-  }
-});

@@ -32,4 +32,7 @@ urlpatterns = [
     # 👇 ADICIONEI ESTAS DUAS ROTAS NOVAS AQUI:
     path('treino/atribuir/', atribuir_treino, name='atribuir_treino'),
     path('treino/alunos/<int:treino_id>/', get_alunos_treino, name='get_alunos_treino'),
+    path('treino/remover-aluno/', remover_aluno_treino, name='remover_aluno_treino'),
+
+    path('aluno/desconectar/', desconectar_aluno, name='desconectar_aluno'),
 ]  

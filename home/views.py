@@ -345,3 +345,48 @@ def get_alunos_treino(request, treino_id):
         return JsonResponse(lista, safe=False)
     except Exception:
         return JsonResponse([], safe=False)
+    
+
+@login_required
+@treinador_required
+def remover_aluno_treino(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Método não permitido'}, status=405)
+
+    try:
+        data = json.loads(request.body)
+        treino_id = data.get('treino_id')
+        aluno_id = data.get('aluno_id')
+
+        # Remove o vínculo entre o aluno e o treino
+        from .models import AlunoTreino
+        AlunoTreino.objects.filter(treino_id=treino_id, aluno_id=aluno_id).delete()
+        
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+    
+@login_required
+@treinador_required
+def desconectar_aluno(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            aluno_id = data.get('aluno_id')
+            treinador = Treinador.objects.get(user=request.user)
+            
+            # Busca a conexão ativa entre este treinador e o aluno
+            conexao = ConexaoAlunoTreinador.objects.filter(
+                treinador=treinador, 
+                aluno_id=aluno_id,
+                status='ACEITA'
+            ).first()
+
+            if conexao:
+                conexao.delete() # Ou conexao.status = 'ENCERRADA' se quiser manter histórico
+                return JsonResponse({'success': True})
+            
+            return JsonResponse({'success': False, 'error': 'Conexão não encontrada.'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Método inválido.'})

@@ -1276,3 +1276,75 @@
     from { opacity: 0; transform: translateY(-5px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* Container das caixinhas */
+.student-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 45px;
+    padding: 10px;
+    background: #1a1a1a; /* Fundo levemente mais claro que o modal */
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+/* A caixinha (Badge) do aluno */
+.student-assigned-box {
+    display: flex;
+    align-items: center;
+    background: #28a74522; /* Verde bem transparente */
+    border: 1px solid #28a745; /* Borda verde do seu tema */
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 0.85rem;
+    gap: 8px;
+}
+
+/* O botão X de remover */
+.remove-student-btn {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.remove-student-btn:hover {
+    color: #ff1a1a;
+    transform: scale(1.2);
+}
+
+.empty-text {
+    color: #666;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.days-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.avatar-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Classe para animar a remoção */
+.student-item.removing {
+    transform: translateX(100px);
+    opacity: 0;
+    transition: all 0.5s ease;
+    pointer-events: none;
+}
