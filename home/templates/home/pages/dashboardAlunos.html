@@ -23,6 +23,7 @@
 
 <!-- MODAL RELATÓRIO DO ALUNO -->
 
+
 <div class="modal-overlay" id="reportModal">
     <div class="modal-card">
         <button class="modal-close" id="closeModal">&times;</button>
@@ -31,34 +32,35 @@
         <p class="modal-subtitle" id="modalStudentName"></p>
 
         <div class="modal-grid">
-        <div class="modal-item"><span>Peso Atual</span><strong>82 kg</strong></div>
-        <div class="modal-item"><span>Meta</span><strong>Hipertrofia</strong></div>
+            <div class="modal-item"><span>Peso Atual</span><strong id="rep-peso">--</strong></div>
+            <div class="modal-item"><span>Meta/Objetivo</span><strong id="rep-objetivo">--</strong></div>
 
-        <div class="modal-item"><span>Ombro</span><strong>110 cm</strong></div>
-        <div class="modal-item"><span>Peito</span><strong>102 cm</strong></div>
+            <div class="modal-item"><span>Ombro</span><strong id="rep-ombros">--</strong></div>
+            <div class="modal-item"><span>Peito</span><strong id="rep-peito">--</strong></div>
 
-        <div class="modal-item"><span>Antebraço (E)</span><strong>30 cm</strong></div>
-        <div class="modal-item"><span>Antebraço (D)</span><strong>31 cm</strong></div>
+            <div class="modal-item"><span>Antebraço (E)</span><strong id="rep-antebraco-e">--</strong></div>
+            <div class="modal-item"><span>Antebraço (D)</span><strong id="rep-antebraco-d">--</strong></div>
 
-        <div class="modal-item"><span>Braço (E)</span><strong>38 cm</strong></div>
-        <div class="modal-item"><span>Braço (D)</span><strong>39 cm</strong></div>
+            <div class="modal-item"><span>Braço (E)</span><strong id="rep-braco-e">--</strong></div>
+            <div class="modal-item"><span>Braço (D)</span><strong id="rep-braco-d">--</strong></div>
 
-        <div class="modal-item"><span>Cintura</span><strong>84 cm</strong></div>
-        <div class="modal-item"><span>Quadril</span><strong>96 cm</strong></div>
+            <div class="modal-item"><span>Cintura</span><strong id="rep-cintura">--</strong></div>
+            <div class="modal-item"><span>Quadril</span><strong id="rep-quadril">--</strong></div>
 
-        <div class="modal-item"><span>Pernas (E)</span><strong>62 cm</strong></div>
-        <div class="modal-item"><span>Pernas (D)</span><strong>63 cm</strong></div>
+            <div class="modal-item"><span>Pernas (E)</span><strong id="rep-perna-e">--</strong></div>
+            <div class="modal-item"><span>Pernas (D)</span><strong id="rep-perna-d">--</strong></div>
 
-        <div class="modal-item"><span>Panturrilha (E)</span><strong>40 cm</strong></div>
-        <div class="modal-item"><span>Panturrilha (D)</span><strong>41 cm</strong></div>
+            <div class="modal-item"><span>Panturrilha (E)</span><strong id="rep-panturrilha-e">--</strong></div>
+            <div class="modal-item"><span>Panturrilha (D)</span><strong id="rep-panturrilha-d">--</strong></div>
         </div>
+        
         <div class="modal-footer">
             <button class="btn-disconnect" id="openDisconnectModal">
                 Desconectar aluno
             </button>
         </div>
     </div>
-
+</div>
     </div>
     <div class="modal-overlay" id="disconnectModal">
     <div class="modal-card small">

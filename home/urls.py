@@ -37,4 +37,5 @@ urlpatterns = [
     path('aluno/desconectar/', desconectar_aluno, name='desconectar_aluno'),
     path('treino/deletar/<int:treino_id>/', deletar_treino, name='deletar_treino'),
     path('treinador/atualizar-perfil/', atualizar_perfil_treinador, name='atualizar_perfil_treinador'),
+    path('aluno/detalhes/<int:aluno_id>/', detalhes_aluno, name='detalhes_aluno'),
 ]  

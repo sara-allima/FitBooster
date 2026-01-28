@@ -19,6 +19,75 @@ let alunoIdAtivo = null;
 
 document.addEventListener('DOMContentLoaded', function () {
 
+
+
+  /* ===== LÓGICA UNIFICADA DO CARD DE ALUNO (RELATÓRIO E PLANOS) ===== */
+document.addEventListener('click', function (e) {
+    // 1. Identifica o clique nos botões específicos
+    const reportBtn = e.target.closest('.btn-report');
+    const planBtn = e.target.closest('.btn-plan');
+    const closeBtn = e.target.closest('.btn-remove-row, #closeModal, #closeCreatePlan, #closeTrainingManager');
+    const card = e.target.closest('.student-item');
+
+    // --- LÓGICA PARA ABRIR RELATÓRIO ---
+    if (reportBtn && card) {
+        const reportModal = document.getElementById('reportModal');
+        const studentId = card.dataset.id;
+        alunoIdAtivo = studentId;
+
+        // Limpa e coloca "carregando"
+        const modalStudentName = document.getElementById('modalStudentName');
+        if (modalStudentName) modalStudentName.textContent = card.dataset.name || 'Carregando...';
+        
+        reportModal.querySelectorAll('strong').forEach(s => s.textContent = '...');
+
+        // Busca os dados via Fetch
+        fetch(`/aluno/detalhes/${studentId}/`)
+            .then(res => res.json())
+            .then(data => {
+                // Preenche os dados nos IDs que adicionamos no HTML
+                document.getElementById('rep-peso').textContent = data.peso + " kg";
+                document.getElementById('rep-objetivo').textContent = data.objetivo;
+                document.getElementById('rep-ombros').textContent = data.ombros + " cm";
+                document.getElementById('rep-peito').textContent = data.peito + " cm";
+                document.getElementById('rep-antebraco-e').textContent = data.antebraco_e + " cm";
+                document.getElementById('rep-antebraco-d').textContent = data.antebraco_d + " cm";
+                document.getElementById('rep-braco-e').textContent = data.braco_e + " cm";
+                document.getElementById('rep-braco-d').textContent = data.braco_d + " cm";
+                document.getElementById('rep-cintura').textContent = data.cintura + " cm";
+                document.getElementById('rep-quadril').textContent = data.quadril + " cm";
+                document.getElementById('rep-perna-e').textContent = data.pernas_e + " cm";
+                document.getElementById('rep-perna-d').textContent = data.pernas_d + " cm";
+                document.getElementById('rep-panturrilha-e').textContent = data.panturrilha_e + " cm";
+                document.getElementById('rep-panturrilha-d').textContent = data.panturrilha_d + " cm";
+
+                reportModal.classList.add('active');
+            })
+            .catch(err => console.error("Erro ao buscar detalhes:", err));
+    }
+
+    // --- LÓGICA PARA ABRIR PLANO DE TREINO ---
+    if (planBtn && card) {
+        const trainingManagerModal = document.getElementById('trainingManagerModal');
+        alunoIdAtivo = card.dataset.id;
+        if (trainingManagerModal) {
+            const title = document.getElementById('trainingManagerTitle');
+            if(title) title.textContent = `Plano de: ${card.dataset.name}`;
+            trainingManagerModal.classList.add('active');
+        }
+    }
+
+    // --- LÓGICA PARA FECHAR MODAIS ---
+    if (closeBtn) {
+        const modal = closeBtn.closest('.modal, .modal-overlay'); 
+        if (modal) {
+            modal.classList.remove('active');
+        } else {
+            document.querySelectorAll('.active').forEach(m => m.classList.remove('active'));
+        }
+    }
+});
+
   // ... (mantenha seu código de barra de progresso e filtro)
 
   /* ===== MODAL RELATÓRIO ===== (ATUALIZADO) */
@@ -26,22 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const closeReportBtn = document.getElementById('closeModal');
   const modalStudentName = document.getElementById('modalStudentName');
 
-  if (reportModal && closeReportBtn && modalStudentName) {
-    document.querySelectorAll('.student-item').forEach(card => {
-      const reportBtn = card.querySelectorAll('.action-btn')[1]; // Segundo botão é o de Relatório
-
-      if (!reportBtn) return;
-
-      reportBtn.addEventListener('click', () => {
-        // CAPTURA O ID DO ALUNO DO CARD (Certifique-se que o HTML tem data-id="{{ aluno.id }}")
-        alunoIdAtivo = card.dataset.id; 
-        
-        modalStudentName.textContent = card.dataset.name || '';
-        reportModal.classList.add('active');
-      });
-    });
-    // ... (mantenha os eventos de fechar o reportModal)
-  }
+  
 
   /* ===== MODAL DESCONECTAR ALUNO ===== (ATUALIZADO) */
   const disconnectModal = document.getElementById('disconnectModal');
@@ -247,44 +301,7 @@ fetch('/exercicios/')
   /* ===== MODAL RELATÓRIO ===== */
 /* ===== LÓGICA UNIFICADA DO CARD DE ALUNO ===== */
 /* ===== LÓGICA CORRIGIDA DOS BOTÕES DO CARD ===== */
-document.addEventListener('click', function (e) {
-    // 1. Identifica qual botão ou elemento foi clicado
-    const reportBtn = e.target.closest('.btn-report');
-    const planBtn = e.target.closest('.btn-plan');
-    const closeBtn = e.target.closest('.btn-remove-row, #closeModal, #closeCreatePlan, #closeTrainingManager');
-    const card = e.target.closest('.student-item');
 
-    // Lógica para abrir Relatório
-    if (reportBtn && card) {
-        const reportModal = document.getElementById('reportModal');
-        const modalStudentName = document.getElementById('modalStudentName');
-        alunoIdAtivo = card.dataset.id;
-        if (modalStudentName) modalStudentName.textContent = card.dataset.name;
-        if (reportModal) reportModal.classList.add('active');
-    }
-
-    // Lógica para abrir Plano de Treino
-    if (planBtn && card) {
-        const trainingManagerModal = document.getElementById('trainingManagerModal');
-        alunoIdAtivo = card.dataset.id;
-        if (trainingManagerModal) {
-            document.getElementById('trainingManagerTitle').textContent = `Plano de: ${card.dataset.name}`;
-            trainingManagerModal.classList.add('active');
-        }
-    }
-
-    // Lógica para o BOTÃO X (Fechar Modais)
-    if (closeBtn) {
-        // Encontra o modal pai do botão X clicado e remove a classe active
-        const modal = closeBtn.closest('.modal, .modal-overlay'); 
-        if (modal) {
-            modal.classList.remove('active');
-        } else {
-            // Caso seja um botão de fechar genérico que não está dentro do modal no DOM
-            document.querySelectorAll('.active').forEach(m => m.classList.remove('active'));
-        }
-    }
-});
   /* ===== MODAL NOTIFICAÇÃO ===== */
   const btnNotificacao = document.getElementById('btnNotificacao');
   const notificacaoModal = document.getElementById('modalNotificacao');
@@ -305,6 +322,7 @@ document.addEventListener('click', function (e) {
       }
     });
   }
+  
 
   /* ===== MODAL DESCONECTAR ALUNO ===== */
   const openDisconnectBtn = document.getElementById('openDisconnectModal');
