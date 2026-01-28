@@ -111,6 +111,8 @@ def redirecionar(request):
 # =========================
 # DASHBOARD TREINADOR
 # =========================
+# home/views.py
+
 @login_required
 @treinador_required
 def dashboard_alunos(request):
@@ -126,12 +128,18 @@ def dashboard_alunos(request):
         conexoes__status='ACEITA'
     ).distinct()
 
+    # --- NOVAS LINHAS PARA OS CARDS ---
+    alunos_ativos_count = alunos.count()
+    planos_criados_count = Treino.objects.filter(treinador=treinador).count()
+    # ----------------------------------
+
     return render(request, 'home/pages/dashboardAlunos.html', {
         'treinador': treinador,
         'pedidos': pedidos,
-        'alunos': alunos
+        'alunos': alunos,
+        'alunos_ativos_count': alunos_ativos_count, # Passando para o template
+        'planos_criados_count': planos_criados_count # Passando para o template
     })
-
 
 
 @login_required
@@ -148,22 +156,37 @@ def dashboard_planos_treino(request):
         conexoes__status='ACEITA'
     ).distinct()
 
+    # --- NOVAS LINHAS PARA OS CARDS ---
+    alunos_ativos_count = alunos.count()
+    planos_criados_count = treinos.count()
+    # ----------------------------------
+
     return render(request, 'home/pages/dashboardPlanosTreino.html', {
         'treinador': treinador,
         'treinos': treinos,
-        'alunos': alunos
+        'alunos': alunos,
+        'alunos_ativos_count': alunos_ativos_count,
+        'planos_criados_count': planos_criados_count
     })
-
-
-
 
 @login_required
 @treinador_required
 def dashboard_relatorios(request):
     treinador = Treinador.objects.get(user=request.user)
+    
+    # --- BUSCANDO DADOS PARA OS CARDS ---
+    alunos_ativos_count = Aluno.objects.filter(
+        conexoes__treinador=treinador, 
+        conexoes__status='ACEITA'
+    ).distinct().count()
+    
+    planos_criados_count = Treino.objects.filter(treinador=treinador).count()
+    # ----------------------------------
 
     return render(request, 'home/pages/dashboardRelatorios.html', {
-        'treinador': treinador
+        'treinador': treinador,
+        'alunos_ativos_count': alunos_ativos_count,
+        'planos_criados_count': planos_criados_count
     })
 
 from home.models import ConexaoAlunoTreinador
