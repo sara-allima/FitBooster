@@ -266,6 +266,36 @@ def listar_exercicios(request):
     return JsonResponse(list(exercicios), safe=False)
 
 
+def relatorio_aluno(request, aluno_id):
+    aluno = get_object_or_404(Aluno, id=aluno_id)
+
+    return JsonResponse({
+        "nome": aluno.nome,
+        "objetivo": aluno.objetivo,
+        "peso": float(aluno.peso),
+        "meta_peso": float(aluno.meta_peso) if aluno.meta_peso else None,
+        "altura": float(aluno.altura),
+
+        # MEDIDAS
+        "ombros": float(aluno.ombros) if aluno.ombros else None,
+        "peito": float(aluno.peito) if aluno.peito else None,
+
+        "antebraco_esquerdo": float(aluno.antebraco_esquerdo) if aluno.antebraco_esquerdo else None,
+        "antebraco_direito": float(aluno.antebraco_direito) if aluno.antebraco_direito else None,
+
+        "braco_esquerdo": float(aluno.braco_esquerdo) if aluno.braco_esquerdo else None,
+        "braco_direito": float(aluno.braco_direito) if aluno.braco_direito else None,
+
+        "cintura": float(aluno.cintura) if aluno.cintura else None,
+        "quadril": float(aluno.quadril) if aluno.quadril else None,
+
+        "perna_esquerda": float(aluno.perna_esquerda) if aluno.perna_esquerda else None,
+        "perna_direita": float(aluno.perna_direita) if aluno.perna_direita else None,
+
+        "panturrilha_esquerda": float(aluno.panturrilha_esquerda) if aluno.panturrilha_esquerda else None,
+        "panturrilha_direita": float(aluno.panturrilha_direita) if aluno.panturrilha_direita else None,
+    })
+
 
 
 

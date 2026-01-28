@@ -394,6 +394,75 @@ function renderTrainingStudents(alunos) {
   });
 }
 
+document.querySelectorAll(".btn-relatorio").forEach(button => {
+    button.addEventListener("click", () => {
+        const alunoId = button.dataset.id;
+
+        fetch(`/relatorio-aluno/${alunoId}/`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erro ao buscar relatório");
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Nome do aluno
+                document.getElementById("modalStudentName").innerText = data.nome || "-";
+
+                // Dados principais
+                document.getElementById("peso").innerText =
+                    data.peso ? `${data.peso} kg` : "-";
+
+                document.getElementById("objetivo").innerText =
+                    data.objetivo || "-";
+
+                // Medidas
+                document.getElementById("ombro").innerText =
+                    data.ombros ? `${data.ombros} cm` : "-";
+
+                document.getElementById("peito").innerText =
+                    data.peito ? `${data.peito} cm` : "-";
+
+                document.getElementById("antebraco_e").innerText =
+                    data.antebraco_esquerdo ? `${data.antebraco_esquerdo} cm` : "-";
+
+                document.getElementById("antebraco_d").innerText =
+                    data.antebraco_direito ? `${data.antebraco_direito} cm` : "-";
+
+                document.getElementById("braco_e").innerText =
+                    data.braco_esquerdo ? `${data.braco_esquerdo} cm` : "-";
+
+                document.getElementById("braco_d").innerText =
+                    data.braco_direito ? `${data.braco_direito} cm` : "-";
+
+                document.getElementById("cintura").innerText =
+                    data.cintura ? `${data.cintura} cm` : "-";
+
+                document.getElementById("quadril").innerText =
+                    data.quadril ? `${data.quadril} cm` : "-";
+
+                document.getElementById("perna_e").innerText =
+                    data.perna_esquerda ? `${data.perna_esquerda} cm` : "-";
+
+                document.getElementById("perna_d").innerText =
+                    data.perna_direita ? `${data.perna_direita} cm` : "-";
+
+                document.getElementById("panturrilha_e").innerText =
+                    data.panturrilha_esquerda ? `${data.panturrilha_esquerda} cm` : "-";
+
+                document.getElementById("panturrilha_d").innerText =
+                    data.panturrilha_direita ? `${data.panturrilha_direita} cm` : "-";
+
+                // Abrir modal
+                document.getElementById("reportModal").classList.add("active");
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Não foi possível carregar o relatório do aluno.");
+            });
+    });
+});
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
