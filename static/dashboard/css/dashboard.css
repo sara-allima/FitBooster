@@ -30,6 +30,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
   }
   .title{
     margin: 0;
@@ -42,12 +43,12 @@
     color: var(--secundary-dark-text);
     font-size: 20px;
   }
-      /*Header*/
+   
 
       /*Cards Principais*/
   .cards {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(2,1fr);
     gap: 1.125rem;
     margin: 1.125rem 0 1.625rem 0;
   }
@@ -60,6 +61,7 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+    width: auto;
   }
   .card-icon {
     width: 3.5rem;
@@ -1400,4 +1402,86 @@ margin-left: 10px;
 
 .delete-btn:hover {
     background: rgba(239, 67, 67, 0.1);
+}
+
+.photo{
+
+  display: flex;
+  flex-direction: row;
+}
+
+
+/* Foto no Header */
+.avatar-container {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--primary-green);
+    margin-right: 15px;
+}
+.avatar-img-treinador {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--quaternary-dark-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-green);
+    font-weight: bold;
+    font-size: 24px;
+}
+
+/* Upload de Foto no Modal */
+.profile-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.upload-label {
+    cursor: pointer;
+    text-align: center;
+}
+.upload-label img, #previewPlaceholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px dashed var(--primary-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    font-size: 30px;
+}
+.upload-label span {
+    font-size: 12px;
+    color: var(--primary-green);
+}
+
+/* Botão Sair dentro do Modal */
+.btn-logout-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--primary-red);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px;
+    transition: 0.3s;
+}
+.btn-logout-modal:hover {
+    background: rgba(239, 67, 67, 0.1);
+    border-radius: 8px;
+}
+
+.modal-actions-profile {
+    margin-top: 20px;
 }

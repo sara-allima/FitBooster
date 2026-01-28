@@ -16,6 +16,10 @@ class Treinador(models.Model):
     cpf = models.CharField(max_length=11, unique=True)
     formacao = models.TextField()
     idade = models.IntegerField()
+    telefone = models.CharField(max_length=20, null=True, blank=True)
+    instagram = models.CharField(max_length=50, null=True, blank=True, help_text="Apenas o @")
+    foto = models.ImageField(upload_to='fotos_treinadores/', null=True, blank=True)
+
 
     def __str__(self):
         return self.nome or self.user.username

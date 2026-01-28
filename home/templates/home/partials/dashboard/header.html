@@ -1,39 +1,42 @@
 {% load static %}
-
-<div class="dashboard-div">
-    <h1 class="title">Dashboard do Treinador</h1>
-    <p class="subtitle">Gerencie seus alunos e acompanhe o progresso</p>
-</div>
-
-
-<!-- Sino -->
-<div class="notificacao">
-    <div class="noti" id="btnNotificacao">
-        <img src="{% static 'dashboard/images/notificacao.png' %}">
+<header>
+    <div class="photo" id="btnPerfil" style="cursor: pointer;">
+        <div class="avatar-container">
+            {% if treinador.foto %}
+                <img src="{{ treinador.foto.url }}" class="avatar-img-treinador">
+            {% else %}
+                <div class="avatar-placeholder">{{ treinador.nome|slice:":1" }}</div>
+            {% endif %}
+        </div>
+        <div class="dashboard-div">
+            <h1 class="title">Dashboard do Treinador</h1>
+            <p class="subtitle">Gerencie seus alunos e acompanhe o progresso</p>
+        </div>
     </div>
 
-    <a href="{% url 'logout' %}" class="primary-buttonn">Sair</a>
-</div>
+    <div class="notificacao">
+        <div class="noti" id="btnNotificacao" style="cursor: pointer;">
+            <img src="{% static 'dashboard/images/notificacao.png' %}">
+        </div>
+    
+    </div>
+</header>
 
-<!-- MODAL -->
 <div class="modal-notificacao" id="modalNotificacao">
     <div class="modal-conteudo">
-
         <div class="modal-header">
             <h3>Pedidos de Conexão</h3>
-            <button class="modal-close" id="fecharModal">&times;</button>
+            <button class="modal-close" id="fecharNotificacao">&times;</button>
         </div>
 
         {% for pedido in pedidos %}
         <div class="pedido">
             <span>{{ pedido.aluno.nome }}</span>
-
             <div class="acoes">
                 <form method="post" action="{% url 'aceitar_pedido' pedido.id %}">
                     {% csrf_token %}
                     <button type="submit" class="btn-aceitar">Aceitar</button>
                 </form>
-
                 <form method="post" action="{% url 'recusar_pedido' pedido.id %}">
                     {% csrf_token %}
                     <button type="submit" class="btn-recusar">Recusar</button>
@@ -42,11 +45,59 @@
         </div>
         {% empty %}
         <div class="pedido">
-            <span>Não ha pedidos de conexão</span>
-
-            
+            <span>Não há pedidos de conexão</span>
         </div>
         {% endfor %}
+    </div>
+</div>
 
+<div class="modal-overlay" id="modalPerfil">
+    <div class="modal-card">
+        <button class="modal-close" id="fecharPerfil">&times;</button>
+        <h3 class="modal-title">Meu Perfil</h3>
+        <p class="modal-subtitle">Atualize suas informações pessoais</p>
+
+        <form action="{% url 'atualizar_perfil_treinador' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="profile-upload">
+                <label for="inputFoto" class="upload-label">
+                    {% if treinador.foto %}
+                        <img src="{{ treinador.foto.url }}" id="previewFoto">
+                    {% else %}
+                        <div id="previewPlaceholder">+</div>
+                    {% endif %}
+                    <span>Alterar Foto</span>
+                </label>
+                <input type="file" name="foto" id="inputFoto" hidden accept="image/*">
+            </div>
+
+            <div class="modal-field">
+                <label class="modal-label">Nome Completo</label>
+                <input type="text" name="nome" class="modal-input" value="{{ treinador.nome }}">
+            </div>
+
+            <div class="modal-field">
+                <label class="modal-label">Email</label>
+                <input type="email" name="email" class="modal-input" value="{{ treinador.email }}">
+            </div>
+
+            <div class="modal-grid">
+                <div class="modal-field">
+                    <label class="modal-label">Telefone</label>
+                    <input type="text" name="telefone" class="modal-input" value="{{ treinador.telefone|default:'' }}" placeholder="(00) 00000-0000">
+                </div>
+                <div class="modal-field">
+                    <label class="modal-label">Instagram (@)</label>
+                    <input type="text" name="instagram" class="modal-input" value="{{ treinador.instagram|default:'' }}" placeholder="ex: @personal">
+                </div>
+            </div>
+
+            <div class="modal-actions-profile">
+                <button type="submit" class="primary-buttonn" style="width: 100%;">Salvar Alterações</button>
+
+                <a href="{% url 'logout' %}" class="btn-logout-modal">Encerrar Sessão (Sair)</a>
+            </div>
+        </form>
     </div>
 </div>
