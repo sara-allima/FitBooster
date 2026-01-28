@@ -378,3 +378,21 @@ main { padding: 16px; padding-top: 0; }
 .view-all-link:hover {
     text-decoration: underline;
 }
+
+.btn-logout-modal {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    color: #ff4444; /* Vermelho para destaque */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    border: 1px solid #ff4444;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn-logout-modal:hover {
+    background-color: #ff4444;
+    color: white;
+}

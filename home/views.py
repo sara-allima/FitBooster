@@ -299,12 +299,19 @@ def relatorio_aluno(request, aluno_id):
 
 
 
+@login_required
+@treinador_required
 def buscar_alunos(request):
-    alunos = Aluno.objects.all()
+    treinador = Treinador.objects.get(user=request.user)
+    
+    # Filtra apenas alunos que têm conexão ACEITA com este treinador
+    alunos = Aluno.objects.filter(
+        conexoes__treinador=treinador,
+        conexoes__status='ACEITA'
+    ).distinct()
 
     data = []
     for aluno in alunos:
-        # Verifica se o campo tem dados, separa por vírgula e remove espaços em branco
         if aluno.dias_disponiveis:
             lista_dias = [dia.strip() for dia in aluno.dias_disponiveis.split(',')]
         else:
@@ -313,7 +320,7 @@ def buscar_alunos(request):
         data.append({
             "id": aluno.id,
             "nome": aluno.nome,
-            "dias_disponiveis": lista_dias  # Agora retorna os dados reais do banco
+            "dias_disponiveis": lista_dias
         })
 
     return JsonResponse(data, safe=False)
@@ -433,3 +440,28 @@ def deletar_treino(request, treino_id):
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)})
     return JsonResponse({'success': False, 'error': 'Método inválido.'})
+
+@login_required
+@treinador_required
+def atualizar_perfil_treinador(request):
+    if request.method == 'POST':
+        treinador = Treinador.objects.get(user=request.user)
+        
+        treinador.nome = request.POST.get('nome')
+        treinador.email = request.POST.get('email')
+        treinador.telefone = request.POST.get('telefone')
+        treinador.instagram = request.POST.get('instagram')
+        
+        if 'foto' in request.FILES:
+            treinador.foto = request.FILES['foto']
+            
+        # Atualiza também o email no objeto User do Django
+        user = request.user
+        user.email = treinador.email
+        user.username = treinador.email
+        user.save()
+        
+        treinador.save()
+        return redirect(request.META.get('HTTP_REFERER', 'dashboard-alunos'))
+    
+    return JsonResponse({'error': 'Método inválido'}, status=400)

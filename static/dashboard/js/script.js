@@ -109,6 +109,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.addEventListener('DOMContentLoaded', function () {
+
+
+
+
+
+  
   
 
   /* ===== BARRA DE PROGRESSO ===== */
@@ -239,34 +245,46 @@ fetch('/exercicios/')
 
 
   /* ===== MODAL RELATÓRIO ===== */
-  const reportModal = document.getElementById('reportModal');
-  const closeReportBtn = document.getElementById('closeModal');
-  const modalStudentName = document.getElementById('modalStudentName');
+/* ===== LÓGICA UNIFICADA DO CARD DE ALUNO ===== */
+/* ===== LÓGICA CORRIGIDA DOS BOTÕES DO CARD ===== */
+document.addEventListener('click', function (e) {
+    // 1. Identifica qual botão ou elemento foi clicado
+    const reportBtn = e.target.closest('.btn-report');
+    const planBtn = e.target.closest('.btn-plan');
+    const closeBtn = e.target.closest('.btn-remove-row, #closeModal, #closeCreatePlan, #closeTrainingManager');
+    const card = e.target.closest('.student-item');
 
-  if (reportModal && closeReportBtn && modalStudentName) {
-    document.querySelectorAll('.student-item').forEach(card => {
-      const buttons = card.querySelectorAll('.action-btn');
-      const reportBtn = buttons[1];
+    // Lógica para abrir Relatório
+    if (reportBtn && card) {
+        const reportModal = document.getElementById('reportModal');
+        const modalStudentName = document.getElementById('modalStudentName');
+        alunoIdAtivo = card.dataset.id;
+        if (modalStudentName) modalStudentName.textContent = card.dataset.name;
+        if (reportModal) reportModal.classList.add('active');
+    }
 
-      if (!reportBtn) return;
+    // Lógica para abrir Plano de Treino
+    if (planBtn && card) {
+        const trainingManagerModal = document.getElementById('trainingManagerModal');
+        alunoIdAtivo = card.dataset.id;
+        if (trainingManagerModal) {
+            document.getElementById('trainingManagerTitle').textContent = `Plano de: ${card.dataset.name}`;
+            trainingManagerModal.classList.add('active');
+        }
+    }
 
-      reportBtn.addEventListener('click', () => {
-        modalStudentName.textContent = card.dataset.name || '';
-        reportModal.classList.add('active');
-      });
-    });
-
-    closeReportBtn.addEventListener('click', () => {
-      reportModal.classList.remove('active');
-    });
-
-    reportModal.addEventListener('click', (e) => {
-      if (e.target === reportModal) {
-        reportModal.classList.remove('active');
-      }
-    });
-  }
-
+    // Lógica para o BOTÃO X (Fechar Modais)
+    if (closeBtn) {
+        // Encontra o modal pai do botão X clicado e remove a classe active
+        const modal = closeBtn.closest('.modal, .modal-overlay'); 
+        if (modal) {
+            modal.classList.remove('active');
+        } else {
+            // Caso seja um botão de fechar genérico que não está dentro do modal no DOM
+            document.querySelectorAll('.active').forEach(m => m.classList.remove('active'));
+        }
+    }
+});
   /* ===== MODAL NOTIFICAÇÃO ===== */
   const btnNotificacao = document.getElementById('btnNotificacao');
   const notificacaoModal = document.getElementById('modalNotificacao');
@@ -515,48 +533,45 @@ function resetAlunoSelecionado() {
   /* ===============================
      BUSCA DE ALUNOS (AGORA FUNCIONA)
   =============================== */
-  if (searchAluno) {
-    searchAluno.addEventListener('input', async () => {
-      resetAlunoSelecionado();
+  /* Substitua a parte de busca do Modal de Gerenciar Treino por esta única versão: */
 
-      const q = searchAluno.value.trim().toLowerCase();
-      alunoResults.innerHTML = '';
+if (searchInput) {
+    searchInput.addEventListener('input', async () => {
+        const query = searchInput.value.trim().toLowerCase();
+        
+        // Limpa os resultados anteriores imediatamente para evitar acúmulo visual
+        resultsDiv.innerHTML = ''; 
+        daysSection.style.display = 'none';
+        selectedStudentId = null;
 
-      if (q.length < 1) return;
+        if (query.length < 1) return;
 
-      const res = await fetch('/alunos/buscar/');
-      const alunos = await res.json();
+        try {
+            const res = await fetch('/alunos/buscar/');
+            const alunos = await res.json();
+            
+            // Filtra localmente apenas para garantir a melhor experiência
+            const filtrados = alunos.filter(a => a.nome.toLowerCase().includes(query));
 
-      alunos
-        .filter(a => a.nome.toLowerCase().includes(q))
-        .forEach(aluno => {
-          const div = document.createElement('div');
-          div.className = 'search-item';
-          div.textContent = aluno.nome;
-
-         div.addEventListener('click', () => {
-           resetAlunoSelecionado();
-
-            alunoSelecionado = aluno;
-
-            // RESET TOTAL
-            diasSelecionados = [];
-            daysGrid.innerHTML = '';
-            exerciseConfig.style.display = 'none';
-
-            searchAluno.value = aluno.nome;
-            alunoResults.innerHTML = '';
-
-            renderDays(aluno.dias_disponiveis || []);
-          });
-
-
-
-
-          alunoResults.appendChild(div);
-        });
+            filtrados.forEach(aluno => {
+                const div = document.createElement('div');
+                div.className = 'search-item';
+                div.textContent = aluno.nome;
+                
+                div.onclick = () => {
+                    searchInput.value = aluno.nome;
+                    resultsDiv.innerHTML = ''; // Limpa a lista após selecionar
+                    selectedStudentId = aluno.id;
+                    if(studentNameDisplay) studentNameDisplay.textContent = aluno.nome;
+                    renderDaysForAssignment(aluno.dias_disponiveis || []);
+                };
+                resultsDiv.appendChild(div);
+            });
+        } catch (err) { 
+            console.error("Erro ao buscar alunos:", err); 
+        }
     });
-  }
+}
 
   /* ===============================
      RENDERIZA DIAS
@@ -1019,3 +1034,78 @@ async function deleteTraining(trainingId) {
         alert("Ocorreu um erro ao tentar excluir o treino.");
     }
 }
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const btnPerfil = document.getElementById('btnPerfil');
+    const modalPerfil = document.getElementById('modalPerfil');
+    const fecharPerfil = document.getElementById('fecharPerfil');
+    const inputFoto = document.getElementById('inputFoto');
+    const previewFoto = document.getElementById('previewFoto');
+    const previewPlaceholder = document.getElementById('previewPlaceholder');
+
+    // Abrir Modal
+    if (btnPerfil) {
+        btnPerfil.addEventListener('click', () => {
+            modalPerfil.classList.add('active');
+        });
+    }
+
+    // Fechar Modal
+    if (fecharPerfil) {
+        fecharPerfil.addEventListener('click', () => {
+            modalPerfil.classList.remove('active');
+        });
+    }
+
+    // Preview da imagem antes de salvar
+    if (inputFoto) {
+        inputFoto.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    if (previewFoto) {
+                        previewFoto.src = e.target.result;
+                    } else if (previewPlaceholder) {
+                        // Se não tinha foto, substitui o "+" pela imagem
+                        const img = document.createElement('img');
+                        img.id = 'previewFoto';
+                        img.src = e.target.result;
+                        previewPlaceholder.replaceWith(img);
+                    }
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Modal Notificações
+    const btnNoti = document.getElementById('btnNotificacao');
+    const modalNoti = document.getElementById('modalNotificacao');
+    const closeNoti = document.getElementById('fecharNotificacao');
+
+    btnNoti?.addEventListener('click', () => modalNoti.classList.add('active'));
+    closeNoti?.addEventListener('click', () => modalNoti.classList.remove('active'));
+
+    // Modal Perfil
+    const btnPerfil = document.getElementById('btnPerfil');
+    const modalPerfil = document.getElementById('modalPerfil');
+    const closePerfil = document.getElementById('fecharPerfil');
+
+    btnPerfil?.addEventListener('click', () => modalPerfil.classList.add('active'));
+    closePerfil?.addEventListener('click', () => modalPerfil.classList.remove('active'));
+
+    // Fechar ao clicar fora
+    window.addEventListener('click', (e) => {
+        if (e.target === modalNoti) modalNoti.classList.remove('active');
+        if (e.target === modalPerfil) modalPerfil.classList.remove('active');
+    });
+});
+
+
+
