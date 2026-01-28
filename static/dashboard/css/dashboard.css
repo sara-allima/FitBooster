@@ -1348,3 +1348,56 @@
     transition: all 0.5s ease;
     pointer-events: none;
 }
+
+.point{
+
+margin-left: 10px;
+}
+
+/* Container relativo para o popup se basear */
+.options-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.point {
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* Estilo do Popup */
+.training-options-popup {
+    display: none; /* Escondido por padrão */
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: var(--secundary-dark-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    z-index: 100;
+    min-width: 150px;
+    padding: 5px;
+}
+
+.training-options-popup.show {
+    display: block;
+    animation: fadeIn 0.2s ease;
+}
+
+.delete-btn {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--primary-red);
+    padding: 10px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+.delete-btn:hover {
+    background: rgba(239, 67, 67, 0.1);
+}

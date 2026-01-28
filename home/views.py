@@ -420,3 +420,16 @@ def desconectar_aluno(request):
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)})
     return JsonResponse({'success': False, 'error': 'Método inválido.'})
+
+@login_required
+@treinador_required
+def deletar_treino(request, treino_id):
+    if request.method == 'POST':
+        try:
+            # Garante que o treinador só exclua os próprios treinos
+            treino = get_object_or_404(Treino, id=treino_id, treinador__user=request.user)
+            treino.delete() # Isso remove do BD e limpa as relações (CASCADE)
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Método inválido.'})
