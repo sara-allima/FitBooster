@@ -752,22 +752,9 @@
     color: var(--secundary-dark-text);
   }
 
-  .days-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
-    margin-top: 1rem;
-  }
+ 
 
-  .day-btn {
-    padding: 0.5rem;
-    border-radius: 8px;
-    border: 1px solid var(--primary-green);
-    background: transparent;
-    color: var(--primary-green);
-    cursor: pointer;
-    font-weight: 600;
-  }
+  
 
   .day-btn:hover {
     background: rgba(51, 255, 85, 0.15);
@@ -780,34 +767,9 @@
   }
 
 
-  .days-grid {
-    display:grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap:10px;
-    margin-top:12px;
-  }
 
-  .days-grid button {
-    background: transparent;
-    border: 1px solid var(--border-color);
-    padding: 10px 0;
-    border-radius: 10px;
-    color: var(--primary-white-bg-text);
-    cursor: pointer;
-    font-size: 15px;
-    transition: all 0.2s ease;
-  }
+ 
 
-  .days-grid button:hover {
-    border-color: var(--primary-green);
-  }
-
-  .days-grid button.active {
-    background: var(--primary-green);
-    color: var(--primary-dark-bg);
-    font-weight: 700;
-    border-color: var(--primary-green);
-  }
 
   /* ===== INPUTS E SELECTS DO MODAL ===== */
   .inputt {
@@ -888,7 +850,7 @@
   ================================ */
 
   .modal-lg {
-    width: 520px;
+    width: 1000px;
     max-width: 95%;
     padding: 2rem 2.25rem;
     border-radius: 16px;
@@ -1030,39 +992,13 @@
    DIAS DISPONÍVEIS DO ALUNO
 ================================ */
 
-.days-grid {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 8px;
-}
 
-.day-btn {
-  padding: 8px 14px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background: #f4f4f4;
-  cursor: pointer;
-  font-size: 14px;
-  transition: 0.2s;
-}
 
-.day-btn.available {
-  background: #e6f7ec;
-  border-color: #2ecc71;
-  color: #2ecc71;
-  font-weight: 600;
-}
 
-.day-btn.available:hover {
-  background: #2ecc71;
-  color: #fff;
-}
 
-.day-btn.active {
-  background: #2ecc71;
-  color: #fff;
-}
+
+
+
 
 
 /* ===== MODAL BASE (ÚNICA DEFINIÇÃO) ===== */
@@ -1082,27 +1018,333 @@
 
 
 
+
+
+
+
+
+
+
+.search-results {
+  background: #1e1e1e;
+  border-radius: 6px;
+  margin-top: 4px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.search-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.search-item:hover {
+  background: #2ecc71;
+  color: #000;
+}
+
+
+/* ===============================
+   DIAS DISPONÍVEIS DO ALUNO
+================================ */
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
 .day-btn {
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 10px 0;
+  border-radius: 10px;
   border: 1px solid var(--border-color);
   background: transparent;
   color: var(--primary-white-bg-text);
   cursor: pointer;
-  font-weight: 500;
+  font-size: 15px;
+  transition: all 0.2s ease;
 }
 
+/* Dia disponível */
 .day-btn.available {
   border-color: var(--primary-green);
   color: var(--primary-green);
+  font-weight: 600;
 }
 
+/* Hover apenas se disponível */
 .day-btn.available:hover {
   background: rgba(51, 255, 85, 0.15);
 }
 
+/* Dia selecionado */
 .day-btn.active {
   background: var(--primary-green);
   color: var(--primary-dark-bg);
   font-weight: 700;
+  border-color: var(--primary-green);
+}
+
+/* Dia indisponível */
+.day-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+/* ===== ESTILOS DO MODAL DE CRIAR TREINO (ADMIN STYLE) ===== */
+.exercise-table-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr; /* Grid igual as colunas */
+    gap: 10px;
+    background-color: #3b6e86; /* Azul do header do admin */
+    padding: 10px;
+    border-radius: 4px 4px 0 0;
+    margin-top: 20px;
+}
+
+.exercise-table-header span {
+    color: white;
+    font-weight: bold;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.exercise-list-container {
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #1e1e1e; /* Fundo escuro */
+    border: 1px solid #333;
+    border-top: none;
+    margin-bottom: 10px;
+}
+
+.exercise-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #333;
+    align-items: center;
+}
+
+.exercise-row:nth-child(even) {
+    background-color: #252525; /* Zebrado leve */
+}
+
+/* Inputs dentro da linha */
+.exercise-row select,
+.exercise-row input {
+    width: 100%;
+    background-color: #121212;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.exercise-row select:focus,
+.exercise-row input:focus {
+    border-color: #28a745;
+    outline: none;
+}
+
+/* Botão de remover (X) */
+.btn-remove-row {
+    background: transparent;
+    border: none;
+    color: #ff4d4d;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.btn-remove-row:hover {
+    color: #ff0000;
+    transform: scale(1.1);
+}
+
+/* Botão Adicionar Outro (Estilo link verde igual admin) */
+.btn-add-row {
+    background: transparent;
+    border: none;
+    color: #28a745; /* Verde */
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 0;
+    font-size: 0.95rem;
+}
+
+.btn-add-row:hover {
+    color: #1e7e34;
+    text-decoration: underline;
+}
+
+.btn-add-row i {
+    font-size: 1.1rem;
+}
+
+
+
+
+/* Container da lista de alunos atuais */
+.student-list-container {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 10px;
+    max-height: 150px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.student-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border-bottom: 1px solid #2c2c2c;
+    color: #e0e0e0;
+}
+
+.student-list-item:last-child {
+    border-bottom: none;
+}
+
+.student-list-item span {
+    font-size: 0.9rem;
+}
+
+/* Botão de remover aluno da lista (lixeira) */
+.btn-remove-student {
+    background: transparent;
+    border: none;
+    color: #ff4d4d;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-remove-student:hover {
+    color: #ff0000;
+}
+
+/* Grid de Dias */
+.days-grid {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.day-btn {
+    background-color: transparent;
+    border: 1px solid #444;
+    color: #666; /* Cor apagada para dias indisponíveis */
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: not-allowed;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+/* Dia disponível (selecionável) */
+.day-btn.available {
+    border-color: #555;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.day-btn.available:hover {
+    border-color: #28a745;
+    color: #fff;
+}
+
+/* Dia Selecionado (Ativo - Verde preenchido ou borda forte) */
+.day-btn.active {
+    background-color: rgba(40, 167, 69, 0.2);
+    border-color: #28a745;
+    color: #28a745;
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+}
+
+/* Animação suave */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Container das caixinhas */
+.student-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 45px;
+    padding: 10px;
+    background: #1a1a1a; /* Fundo levemente mais claro que o modal */
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+/* A caixinha (Badge) do aluno */
+.student-assigned-box {
+    display: flex;
+    align-items: center;
+    background: #28a74522; /* Verde bem transparente */
+    border: 1px solid #28a745; /* Borda verde do seu tema */
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 0.85rem;
+    gap: 8px;
+}
+
+/* O botão X de remover */
+.remove-student-btn {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.remove-student-btn:hover {
+    color: #ff1a1a;
+    transform: scale(1.2);
+}
+
+.empty-text {
+    color: #666;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.days-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.avatar-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Classe para animar a remoção */
+.student-item.removing {
+    transform: translateX(100px);
+    opacity: 0;
+    transition: all 0.5s ease;
+    pointer-events: none;
 }

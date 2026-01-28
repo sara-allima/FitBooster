@@ -1,120 +1,47 @@
-<!--Estudante 1-->
-<div class="student-item" data-name="João Silva" data-goal="Hipertrofia">
-    <div class="student-left">
-        <div class="avatar">JS</div>
-        <div class="student-meta">
-            <p class="student-name">João Silva</p>
-            <div class="muted objective-last-training">
-                <p>Objetivo: Hipertrofia</p>
-                <p>Último Treino: 2 dias atrás</p>
-            </div>
-        </div>
-    </div>
-    <div style="display: flex; flex-direction: column; align-items: flex-end; gap:8px">
-        <div class="progress-wrap">
-            <div style="display: flex; lign-items: center; gap:8px">
-                <div class="percent">85%</div>
-                <div class="badge active">Ativo</div>
-            </div>
-            <div class="progress-bar" aria-hidden="true">
-                <div class="progress-fill" data-progress="85"></div>
+{% if alunos %}
+    {% for aluno in alunos %}
+    <div class="student-item" data-id="{{ aluno.id }}" data-name="{{ aluno.none }}" data-goal="{{ aluno.objetivo }}">
+        <div class="student-left">
+            {% if aluno.foto %}
+                <img src="{{ aluno.foto.url }}" alt="{{ aluno.nome }}" class="avatar-img">
+            {% else %}
+                <div class="avatar">{{ aluno.nome|slice:":2"|upper }}</div>
+            {% endif %}
+            
+            <div class="student-meta">
+                <p class="student-name">{{ aluno.nome }}</p>
+                <div class="muted objective-last-training">
+                    <p>Objetivo: {{ aluno.objetivo }}</p>
+                    <p>Treinos: 
+                        {% for conexao in aluno.conexoes.all %}
+                            {% if conexao.treinador == treinador %}
+                                Status: {{ conexao.status }}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
             </div>
         </div>
 
-        <div class="student-actions">
-            <button class="secundary-button action-btn">Contato</button>
-            <button class="secundary-button action-btn">Relatório</button>
-            <button class="secundary-button action-btn">Plano de Treino</button>
-        </div>
-    </div>
-</div>
+        <div style="display: flex; flex-direction: column; align-items: flex-end; gap:8px">
+            <div class="progress-wrap">
+                <div style="display: flex; align-items: center; gap:8px">
+                    <div class="percent">100%</div> 
+                    <div class="badge active">Ativo</div>
+                </div>
+                <div class="progress-bar" aria-hidden="true">
+                    <div class="progress-fill" data-progress="100"></div>
+                </div>
+            </div>
 
-<!--Estudante 2-->
-<div class="student-item" data-name="Ana Nunes" data-goal="Emagrecimento">
-    <div class="student-left">
-        <div class="avatar">AN</div>
-        <div class="student-meta">
-            <p class="student-name">Ana Nunes</p>
-            <div class="muted objective-last-training">
-                <p>Objetivo: Emagrecimento</p>
-                <p>Último Treino: 1 dia atrás</p>
+            <div class="student-actions">
+                <button class="secundary-button action-btn">Contato</button>
+                <button class="secundary-button action-btn">Relatório</button>
+                <button class="secundary-button action-btn">Plano de Treino</button>
             </div>
         </div>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
-        <div class="progress-wrap">
-            <div style="display:flex;align-items:center;gap:8px">
-                <div class="percent">92%</div>
-                <div class="badge active">Ativo</div>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" data-progress="92"></div>
-            </div>
-        </div>
-        <div class="student-actions">
-            <button class="secundary-button action-btn">Contato</button>
-            <button class="secundary-button action-btn">Relatório</button>
-            <button class="secundary-button action-btn">Plano de Treino</button>
-        </div>
-    </div>
-</div>
-
-<!--Estudante 3-->
-<div class="student-item" data-name="Pedro Costa" data-goal="Condicionamento">
-    <div class="student-left">
-        <div class="avatar">PC</div>
-        <div class="student-meta">
-            <p class="student-name">Pedro Costa</p>
-            <div class="muted objective-last-training">
-                <p>Objetivo: Condicionamento</p>
-                <p>Último Treino: 5 dias atrás</p>
-            </div>
-        </div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
-        <div class="progress-wrap">
-            <div style="display:flex;align-items:center;gap:8px">
-                <div class="percent">65%</div>
-                <div class="badge inactive">Inativo</div>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" data-progress="65"></div>
-            </div>
-        </div>
-        <div class="student-actions">
-            <button class="secundary-button action-btn">Contato</button>
-            <button class="secundary-button action-btn">Relatório</button>
-            <button class="secundary-button action-btn">Plano de Treino</button>
-        </div>
-    </div>
-</div>
-
-<!--Estudante 4-->
-<div class="student-item" data-name="Maria Luiza" data-goal="Força">
-    <div class="student-left">
-        <div class="avatar">ML</div>
-        <div class="student-meta">
-            <p class="student-name">Maria Luiza</p>
-            <div class="muted objective-last-training">
-                <p>Objetivo: Força</p>
-                <p>Último Treino: Hoje</p>
-            </div>
-        </div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
-        <div class="progress-wrap">
-            <div style="display:flex;align-items:center;gap:8px">
-                <div class="percent">71%</div>
-                <div class="badge active">Ativo</div>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" data-progress="71"></div>
-            </div>
-        </div>
-        <div class="student-actions">
-            <button class="secundary-button action-btn">Contato</button>
-            <button class="secundary-button action-btn">Relatório</button>
-            <button class="secundary-button action-btn">Plano de Treino</button>
-        </div>
-    </div>
-</div>
+    {% endfor %}
+{% else %}
+    <p class="empty-text" style="color: white; padding: 20px;">Você ainda não possui alunos vinculados.</p>
+{% endif %}
