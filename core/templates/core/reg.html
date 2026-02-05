@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Adicionar Registro</title>
+
+<link rel="stylesheet" href="{% static 'core/reg/css/stylereg.css' %}" />
+</head>
+<body>
+  <div class="sheet"> 
+    <div class="container">
+
+      <!-- HEADER -->
+      <div class="header">
+        <div class="back">
+          <a href="{% url 'corpo' %}">
+            <img src="{% static 'core/img/seta-esquerda 1.png' %}" alt="">
+          </a>
+        </div>
+        <div class="title">Alterar Registro</div>
+      </div>
+    <form method="POST">
+      {% csrf_token %}
+      <!-- ACCORDION -->
+      <div class="accordion">
+
+        <!-- PESO -->
+        <div class="acc-row" data-target="peso">
+          <h4>Peso</h4>
+          <div class="icon">
+            <img src="{% static 'core/img/sinal-de-seta-para-baixo-para-navegar.png' %}" alt="">
+          </div>
+        </div>
+
+        <div class="acc-body" id="body-peso">
+          <input class="input measure" name="peso_atual" placeholder="Peso (Kg)" type="number" step="0.1">
+          <input class="input measure" name="meta_peso" placeholder="Meta (Kg)" type="number" step="0.1">
+        </div>
+
+        <!-- MEDIDAS -->
+        <div class="acc-row" data-target="medidas">
+          <h4>Medidas</h4>
+          <div class="icon">
+            <img src="{% static 'core/img/sinal-de-seta-para-baixo-para-navegar.png' %}" alt="">
+          </div>
+        </div>
+
+        <div class="acc-body acc-body-medidas" id="body-medidas">
+          <div class="measures-grid">
+            <input class="input measure" name="ombros" placeholder="Ombros (cm)" type="number">
+            <input class="input measure" name="peito" placeholder="Peito (cm)" type="number">
+            <input class="input measure" name="antebraco_e" placeholder="Antebraço (E)" type="number">
+            <input class="input measure" name="antebraco_d" placeholder="Antebraço (D)" type="number">
+            <input class="input measure" name="braco_e" placeholder="Braço (E)" type="number">
+            <input class="input measure" name="braco_d" placeholder="Braço (D)" type="number">
+            <input class="input measure" name="cintura" placeholder="Cintura (cm)" type="number">
+            <input class="input measure" name="quadril" placeholder="Quadril (cm)" type="number">
+            <input class="input measure" name="perna_e" placeholder="Perna (E)" type="number">
+            <input class="input measure" name="perna_d" placeholder="Perna (D)" type="number">
+            <input class="input measure" name="panturrilha_e" placeholder="Panturrilha (E)" type="number">
+            <input class="input measure" name="panturrilha_d" placeholder="Panturrilha (D)" type="number">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- BOTÃO SALVAR -->
+      <div class="save-wrap">
+        <button type="submit" id="saveBtn" class="save-btn">Salvar</button>
+      </div>
+    </form>
+    </div>
+  </div>
+
+<script src="{% static 'core/reg/script/script.js' %}"></script>
+</body>
+</html>

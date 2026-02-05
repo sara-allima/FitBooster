@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corpo</title>
+    <link rel="stylesheet" href="{% static 'core/corpo/css/stylecorpo.css' %}">
+</head>
+<body>
+
+<div class="cinza">
+    <header class="topo">
+        <h1>Corpo</h1>
+    </header>
+
+    <!-- FOTO -->
+    <div class="foto-wrapper">
+        <div class="foto-area">
+            <img src="{% static 'core/img/corpo.png' %}" id="fotoPerfil">
+        </div>
+        <button class="btn-add-foto">+</button>
+    </div>
+
+    <!-- PESO E DATA -->
+    <h2 class="peso">{{ aluno.peso }} kg</h2>
+    <p class="data">{{ aluno.user.date_joined|date:"d \d\e F \d\e Y" }}</p>
+
+
+</div>
+
+<div class="container">
+
+    <!-- TABS -->
+    <div class="tabs">
+        <button class="tab-btn ativo" id="tabPeso">Peso</button>
+        <button class="tab-btn" id="tabMedidas">Medidas</button>
+    </div>
+
+    <!-- PESO -->
+    <div id="boxPeso">  
+        <div class="box1">
+            <div class="vertical">
+                <div class="horizontal">
+                    <img src="{% static 'core/img/ponto verde.png' %}" class="ponto"> 
+                    <p>Atual</p>
+                </div>
+                <div class="pesoatual">{{ aluno.peso }} kg</div>
+            </div>
+
+            <div class="vertical">
+                <div class="horizontal">
+                    <img src="{% static 'core/img/ponto azul.png' %}" class="ponto"> 
+                    <p>Meta</p>
+                </div>
+                <div class="metaatual">
+                    {% if aluno.meta_peso %}
+                        {{ aluno.meta_peso }} kg
+                    {% else %}
+                        --
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="vertical">
+                <p>Diferença</p>
+                <div class="diferencaatual">
+                    {% if diferenca %}
+                        {{ diferenca }} kg
+                    {% else %}
+                        --
+                    {% endif %}
+                </div>
+            </div>  
+        </div>
+
+        
+    </div>
+
+    <!-- BOTÃO PESO -->
+    <a href="{% url 'reg' %}">
+        <button class="btn-add hidden" id="btnpeso">Alterar</button>
+    </a>
+
+    <!-- MEDIDAS -->
+    <div class="box hidden" id="boxMedidas">
+        <div class="medida">
+            <span>Ombros</span>
+            <span>{{ aluno.ombros|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Peito</span>
+            <span>{{ aluno.peito|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Antebraço (E)</span>
+            <span>{{ aluno.antebraco_esquerdo|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Antebraço (D)</span>
+            <span>{{ aluno.antebraco_direito|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Braço (E)</span>
+            <span>{{ aluno.braco_esquerdo|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Braço (D)</span>
+            <span>{{ aluno.braco_direito|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Cintura</span>
+            <span>{{ aluno.cintura|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Quadril</span>
+            <span>{{ aluno.quadril|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Pernas (E)</span>
+            <span>{{ aluno.perna_esquerda|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Pernas (D)</span>
+            <span>{{ aluno.perna_direita|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Panturrilha (E)</span>
+            <span>{{ aluno.panturrilha_esquerda|default:"--" }} cm</span>
+        </div>
+
+        <div class="medida">
+            <span>Panturrilha (D)</span>
+            <span>{{ aluno.panturrilha_direita|default:"--" }} cm</span>
+        </div>
+
+    </div>
+
+    <!-- BOTÃO MEDIDAS -->
+    <a href="{% url 'reg' %}">
+        <button class="btn-add hidden" id="btnmedida">Alterar</button>
+    </a>
+</div>
+
+<!-- NAV BAR -->
+<nav class="nav">
+    <a href="{% url 'home' %}" class="nav-btn"><img src="{% static 'core/img/casa.png' %}"></a>
+    <a href="{% url 'calendario' %}" class="nav-btn"><img src="{% static 'core/img/escala.png' %}"></a>
+    <a href="{% url 'corpo' %}" class="nav-btn ativo"><img src="{% static 'core/img/corpo1.png' %}"></a>
+</nav>
+
+<script src="{% static 'core/corpo/script/script.js' %}"></script>
+</body>
+</html>

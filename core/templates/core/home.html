@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FitBooster - Home</title>
+
+  <link rel="stylesheet" href="{% static 'core/homemobile/css/stylehome.css' %}">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="bar">
+        <div class="top-bar">
+          <div class="greeting">
+            <h2>Olá, {{ request.user.aluno.nome }}</h2>
+            <p>Prepare-se, hoje é dia de treino!</p>
+          </div>
+          <div class="Addtreinador">
+            <a href="{% url 'treinadores' %}" id="openPopup">
+              <img src="{% static 'core/img/adicionar-usuario.png' %}" alt="perfil" class="Add-img">
+            </a>
+          </div>
+            <div class="profile">
+              <a href="{% url 'perfil' %}">
+                {% if request.user.aluno.foto %}
+                  <img src="{{ request.user.aluno.foto.url }}" alt="perfil" class="profile-img">
+                {% else %}
+                  <img src="{% static 'core/img/perfil.png' %}" alt="perfil" class="profile-img">
+                {% endif %}
+              </a>
+            </div>
+
+        </div>
+      </div>
+
+      <div class="date-bar">
+        <a href={% url 'calendario'%}> <div class="month" id="monthLabel"> Out </div> </a> 
+        <div class="days" id="daysContainer" aria-label="dias do mês"></div>
+      </div>
+    </header>
+
+    <main>
+      <section class="trainer">
+        <h3>Plano de Treino</h3>
+        <p class="subtitle">Siga a sequência sugerida pelo seu treinador</p>
+        
+        <div class="workout-list">
+          {% for treino in treinos %}
+            <a href="{% url 'detalhe-treino' treino.id %}" class="workout-card">
+              <div class="workout-info">
+                <span class="workout-letter">{{ treino.nome|first|upper }}</span>
+                <div>
+                  <h4>{{ treino.nome }}</h4>
+                  <p>{{ treino.tipo }}</p> </div>
+              </div>
+            </a>
+          {% empty %}
+            <p class="subtitle">Você ainda não possui treinos atribuídos.</p>
+          {% endfor %}
+
+          {% if treinos %}
+            <a href="{% url 'treino' %}" class="view-all-link">Ver todos</a>
+          {% endif %}
+        </div>
+      </section>
+
+      <section class="more-options">
+        <h3>Mais opções</h3>
+        <div class="option" id="sino" ><img src="{% static 'core/img/sino.png' %}" alt=""><a href={% url 'note'%}>Lembretes e notificações</a></div>
+        <div class="option"><img src="{% static 'core/img/avaliar.png' %}" alt="">Avaliar o aplicativo</div>
+        <div class="option"><img src="{% static 'core/img/compartilhar.png' %}" alt="">Compartilhar FitBooster</div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="nav">
+    <button class="nav-btn">
+      <a href={% url 'home'%}>
+        <img src="{% static 'core/img/casa.png' %}" alt="">
+      </a>
+    </button>
+    <button class="nav-btn">
+      <a href={% url 'calendario'%}>
+        <img src="{% static 'core/img/escala.png' %}" alt="">
+      </a>
+    </button>
+    <button class="nav-btn ativo">
+      <a href={% url 'corpo'%}>
+        <img src="{% static 'core/img/corpo1.png' %}" alt="">
+      </a>
+    </button>
+  </nav>
+
+  <script src="{% static 'core/homemobile/script/script.js' %}"></script>
+</body>
+</html>

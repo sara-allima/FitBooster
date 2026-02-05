@@ -1,0 +1,113 @@
+{% load static %}
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FitBooster</title>
+  <link rel="stylesheet" href="{% static 'core/form/css/styleform.css' %}" />
+</head>
+<body>
+  <div class="container" role="main">
+
+    <header>
+      <div class="back">
+        <a href="javascript:history.back()">
+        <img src="{% static 'core/img/seta-esquerda 1.png' %}" alt="">
+        </a>
+      </div>
+    </header>
+
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <!-- NOME -->
+      <div class="field">
+        <label for="name">Nome Completo:</label>
+        <input id="name" name="nome" class="input" placeholder="Digite aqui" required>
+      </div>
+
+      <!--EMAIL-->
+      <div class="field">
+        <label for="email">Seu email:</label>
+        <input id="email" name="email" class="input" placeholder="Digite aqui" required>
+      </div>
+
+      <!-- GÊNERO -->
+      <div class="field">
+        <label for="genero">Gênero:</label>
+        <select id="genero" name="genero" class="input" required>
+            <option value="">Selecionar</option>
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+            <option value="O">Outro</option>
+        </select>
+      </div>
+
+      <!-- IDADE -->
+      <div class="field">
+        <label for="age">Idade:</label>
+        <input id="age" name="idade" type="number" class="input" placeholder="Digite aqui" min="0" required>
+      </div>
+
+      <!-- ALTURA -->
+      <div class="field">
+        <label for="heightCm">Altura (em centímetros):</label>
+          <input id="heightCm" name="altura" type="number" class="input" placeholder="Ex: 1.75" min="1.00" max="2.50" step="0.01" required>
+      </div>
+
+      <!-- PESO -->
+      <div class="field">
+        <label for="weight">Seu peso atual (em Kg):</label>
+        <input id="weight" name="peso" type="number" class="input" placeholder="Ex: 69.50" min="20" max="400" step="0.01" required>
+      </div>
+
+      <!-- OBJETIVO -->
+      <div class="field">
+        <label for="objetivo">Qual o seu objetivo com os treinos?</label>
+        <select name="objetivo" id="objetivo" class="input" required>
+          <option value="" disabled selected>Selecione uma opção</option>
+          <option value="emagrecer">Emagrecer</option>
+          <option value="hipertrofia">Hipertrofia</option>
+          <option value="forca">Força</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Quais dias da semana você pode treinar?</label>
+
+        <div class="days-grid" id="daysGrid">
+          <button type="button" data-day="Domingo">Dom</button>
+          <button type="button" data-day="Segunda">Seg</button>
+          <button type="button" data-day="Terça">Ter</button>
+          <button type="button" data-day="Quarta">Qua</button>
+          <button type="button" data-day="Quinta">Qui</button>
+          <button type="button" data-day="Sexta">Sex</button>
+          <button type="button" data-day="Sabado">Sáb</button>
+        </div>
+
+        <input type="hidden" name="dias_treino" id="dias_treino">
+      </div>
+
+      <!--SENHA-->
+      <div class="field">
+        <label for="senha">Senha:</label>
+        <input class="input" type="password" name="senha" id="senha" placeholder="Digite sua senha aqui" required>
+      </div>
+      <div class="field">
+        <label for="senha">Repita a senha:</label>
+        <input class="input" type="password" name="confirmar_senha" id="confirmar_senha" placeholder="Repita a mesma senha que você digitou agora a pouco" required>
+      </div>
+
+      <!-- BOTÃO CONTINUAR -->
+      <button class="continue-btn" id="continueBtn" type="submit">
+        Continuar
+      </button>
+    </form>
+  </div>
+
+  <script src="{% static 'core/form/script/script.js' %}"></script>
+</body>
+</html>

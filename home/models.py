@@ -1,0 +1,219 @@
+from django.contrib.auth.models import User
+from django.db import models
+from django.utils import timezone
+
+# Create your models here.
+class Treinador(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    cref = models.CharField(primary_key=True, max_length=20)
+    nome = models.CharField(max_length=100)
+    genero = models.CharField(max_length=20, choices=[
+        ('M', 'Masculino'),
+        ('F', 'Feminino'),
+        ('O', 'Outro')
+    ])
+    email = models.EmailField(unique=True)
+    cpf = models.CharField(max_length=11, unique=True)
+    formacao = models.TextField()
+    idade = models.IntegerField()
+    telefone = models.CharField(max_length=20, null=True, blank=True)
+    instagram = models.CharField(max_length=50, null=True, blank=True, help_text="Apenas o @")
+    foto = models.ImageField(upload_to='fotos_treinadores/', null=True, blank=True)
+
+
+    def __str__(self):
+        return self.nome or self.user.username
+
+class Aluno(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nome = models.CharField(max_length=100)
+    genero = models.CharField(max_length=20, choices=[
+        ('M', 'Masculino'),
+        ('F', 'Feminino'),
+        ('O', 'Outro')
+    ])
+    email = models.EmailField(unique=True)
+    objetivo = models.CharField(max_length=100)
+    peso = models.DecimalField(max_digits=5, decimal_places=2)
+    meta_peso = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    altura = models.DecimalField(max_digits=4, decimal_places=2)
+    idade = models.IntegerField()
+    
+     # MEDIDAS (ESTADO ATUAL)
+    ombros = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    peito = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+
+    antebraco_esquerdo = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    antebraco_direito = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+
+    braco_esquerdo = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    braco_direito = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+
+    cintura = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    quadril = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+
+    perna_esquerda = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    perna_direita = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+
+    panturrilha_esquerda = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    panturrilha_direita = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+
+    # 👇 NOVO CAMPO
+    dias_disponiveis = models.CharField(
+        max_length=100,
+        help_text="Dias da semana separados por vírgula. Ex: Segunda,Quarta,Sexta"
+    )
+    
+        # 👇 FOTO DE PERFIL
+    foto = models.ImageField(
+        upload_to='fotos_alunos/',
+        null=True,
+        blank=True
+    )
+
+
+    def __str__(self):
+        return self.nome or self.user.username
+
+class Exercicio(models.Model):
+    nome = models.CharField(max_length=100)
+    grupo_muscular = models.CharField(max_length=50)
+    descricao = models.TextField()
+    # Campos default que podem ser mudados mais especificamente para os treinos
+    series = models.IntegerField(default=0)
+    repeticoes = models.IntegerField(default=0)
+    carga = models.IntegerField(default=0, help_text='Carga em Kg')
+    
+    def __str__(self):
+        return f'{self.nome} - {self.grupo_muscular}'
+    
+class Treino(models.Model):
+    nome = models.CharField(max_length=100)
+    descricao = models.TextField()
+    tipo = models.CharField(max_length=50)
+    data_criacao = models.DateField(auto_now_add=True)
+    treinador = models.ForeignKey(
+        Treinador,
+        on_delete=models.CASCADE,
+        related_name='treinos_criados'
+    )
+    alunos = models.ManyToManyField(
+        Aluno,
+        through='AlunoTreino',
+        through_fields=('treino', 'aluno'),
+        related_name='treinos'
+    )
+    exercicios = models.ManyToManyField(
+        Exercicio,
+        through='TreinoExercicio',
+        through_fields=('treino', 'exercicio'),
+        related_name='treinos'
+    )
+
+    def __str__(self):
+        return f'{self.nome} - {self.tipo}'
+
+class TreinoExercicio(models.Model):
+    treino = models.ForeignKey(
+        Treino,
+        on_delete=models.CASCADE
+    )
+    exercicio = models.ForeignKey(
+        Exercicio,
+        on_delete=models.CASCADE
+    )
+    series = models.IntegerField()
+    repeticoes = models.IntegerField()
+    carga = models.IntegerField(default=0 , help_text='Carga em Kg')
+
+    class Meta:
+        verbose_name = 'Exercício no Treino'
+        verbose_name_plural = 'Exercícios nos Treinos'
+        unique_together = ('treino', 'exercicio')
+
+class AlunoTreino(models.Model):
+    aluno = models.ForeignKey(
+        Aluno,
+        on_delete=models.CASCADE
+    )
+    treino = models.ForeignKey(
+        Treino,
+        on_delete=models.CASCADE
+    )
+    ativo = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = 'Treino do Aluno'
+        verbose_name_plural = 'Treinos dos Alunos'
+        unique_together = ['aluno', 'treino']
+    
+    def __str__(self):
+        return f'{self.aluno} - {self.treino}'
+
+class ConexaoAlunoTreinador(models.Model):
+    STATUS_CHOICES = [
+        ('PENDENTE', 'Pendente'),
+        ('ACEITA', 'Aceita'),
+        ('RECUSADA', 'Recusada'),
+        ('ENCERRADA', 'Encerrada'),
+    ]
+
+    aluno = models.ForeignKey(
+        Aluno,
+        on_delete=models.CASCADE,
+        related_name='conexoes'
+    )
+    treinador = models.ForeignKey(
+        Treinador,
+        on_delete=models.CASCADE,
+        related_name='conexoes'
+    )
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='PENDENTE'
+    )
+    data_solicitacao = models.DateTimeField(auto_now_add=True)
+    data_resposta = models.DateTimeField(null=True, blank=True)
+    data_encerramento = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ('aluno', 'treinador')
+    
+
+class ExercicioConcluido(models.Model):
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
+    treino_exercicio = models.ForeignKey(TreinoExercicio, on_delete=models.CASCADE)
+    data_conclusao = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        unique_together = ('aluno', 'treino_exercicio')
+
+    def __str__(self):
+        return f"{self.aluno} - {self.treino_exercicio}"
+    
+class DiaTreinoAluno(models.Model):
+    DIAS_SEMANA = [
+        ('DOM', 'Domingo'),
+        ('SEG', 'Segunda'),
+        ('TER', 'Terça'),
+        ('QUA', 'Quarta'),
+        ('QUI', 'Quinta'),
+        ('SEX', 'Sexta'),
+        ('SAB', 'Sábado'),
+    ]
+
+    aluno = models.ForeignKey(
+        Aluno,
+        on_delete=models.CASCADE,
+        related_name='dias_treino'
+    )
+    dia = models.CharField(max_length=3, choices=DIAS_SEMANA)
+
+    class Meta:
+        unique_together = ('aluno', 'dia')
+        verbose_name = 'Dia de treino do aluno'
+        verbose_name_plural = 'Dias de treino do aluno'
+
+    def __str__(self):
+        return f'{self.aluno.nome} - {self.get_dia_display()}'

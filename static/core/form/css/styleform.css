@@ -1,0 +1,218 @@
+/* ----------- 1FORM ----------- */
+
+:root {
+  --bg:#0f1113;
+  --card:#272C35;
+  --muted:#99a0a6;
+  --accent:#00e676;
+  --accent-dark:#0bb85a; /* tom um pouco mais escuro */
+  --white:#ffffff;
+}
+
+/* evita overflow horizontal */
+html, body {
+  margin:0;
+  height:100%;
+  font-family:Inter, Arial, sans-serif;
+  background:linear-gradient(#1C2126, #121416 35%);
+  color:var(--white);
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling: touch;
+  box-sizing:border-box;
+}
+
+/* container com padding controlado e box-sizing para evitar estouro */
+.container {
+  max-width:420px;
+  margin:0 auto;
+  padding:18px;
+  padding-bottom:140px; /* espaço para o botão flutuante */
+  min-height:100vh;
+  box-sizing:border-box;
+  width:100%;
+}
+
+header {
+  display:flex;
+  align-items:center;
+}
+
+.back img {
+   max-width: 15px;
+   max-width:100%;
+   height:auto; 
+   display:block; 
+   margin-bottom: 15px;
+}
+
+.field { margin-bottom:16px; }
+
+label {
+  display:block;
+  font-weight:700;
+  margin-bottom:8px;
+  font-size:20px; /* TÍTULOS 20px */
+}
+
+.input {
+  width:100%;
+  background:var(--card);
+  border-radius:10px;
+  padding:14px 16px;
+  color:var(--white);
+  border:1px solid rgba(255,255,255,0.03);
+  box-sizing:border-box;
+}
+
+.segmented {
+  display:inline-flex;
+  background:#121416;
+  border-radius:999px;
+  padding:6px;
+}
+
+.segmented button {
+  border:0;
+  padding:8px 14px;
+  border-radius:999px;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:15px; /* subtítulos 15px */
+}
+
+.segmented button.active {
+  background:var(--accent);
+  color:#000;
+  font-weight:700;
+}
+
+.mt10 { margin-top:10px; }
+.hidden { display:none; }
+
+.height-row { display:flex; gap:10px; }
+
+.small-input {
+  flex:1;
+  padding:12px;
+  border-radius:10px;
+  background:var(--card);
+  border:1px solid rgba(255,255,255,0.03);
+  color:var(--white);
+}
+
+.kg-lbs {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:8px;
+}
+
+.muted {
+  color:var(--muted);
+  font-size:15px; /* SUBTÍTULOS 15px */
+  margin:0;
+}
+
+.bmi {
+  font-size:15px; /* SUBTÍTULOS 15px */
+  margin-top:8px;
+  color:var(--muted);
+}
+
+.cards {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:12px;
+}
+
+.card {
+  height: 110px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--card);
+  border-radius:16px;
+  padding:0 22px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.4);
+  cursor:pointer;
+}
+
+.corpos { font-size:20px; } /* TÍTULOS 20px */
+
+.radio {
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,0.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.radio .dot {
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:transparent;
+}
+
+.card.selected .radio { border-color:var(--accent); }
+.card.selected .radio .dot { background:var(--accent); }
+.card.selected { outline:2px solid rgba(0,230,118,0.18); }
+
+/* DIAS DE TREINO: grid responsivo que quebra linhas sem overflow */
+.days-grid {
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap:10px;
+  margin-top:12px;
+}
+
+.days-grid button {
+  background:var(--card);
+  border:1px solid rgba(255,255,255,0.1);
+  padding:10px 0;
+  border-radius:10px;
+  text-transform:lowercase;
+  color:var(--white);
+  cursor:pointer;
+  font-size:15px; /* SUBTÍTULOS 15px */
+}
+
+.days-grid button.active {
+  background:var(--accent);
+  color:#000;
+  font-weight:700;
+}
+
+/* BOTÃO CONTINUAR: menor, central, arredondado */
+/* por padrão "inativo" -> tom escuro (mais discreto),
+   quando tiver a classe .enabled -> fica claro e com contraste */
+.continue-btn {
+  position:fixed;
+  bottom:16px;
+  left:50%;
+  transform:translateX(-50%);
+  width:360px;
+  max-width:90%;
+  border:0;
+  padding:14px 18px;
+  font-size:18px;
+  font-weight:700;
+  color: #000;
+  border-radius:28px;
+  background: var(--accent);
+  box-shadow:none;
+  transition: all 180ms ease;
+  z-index:60;
+  cursor:pointer;
+  box-shadow: 0 8px 30px rgba(0,230,118,0.18);
+}
+
+/* garante que inputs e botões não excedam a tela em mobile */
+@media (max-width:420px){
+  .continue-btn { width:320px; max-width:92%; padding:12px 16px; border-radius:24px; }
+}

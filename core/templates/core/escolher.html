@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escolha um Exercício</title>
+  <link rel="stylesheet" href="{% static 'core/escolher/css/styleescolher.css' %}">
+</head>
+
+<body>
+<div class="cont">
+
+    <!-- TOPO -->
+    <div class="topo">
+        <header>
+            <img src="{% static 'core/img/seta-esquerda 1.png' %}" class="back-icon" onclick="history.back()">
+            <h2 class="titulo-topo">Escolha um exercício</h2>
+        </header>
+    </div>
+
+    <div class="container">
+
+        <!-- PESQUISAR -->
+        <div class="search-box">
+            <img src="{% static 'core/img/lupa 1.png' %}" class="search-icon">
+            <input type="text" placeholder="Pesquisar">
+        </div>
+
+        <!-- FILTROS -->
+        <div class="filtros">
+            <button class="filtro ativo">Todos</button>
+            <button class="filtro">Grupos Musculares</button>
+            <button class="filtro">Equipamento</button>
+        </div>
+
+        <!-- LISTA DE EXERCÍCIOS -->
+        <div class="lista">
+
+            <div class="card-exercicio2">
+                <div class="thumb"></div>
+                <p class="nome-ex">Elevação Lateral (halteres)</p>
+                <img src="{% static 'core/img/star.png' %}" class="fav">
+            </div>
+
+            <div class="card-exercicio2">
+                <div class="thumb"></div>
+                <p class="nome-ex">Remada Baixa – com barra V (polia)</p>
+                <img src="{% static 'core/img/star.png' %}" class="fav">
+            </div>
+
+            <div class="card-exercicio2">
+                <div class="thumb"></div>
+                <p class="nome-ex">Desenvolvimento de Ombros Sentado</p>
+                <img src="{% static 'core/img/star.png' %}" class="fav">
+            </div>
+
+            <div class="card-exercicio2">
+                <div class="thumb"></div>
+                <p class="nome-ex">Elevação Frontal (halteres)</p>
+                <img src="{% static 'core/img/star.png' %}" class="fav">
+            </div>
+
+            <div class="card-exercicio2">
+                <div class="thumb"></div>
+                <p class="nome-ex">Desenvolvimento de Ombros Sentado</p>
+                <img src="{% static 'core/img/star.png' %}" class="fav">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

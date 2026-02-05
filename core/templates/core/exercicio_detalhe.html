@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ item.exercicio.nome }}</title>
+  <link rel="stylesheet" href="{% static 'core/clicartreino/css/clicarstyle.css' %}">
+</head>
+
+<body>
+<div class="cont">
+
+  <!-- TOPO -->
+  <div class="topo">
+    <header>
+      <a href="{% url 'detalhe-treino' item.treino.id %}">
+          <img src="{% static 'core/img/seta-esquerda 1.png' %}" class="back-icon" alt="Voltar">
+      </a>
+
+      <h2 class="titulo-topo">
+        {{ forloop.counter|default:"" }}{{ item.exercicio.nome }}
+      </h2>
+    </header>
+  </div>
+
+  <div class="container">
+
+    <!-- PREVIEW (GIF / VÍDEO FUTURO) -->
+    <div class="preview">
+      {% comment %} {# FUTURO:
+      <video src="{{ item.exercicio.video.url }}" controls></video>
+      ou
+      <img src="{{ item.exercicio.gif.url }}">
+      #} {% endcomment %}
+    </div>
+
+    <!-- CARD DE DETALHES -->
+    <div class="card-detalhes">
+
+      <h3 class="titulo-detalhes">Detalhes do Exercício</h3>
+
+      <div class="linha-det">
+        <span class="label">séries</span>
+        <span class="valor">{{ item.series }}</span>
+      </div>
+
+      <div class="linha-det">
+        <span class="label">repetições</span>
+        <span class="valor">{{ item.repeticoes }}</span>
+      </div>
+
+      {% if item.carga %}
+      <div class="linha-det">
+        <span class="label">carga</span>
+        <span class="valor">{{ item.carga }} kg</span>
+      </div>
+      {% endif %}
+
+    </div>
+
+    <!-- BOTÃO -->
+    <form method="post" action="{% url 'concluir_exercicio' item.id %}">
+      {% csrf_token %}
+
+      <button
+        type="submit"
+        class="btn-concluir {% if concluido %}concluido{% endif %}"
+        {% if concluido %}disabled{% endif %}
+      >
+        {% if concluido %}
+          Exercício concluído
+        {% else %}
+          Concluir exercício
+        {% endif %}
+      </button>
+    </form>
+
+
+
+  </div>
+
+  <script src="{% static 'core/clicartreino/js/clicar-script.js' %}"></script>
+</div>
+</body>
+</html>

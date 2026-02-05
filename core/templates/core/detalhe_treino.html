@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ treino.nome }}</title>
+  <link rel="stylesheet" href="{% static 'core/treinoA/css/styleA.css' %}">
+</head>
+
+<body>
+<div class="cont">
+
+  <!-- TOPO -->
+  <div class="topo">
+    <header>
+      <a href="{% url 'treino' %}">
+          <img src="{% static 'core/img/seta-esquerda 1.png' %}" class="back-icon" alt="Voltar">
+      </a>
+
+      <div class="header-text">
+        <h2 class="titulo-topo">{{ treino.nome }}</h2>
+        <p class="sub-titulo">
+          {{ treino.data_criacao|date:"l, d F" }}
+        </p>
+      </div>
+    </header>
+  </div>
+
+  <!-- CONTEÚDO -->
+  <div class="container">
+
+        {% if treino.descricao %}
+        <div class="dica">
+        <img src="{% static 'core/img/Group 168.png' %}">
+        <p>{{ treino.descricao }}</p>
+        </div>
+        {% endif %}
+
+        <h3 class="titulo-sec">Exercícios</h3>
+
+        {% for item in exercicios %}
+        <div class="card-exercicio">
+            <a href="{% url 'exercicio_detalhe' item.id %}">
+            <h4>{{ forloop.counter }} - {{ item.exercicio.nome }}</h4>
+            </a>
+
+        <div class="linha">
+                <p>
+                <span>séries</span><br>
+                {{ item.series }}
+                </p>
+
+                <p>
+                <span>repetições</span><br>
+                {{ item.repeticoes }}
+                </p>
+
+                <p>
+                <span>carga</span><br>
+                {{ item.carga }}kg
+                </p>
+        </div>
+        </div>
+        {% empty %}
+        <p style="opacity:.6;">Nenhum exercício cadastrado</p>
+        {% endfor %}
+        
+
+  </div>
+
+</div>
+</body>
+</html>

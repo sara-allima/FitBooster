@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Treinador</title>
+  <link rel="stylesheet" href="{% static 'core/treinadores/css/treinadores.css' %}">
+</head>
+<body>
+
+<div class="container">
+
+  <header class="header">
+    <a href="{% url 'perfil' %}" class="back-btn">
+      <img src="{% static 'core/img/seta-esquerda 1.png' %}" alt="">
+    </a>
+    <h2>Meu treinador</h2>
+  </header>
+
+  <p class="empty-message" id="emptyMessage">
+    você não tem um treinador, adicione o seu para receber seu plano de treino
+  </p>
+
+<section class="trainer-list" id="trainerList">
+
+  {% if conexoes %}
+    {% for conexao in conexoes %}
+      <div class="trainer-card">
+        <div>
+          <strong>{{ conexao.treinador.nome }}</strong><br>
+          <small>CREF: {{ conexao.treinador.cref }}</small><br>
+          <small>Status: Aceito</small>
+        </div>
+
+        <button
+          class="delete-btn"
+          onclick="abrirConfirmacao({{ conexao.id }})"
+        >
+          ✕
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+</section>
+
+
+
+  <button class="add-btn" id="openPopup">+ Adicionar treinador</button>
+</div>
+
+<!-- Popup adicionar treinador -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup">
+    <button class="close-btn" id="closePopup">✕</button>
+    <h3>Adicionar treinador</h3>
+
+    <div id="listaTreinadoresModal" class="modal-list"></div>
+  </div>
+
+</div>
+
+<!-- Popup confirmar exclusão -->
+<div class="popup-overlay" id="deleteOverlay">
+  <div class="popup">
+    <h3>Ao excluir um treinador você perderá todos seus treinos</h3>
+    <div class="delete-actions">
+      <button class="cancel-btn" id="cancelDelete">Cancelar</button>
+      <button class="confirm-btn delete-confirm" id="confirmDelete">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'core/treinadores/js/treinadores.js' %}"></script>
+</body>
+</html>

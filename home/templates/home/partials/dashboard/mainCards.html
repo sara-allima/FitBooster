@@ -1,0 +1,17 @@
+{% load static %}
+
+<div class="card-container">
+    <div class="card-icon">
+        <img src="{% static "dashboard/images/icon-people.png" %}" alt="Ícone verde de pessoas">
+    </div>
+    <div class="card-value">{{ alunos_ativos_count|default:0 }}</div>
+    <div class="card-label">Alunos Ativos</div>
+</div>
+
+<div class="card-container">
+    <div class="card-icon">
+        <img src="{% static "dashboard/images/icon-calendar.png" %}" alt="Ícone verde de um calendário">
+    </div>
+    <div class="card-value">{{ planos_criados_count|default:0 }}</div>
+    <div class="card-label">Planos Criados</div>
+</div>

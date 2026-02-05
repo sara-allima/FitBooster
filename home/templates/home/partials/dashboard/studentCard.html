@@ -1,0 +1,37 @@
+{% if alunos %}
+    {% for aluno in alunos %}
+    <div class="student-item" data-id="{{ aluno.id }}" data-name="{{ aluno.none }}" data-goal="{{ aluno.objetivo }}">
+        <div class="student-left">
+            {% if aluno.foto %}
+                <img src="{{ aluno.foto.url }}" alt="{{ aluno.nome }}" class="avatar-img">
+            {% else %}
+                <div class="avatar">{{ aluno.nome|slice:":2"|upper }}</div>
+            {% endif %}
+            
+            <div class="student-meta">
+                <p class="student-name">{{ aluno.nome }}</p>
+                <div class="muted objective-last-training">
+                    <p>Objetivo: {{ aluno.objetivo }}</p>
+                    <p>Treinos: 
+                        {% for conexao in aluno.conexoes.all %}
+                            {% if conexao.treinador == treinador %}
+                                Status: {{ conexao.status }}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: flex-end; gap:8px">
+
+            <div class="student-actions">
+                <button class="secundary-button action-btn btn-report">Relatório</button>
+                <button class="secundary-button action-btn btn-plan">Plano de Treino</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p class="empty-text" style="color: white; padding: 20px;">Você ainda não possui alunos vinculados.</p>
+{% endif %}

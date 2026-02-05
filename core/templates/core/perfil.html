@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Conta</title>
+  <link rel="stylesheet" href="{% static 'core/perfil/css/styleperfil.css' %}">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="{% url 'home' %}">
+      <img src="{% static 'core/img/seta-esquerda 1.png' %}" alt="">
+      </a>
+      <h2>Minha conta</h2>
+    </header>
+
+<div class="profile-section">
+
+  <div class="profile-photo">
+    {% if request.user.aluno.foto %}
+      <img src="{{ request.user.aluno.foto.url }}" alt="Foto de perfil">
+    {% else %}
+      <img src="{% static 'core/img/ft.png' %}" alt="Foto padrão">
+    {% endif %}
+
+    <form
+      method="POST"
+      action="{% url 'atualizar-foto' %}"
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %}
+      <label class="photo-icon">
+        <img src="{% static 'core/img/galeria.png' %}" alt="">
+        <input
+          type="file"
+          name="foto"
+          accept="image/*"
+          onchange="this.form.submit()"
+          hidden
+        >
+      </label>
+    </form>
+  </div>
+
+  <div class="lapis">
+    <h3 id="userName">{{ request.user.aluno.nome }}</h3>
+    <span id="editNameBtn">
+      <img src="{% static 'core/img/ferramenta-lapis .png' %}" alt="">
+    </span>
+  </div>
+
+</div>
+
+
+    <div class="options">
+      <a href={% url 'note'%}>
+        <button class="option-btn">
+          <img src="{% static 'core/img/sino.png' %}" alt="">
+          Lembretes e notificações 
+        </button>
+      </a>
+
+      <button class="option-btn" id="themeBtn">
+        <img src="{% static 'core/img/brilho-do-sol.png' %}" alt="">
+        Temas
+      </button>
+      <a href={% url 'treinadores' %}>
+        <button class="option-btn" id="themeBtn">
+          <img src="{% static 'core/img/treinador.png' %}" alt="" class="treino-img">
+          Treinador
+        </button>
+      </a>
+    </div>
+
+    <a class="logout-btn" href={% url "mobile-logout" %}>
+      <img src="{% static 'core/img/sair .png' %}" alt="">
+      Sair
+    </a>
+  </div>
+
+  <!-- POP-UP FOTO -->
+  {% comment %} <div class="popup" id="popupPhoto">
+    <div class="popup-content">
+      <h4>Permissão para Câmera e Galeria</h4>
+      <p>Necessário acesso à câmera e galeria para adicionar sua foto de perfil.</p>
+      <button class="btn green">Salvar</button>
+      <button class="btn gray" id="closePhoto">Negar</button>
+    </div>
+  </div> {% endcomment %}
+
+  <!-- POP-UP NOME -->
+  <div class="popup" id="popupName">
+    <div class="popup-content">
+      {% csrf_token %}
+
+      <img src="{% static 'core/img/close.png' %}" alt="" class="close" id="closeNamePopup">
+
+      <label>Informe seu nome:</label>
+      <input type="text" id="nameInput" placeholder="digite seu nome aqui">
+
+      <button class="btn green" id="saveNameBtn">Salvar</button>
+    </div>
+  </div>
+
+  <!-- POP-UP TEMA -->
+  <div class="popup" id="popupTheme">
+    <div class="popup-content">
+      <div class="flex">
+        <img src="{% static 'core/img/brilho-do-sol.png' %}" alt="" class="sol">
+        <label class="alinhar">
+          Tema
+        </label>
+        <img src="{% static 'core/img/close.png' %}" alt="" class="close" id="closeThemePopup">
+      </div>
+      <div class="radio-group">
+        <label><input type="radio" name="theme"> Claro</label>
+      </div>
+
+      <button class="btn green">Salvar</button>
+    </div>
+  </div>
+
+  <script src="{% static 'core/perfil/script/script.js' %}"></script>
+</body>
+</html>

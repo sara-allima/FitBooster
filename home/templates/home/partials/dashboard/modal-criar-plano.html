@@ -1,0 +1,43 @@
+<div class="modal-overlay" id="createPlanModal">
+  <div class="modal-card modal-lg" > <button class="modal-close" id="closeCreatePlan">&times;</button>
+
+    <h2 class="modal-title">Criar Treino</h2>
+    <p class="modal-subtitle">Defina o nome e configure os exercícios (Séries, Repetições e Carga)</p>
+
+    <div class="modal-field">
+      <label class="modal-label">Nome do treino</label>
+      <input
+        type="text"
+        id="trainingName"
+        class="modal-input"
+        placeholder="Ex: Treino Full Body A"
+      />
+    </div>
+
+    <div class="exercise-table-header">
+      <span>Exercício</span>
+      <span>Séries</span>
+      <span>Repetições</span>
+      <span>Carga (kg)</span>
+      <span style="text-align: center;">Remover?</span>
+    </div>
+
+    <div id="exerciseList" class="exercise-list-container">
+      </div>
+
+    <button type="button" class="btn-add-row" id="btnAddExerciseRow">
+      <i class="fa-solid fa-plus"></i> Adicionar outro(a) Exercício no Treino
+    </button>
+
+    <div class="modal-actions" style="margin-top: 20px;">
+      <button class="secondary-button" id="cancelCreatePlan">Cancelar</button>
+      <button 
+        type="button"
+        class="primary-buttonn"
+        id="confirmCreateTraining"
+      >
+        Criar Treino
+      </button>
+    </div>
+  </div>
+</div>

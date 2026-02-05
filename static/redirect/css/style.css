@@ -1,0 +1,280 @@
+/* -------- RESET -------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(#1c2126, #121416 35%);
+  color: #fff;
+  height: 100vh;
+  overflow: auto;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  position: absolute;
+  top: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo img {
+  width: clamp(120px, 20vw, 260px);
+  height: auto;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+
+.div-h1 {
+  margin-top: 12vh;
+  text-align: center;
+  z-index: 2;
+}
+
+.div-h1 h1 {
+  font-size: clamp(28px, 5vw, 60px);
+  font-weight: 600;
+}
+
+.div-h1 h3 {
+  font-size: clamp(16px, 3vw, 32px);
+  margin-top: 20px;
+  opacity: 0.9;
+}
+
+.background-image {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.background-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.background-image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 20, 22, 0.3),
+    rgba(15, 20, 22, 0.9)
+  );
+  z-index: 1;
+}
+
+.redirect {
+ margin-top: 2%;
+  margin-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  z-index: 2;
+}
+
+.redirect-qrcode {
+  width: clamp(180px, 25vw, 320px);
+  height: auto;
+  border-radius: 12px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.realocar {
+  display: flex;
+  gap: clamp(10px, 4vw, 40px);
+}
+
+.realocar img {
+  width: clamp(180px, 28vw, 340px);
+  height: auto;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.realocar img:hover {
+  transform: scale(1.05);
+
+  filter: brightness(1.2);
+}
+
+
+@media (max-width: 1600px) {
+  .div-h1 h1 {
+    font-size: clamp(24px, 4vw, 48px);
+  }
+  
+  .div-h1 h3 {
+    font-size: clamp(14px, 2.5vw, 28px);
+  }
+  
+  .logo img {
+    width: clamp(100px, 15vw, 200px);
+  }
+  
+  .redirect-qrcode {
+    width: clamp(150px, 20vw, 280px);
+  }
+  
+  .realocar img {
+    width: clamp(150px, 22vw, 280px);
+  }
+}
+
+/* Para tablets e notebooks menores (até 1366px) */
+@media (max-width: 1366px) {
+  .div-h1 {
+    margin-top: 10vh;
+  }
+  
+  .div-h1 h1 {
+    font-size: clamp(22px, 3.5vw, 42px);
+  }
+  
+  .div-h1 h3 {
+    font-size: clamp(14px, 2vw, 24px);
+    margin-top: 15px;
+  }
+  
+  .logo img {
+    width: clamp(90px, 12vw, 180px);
+  }
+  
+  .redirect {
+    gap: 30px;
+  }
+  
+  .redirect-qrcode {
+    width: clamp(140px, 18vw, 240px);
+  }
+  
+  .realocar img {
+    width: clamp(140px, 20vw, 240px);
+  }
+}
+
+/* Para tablets (até 1024px) */
+@media (max-width: 1024px) {
+  .div-h1 {
+    margin-top: 8vh;
+  }
+  
+  .div-h1 h1 {
+    font-size: clamp(20px, 3vw, 36px);
+  }
+  
+  .div-h1 h3 {
+    font-size: clamp(13px, 1.8vw, 20px);
+    margin-top: 12px;
+  }
+  
+  .logo {
+    top: 3%;
+  }
+  
+  .logo img {
+    width: clamp(80px, 10vw, 160px);
+  }
+  
+  .redirect {
+    gap: 25px;
+  }
+  
+  .redirect-qrcode {
+    width: clamp(120px, 16vw, 200px);
+  }
+  
+  .realocar img {
+    width: clamp(120px, 18vw, 200px);
+  }
+}
+
+/* Para mobile (até 768px) */
+@media (max-width: 768px) {
+  .div-h1 {
+    margin-top: 15vh;
+    padding: 0 20px;
+  }
+  
+  .div-h1 h1 {
+    font-size: clamp(18px, 6vw, 32px);
+  }
+  
+  .div-h1 h3 {
+    font-size: clamp(12px, 4vw, 18px);
+  }
+  
+  .logo {
+    top: 2%;
+  }
+  
+  .logo img {
+    width: clamp(70px, 25vw, 140px);
+  }
+  
+  .redirect {
+    gap: 20px;
+    margin-top: 5%;
+  }
+  
+  .redirect-qrcode {
+    width: clamp(110px, 40vw, 180px);
+  }
+  
+  .realocar {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .realocar img {
+    width: clamp(110px, 45vw, 180px);
+  }
+}
+
+/* Para mobile pequeno (até 480px) */
+@media (max-width: 480px) {
+  .div-h1 {
+    margin-top: 12vh;
+  }
+  
+  .div-h1 h1 {
+    font-size: clamp(16px, 7vw, 28px);
+  }
+  
+  .div-h1 h3 {
+    font-size: clamp(11px, 4.5vw, 16px);
+  }
+  
+  .logo img {
+    width: clamp(60px, 30vw, 120px);
+  }
+  
+  .redirect-qrcode {
+    width: clamp(100px, 50vw, 160px);
+  }
+  
+  .realocar img {
+    width: clamp(100px, 55vw, 160px);
+  }
+}

@@ -1,0 +1,44 @@
+<div class="modal-overlay" id="trainingManagerModal">
+  <div class="modal-card modal-lg">
+    <button class="modal-close" id="closeTrainingManager">&times;</button>
+
+    <h2 class="modal-title" id="trainingManagerTitle">Nome do Treino</h2>
+    <p class="modal-subtitle">Veja os alunos vinculados ou adicione novos</p>
+    
+    <input type="hidden" id="currentTrainingId">
+
+    <div class="modal-field">
+      <label class="modal-label">Alunos usando este treino atualmente:</label>
+      <div id="trainingStudents" class="assigned-list-container">
+        </div>
+    </div>
+
+    <hr style="opacity: 0.1; margin: 20px 0;">
+
+    <div class="modal-field">
+      <label class="modal-label">Adicionar novo aluno ao treino</label>
+      <input type="text" id="searchAluno" class="modal-input" placeholder="Digite o nome do aluno...">
+      <div id="alunoResults" class="search-results"></div>
+    </div>
+
+    <div id="daysSection" style="display: none;">
+      <div class="modal-field">
+        <label class="modal-label">
+          Dias de treino para <span id="selectedStudentName" style="color: #4ade80;"></span>
+          <br><small>(Selecione os dias que este treino será aplicado)</small>
+        </label>
+        <div id="daysGrid" class="days-grid">
+            </div>
+      </div>
+      
+      <div id="exerciseConfig" style="display: none;"></div>
+    </div>
+
+    <div class="modal-actions" style="margin-top: 20px;">
+      <button class="secondary-button" id="cancelTrainingManager">Fechar</button>
+      <button type="button" class="primary-buttonn" id="saveTrainingManager">
+        Salvar Atribuição
+      </button>
+    </div>
+  </div>
+</div>
